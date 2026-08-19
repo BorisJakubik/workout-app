@@ -1,0 +1,201 @@
+{
+  "categories": [
+    {
+      "id": "push",
+      "name": "Push tréning"
+    },
+    {
+      "id": "pull",
+      "name": "Pull tréning"
+    },
+    {
+      "id": "legs",
+      "name": "Nohy"
+    },
+    {
+      "id": "full-body",
+      "name": "Full body"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "exercise-0",
+      "name": "Bench press",
+      "categoryId": "push"
+    },
+    {
+      "id": "exercise-1",
+      "name": "Tlaky s jednoručkami",
+      "categoryId": "push"
+    },
+    {
+      "id": "exercise-2",
+      "name": "Tlaky nad hlavu",
+      "categoryId": "push"
+    },
+    {
+      "id": "exercise-3",
+      "name": "Upažovanie",
+      "categoryId": "push"
+    },
+    {
+      "id": "exercise-4",
+      "name": "Mŕtvy ťah",
+      "categoryId": "pull"
+    },
+    {
+      "id": "exercise-5",
+      "name": "Zhyby",
+      "categoryId": "pull"
+    },
+    {
+      "id": "exercise-6",
+      "name": "Drep",
+      "categoryId": "legs"
+    },
+    {
+      "id": "exercise-7",
+      "name": "Leg press",
+      "categoryId": "legs"
+    },
+    {
+      "id": "exercise-8",
+      "name": "Drep",
+      "categoryId": "full-body"
+    },
+    {
+      "id": "exercise-9",
+      "name": "Bench press",
+      "categoryId": "full-body"
+    }
+  ],
+  "workouts": [
+    {
+      "id": 1787163767091,
+      "categoryId": "push",
+      "name": "Push tréning",
+      "date": "2026-08-19T18:22:47.091Z",
+      "duration": 75,
+      "notes": "Bolo to super! dnes to islo jedna radost!",
+      "rating": 4,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "3c005c9e-9402-4b67-9ed7-b4e46361a426",
+          "name": "Tlaky nad hlavu",
+          "sets": [
+            {
+              "reps": 8,
+              "weight": 60
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "categoryId": "push",
+      "name": "Push tréning",
+      "date": "2026-08-18T17:30:00",
+      "duration": 58,
+      "notes": "",
+      "rating": 0,
+      "completed": true,
+      "exercises": [
+        {
+          "id": 11,
+          "name": "Bench press",
+          "sets": [
+            {
+              "reps": 8,
+              "weight": 70
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            },
+            {
+              "reps": 6,
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "name": "Tlaky nad hlavu",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 9,
+              "weight": 30
+            },
+            {
+              "reps": 8,
+              "weight": 30
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "categoryId": "legs",
+      "name": "Nohy",
+      "date": "2026-08-15T18:10:00",
+      "duration": 64,
+      "notes": "",
+      "rating": 0,
+      "completed": true,
+      "exercises": [
+        {
+          "id": 21,
+          "name": "Drep",
+          "sets": [
+            {
+              "reps": 8,
+              "weight": 80
+            },
+            {
+              "reps": 8,
+              "weight": 80
+            },
+            {
+              "reps": 6,
+              "weight": 87
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "name": "Leg press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 140
+            },
+            {
+              "reps": 10,
+              "weight": 140
+            },
+            {
+              "reps": 9,
+              "weight": 140
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "activeWorkout": null
+}

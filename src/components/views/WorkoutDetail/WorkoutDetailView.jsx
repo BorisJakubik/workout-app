@@ -1,5 +1,5 @@
 import React from 'react'
-import { Plus, Trash2, X } from 'lucide-react'
+import { ChevronDown, Plus, Trash2, X } from 'lucide-react'
 import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
 import { toDateInputValue } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
@@ -8,7 +8,7 @@ import { WorkoutDetailHeaderView } from '../../molecules/WorkoutDetailHeader/Wor
 
 const STRENGTH_TRAINING_MET = 6
 
-export const WorkoutDetailView = ({ caloriesBurned, chosenExercise, deleteModalOpen, displayedCalorieWeight, displayedWorkout, draft, editing, exercises, locale, menuOpen, menuRef, onBack, onDelete, orderedExercises, save, setChosenExercise, setDeleteModalOpen, setDraft, setEditing, setMenuOpen, t, updateExercise, updateSet, workout }) => {
+export const WorkoutDetailView = ({ caloriesBurned, chosenExercise, collapsedExercises, deleteModalOpen, displayedCalorieWeight, displayedWorkout, draft, editing, exercises, locale, menuOpen, menuRef, onBack, onDelete, orderedExercises, save, setChosenExercise, setDeleteModalOpen, setDraft, setEditing, setMenuOpen, t, toggleExercise, updateExercise, updateSet, workout }) => {
   return (
     <div className="app-shell detail-page">
       <WorkoutDetailHeaderView
@@ -100,34 +100,43 @@ export const WorkoutDetailView = ({ caloriesBurned, chosenExercise, deleteModalO
             <div className="detail-exercise-title">
               <span>{String(index + 1).padStart(2, '0')}</span>
               {editing ? <input value={exercise.name} onChange={event => updateExercise(exercise.id, item => ({ ...item, name: event.target.value }))} /> : <h2>{exercise.name}</h2>}
-              {editing && (
-                <button onClick={() => setDraft({ ...draft, exercises: draft.exercises.filter(item => item.id !== exercise.id) })}>
-                  <Trash2 size={16} />
+              <div className="detail-exercise-title-actions">
+                <button className="collapse-exercise" type="button" aria-label={collapsedExercises.has(exercise.id) ? t('expandSets') : t('collapseSets')} aria-expanded={!collapsedExercises.has(exercise.id)} onClick={() => toggleExercise(exercise.id)}>
+                  <ChevronDown className={collapsedExercises.has(exercise.id) ? 'collapsed' : ''} size={18} />
                 </button>
-              )}
-            </div>
-            <div className={`detail-set header ${editing ? 'editing' : ''}`}>
-              <span>{t('set')}</span>
-              <span>KG</span>
-              <span>{t('reps')}</span>
-              {editing && <span />}
-            </div>
-            {exercise.sets.map((set, setIndex) => (
-              <div className={`detail-set ${editing ? 'editing' : ''}`} key={setIndex}>
-                <strong>{setIndex + 1}</strong>
-                {editing ? <input type="number" min="0" value={set.weight} onChange={event => updateSet(exercise.id, setIndex, 'weight', event.target.value)} /> : <span>{set.weight} kg</span>}
-                {editing ? <input type="number" min="0" value={set.reps} onChange={event => updateSet(exercise.id, setIndex, 'reps', event.target.value)} /> : <span>{set.reps}×</span>}
                 {editing && (
-                  <button onClick={() => updateExercise(exercise.id, item => ({ ...item, sets: item.sets.filter((_, currentIndex) => currentIndex !== setIndex) }))}>
-                    <X size={15} />
+                  <button type="button" onClick={() => setDraft({ ...draft, exercises: draft.exercises.filter(item => item.id !== exercise.id) })}>
+                    <Trash2 size={16} />
                   </button>
                 )}
               </div>
-            ))}
-            {editing && (
-              <button className="add-set" onClick={() => updateExercise(exercise.id, item => ({ ...item, sets: [...item.sets, { weight: item.sets.at(-1)?.weight || 0, reps: 8 }] }))}>
-                <Plus size={16} /> {t('addSet')}
-              </button>
+            </div>
+            {!collapsedExercises.has(exercise.id) && (
+              <>
+                <div className={`detail-set header ${editing ? 'editing' : ''}`}>
+                  <span>{t('set')}</span>
+                  <span>KG</span>
+                  <span>{t('reps')}</span>
+                  {editing && <span />}
+                </div>
+                {exercise.sets.map((set, setIndex) => (
+                  <div className={`detail-set ${editing ? 'editing' : ''}`} key={setIndex}>
+                    <strong>{setIndex + 1}</strong>
+                    {editing ? <input type="number" min="0" value={set.weight} onChange={event => updateSet(exercise.id, setIndex, 'weight', event.target.value)} /> : <span>{set.weight} kg</span>}
+                    {editing ? <input type="number" min="0" value={set.reps} onChange={event => updateSet(exercise.id, setIndex, 'reps', event.target.value)} /> : <span>{set.reps}×</span>}
+                    {editing && (
+                      <button onClick={() => updateExercise(exercise.id, item => ({ ...item, sets: item.sets.filter((_, currentIndex) => currentIndex !== setIndex) }))}>
+                        <X size={15} />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                {editing && (
+                  <button className="add-set" onClick={() => updateExercise(exercise.id, item => ({ ...item, sets: [...item.sets, { weight: item.sets.at(-1)?.weight || 0, reps: 8 }] }))}>
+                    <Plus size={16} /> {t('addSet')}
+                  </button>
+                )}
+              </>
             )}
           </article>
         ))}

@@ -2,7 +2,57 @@ import React from 'react'
 import { Dumbbell, Trophy } from 'lucide-react'
 import { formatDate } from '../../../utils'
 
-export const ProgressView = ({ locale, maxDuration, powerlifting, powerliftingTotal, recent, stats, t, weightProgress }) => (
+const LineProgressCard = ({ ariaLabel, emptyLabel, eyebrow, getValue, history, points, polyline, title, locale }) => (
+  <div className="weight-progress-card">
+    <div className="section-heading">
+      <div>
+        <p className="eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
+      </div>
+    </div>
+    {history.length ? (
+      <>
+        <div className="weight-chart">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label={ariaLabel}>
+            <line x1="6" y1="88" x2="94" y2="88" />
+            <polyline points={polyline} />
+          </svg>
+          {history.map((item, index) => (
+            <span
+              aria-hidden="true"
+              className="weight-chart-point"
+              key={item.id}
+              style={{ left: `${points[index].x}%`, top: `${points[index].y}%` }}
+            />
+          ))}
+        </div>
+        <div className="weight-chart-labels">
+          {history.map(item => (
+            <div key={item.id}>
+              <strong>{getValue(item)}</strong>
+              <small>{formatDate(item.date, locale)}</small>
+            </div>
+          ))}
+        </div>
+      </>
+    ) : (
+      <p className="weight-chart-empty">{emptyLabel}</p>
+    )}
+  </div>
+)
+
+export const ProgressView = ({
+  bigThreeProgress,
+  bodyFatProgress,
+  locale,
+  maxDuration,
+  powerlifting,
+  powerliftingTotal,
+  recent,
+  stats,
+  t,
+  weightProgress,
+}) => (
   <section className="page">
     <p className="eyebrow">{t('results')}</p>
     <h1>{t('yourProgress')}</h1>
@@ -42,43 +92,33 @@ export const ProgressView = ({ locale, maxDuration, powerlifting, powerliftingTo
         <strong>{powerliftingTotal} kg</strong>
       </div>
     </div>
-    <div className="weight-progress-card">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">{t('bodyWeightProgress')}</p>
-          <h2>{t('weightHistory')}</h2>
-        </div>
-      </div>
-      {weightProgress.history.length ? (
-        <>
-          <div className="weight-chart">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label={t('weightHistory')}>
-              <line x1="6" y1="88" x2="94" y2="88" />
-              <polyline points={weightProgress.polyline} />
-              {weightProgress.history.map((workout, index) => (
-                <circle
-                  key={workout.id}
-                  cx={weightProgress.points[index].x}
-                  cy={weightProgress.points[index].y}
-                  r="2"
-                  vectorEffect="non-scaling-stroke"
-                />
-              ))}
-            </svg>
-          </div>
-          <div className="weight-chart-labels">
-            {weightProgress.history.map(workout => (
-              <div key={workout.id}>
-                <strong>{workout.bodyWeight} kg</strong>
-                <small>{formatDate(workout.date, locale)}</small>
-              </div>
-            ))}
-          </div>
-        </>
-      ) : (
-        <p className="weight-chart-empty">{t('noWeightData')}</p>
-      )}
-    </div>
+    <LineProgressCard
+      {...weightProgress}
+      ariaLabel={t('weightHistory')}
+      emptyLabel={t('noWeightData')}
+      eyebrow={t('bodyWeightProgress')}
+      getValue={workout => `${workout.bodyWeight} kg`}
+      locale={locale}
+      title={t('weightHistory')}
+    />
+    <LineProgressCard
+      {...bigThreeProgress}
+      ariaLabel={t('bigThreeTotalProgress')}
+      emptyLabel={t('noBigThreeData')}
+      eyebrow={t('powerlifting')}
+      getValue={workout => `${workout.value} kg`}
+      locale={locale}
+      title={t('bigThreeTotalProgress')}
+    />
+    <LineProgressCard
+      {...bodyFatProgress}
+      ariaLabel={t('bodyFatProgress')}
+      emptyLabel={t('noBodyFatData')}
+      eyebrow={t('bodyFat')}
+      getValue={workout => `${workout.bodyFatPercentage}%`}
+      locale={locale}
+      title={t('bodyFatProgress')}
+    />
     <div className="milestone">
       <Trophy />
       <div>

@@ -735,14 +735,21 @@ h2 {
 .set-row input:focus {
   border-color: var(--lime);
 }
-.set-check {
+.set-delete {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: #25321d;
-  color: var(--lime);
+  border: 0;
+  background: #321d1d;
+  color: #d98282;
   display: grid;
   place-items: center;
+  cursor: pointer;
+}
+.set-delete:hover,
+.set-delete:focus-visible {
+  background: #482323;
+  color: #ffabab;
 }
 .add-set {
   width: 100%;
@@ -2050,10 +2057,18 @@ h2 {
 :root[data-theme='light'] .pulse {
   box-shadow: 0 0 0 5px rgb(39 121 245 / 16%);
 }
-:root[data-theme='light'] .set-check,
 :root[data-theme='light'] .category-icon-picker button.selected,
 :root[data-theme='light'] .library-category-icon {
   background: #e7f0ff;
+}
+:root[data-theme='light'] .set-delete {
+  background: #f8e7e7;
+  color: #a43d3d;
+}
+:root[data-theme='light'] .set-delete:hover,
+:root[data-theme='light'] .set-delete:focus-visible {
+  background: #f2d4d4;
+  color: #7f2424;
 }
 :root[data-theme='light'] .category-icon-picker button:hover {
   background: #e7f0ff;

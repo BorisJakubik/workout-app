@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChevronDown, Plus, Trash2, X } from 'lucide-react'
+import { ChevronDown, Plus, Trash2 } from 'lucide-react'
 import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
 import { toDateInputValue } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
@@ -225,11 +225,13 @@ export const WorkoutDetailView = ({
                     )}
                     {editing && (
                       <button
+                        type="button"
+                        aria-label={t('deleteSet', { number: setIndex + 1 })}
                         onClick={() =>
                           updateExercise(exercise.id, item => ({ ...item, sets: item.sets.filter((_, currentIndex) => currentIndex !== setIndex) }))
                         }
                       >
-                        <X size={15} />
+                        <Trash2 size={15} />
                       </button>
                     )}
                   </div>

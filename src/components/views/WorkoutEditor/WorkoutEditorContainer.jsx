@@ -45,6 +45,13 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
         exercise.id === id ? { ...exercise, sets: [...exercise.sets, { reps: 10, weight: exercise.sets.at(-1)?.weight || 0 }] } : exercise,
       ),
     })
+  const removeSet = (exerciseId, setIndex) =>
+    setDraft({
+      ...draft,
+      exercises: draft.exercises.map(exercise =>
+        exercise.id === exerciseId ? { ...exercise, sets: exercise.sets.filter((_, index) => index !== setIndex) } : exercise,
+      ),
+    })
   const importWorkout = () => {
     if (!workoutToImport) return
     setDraft({
@@ -77,6 +84,7 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       importDate={importDate}
       importWorkout={importWorkout}
       importableWorkouts={importableWorkouts}
+      removeSet={removeSet}
       setChosen={setChosen}
       setDraft={setDraft}
       setImportDate={setImportDate}

@@ -155,7 +155,20 @@ const fitnessSlice = createSlice({
     },
     startWorkout(state, action) {
       const category = state.categories.find(c => c.id === action.payload)
+      if (!category) return
       const first = state.exercises.find(e => e.categoryId === action.payload)
+      const previousWorkout = state.workouts
+        .filter(workout => workout.completed && workout.categoryId === action.payload)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))[0]
+      const workoutExercises = previousWorkout
+        ? previousWorkout.exercises.map(exercise => ({
+            ...exercise,
+            id: crypto.randomUUID(),
+            sets: exercise.sets.map(set => ({ ...set })),
+          }))
+        : first
+          ? [{ id: crypto.randomUUID(), name: first.name, sets: [{ reps: 10, weight: 0 }] }]
+          : []
       state.activeWorkout = {
         id: Date.now(),
         categoryId: category.id,
@@ -167,7 +180,7 @@ const fitnessSlice = createSlice({
         bodyWeight: null,
         bodyFatPercentage: null,
         completed: false,
-        exercises: first ? [{ id: crypto.randomUUID(), name: first.name, sets: [{ reps: 10, weight: 0 }] }] : [],
+        exercises: workoutExercises,
       }
     },
     updateActiveWorkout(state, action) {

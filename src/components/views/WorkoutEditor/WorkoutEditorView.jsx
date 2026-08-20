@@ -16,6 +16,7 @@ export const WorkoutEditorView = ({
   importDate,
   importWorkout,
   importableWorkouts,
+  removeSet,
   setChosen,
   setDraft,
   setImportDate,
@@ -181,9 +182,14 @@ export const WorkoutEditorView = ({
                     <span className="set-index">{index + 1}</span>
                     <input type="number" value={set.weight} onChange={event => updateSet(exercise.id, index, 'weight', event.target.value)} />
                     <input type="number" value={set.reps} onChange={event => updateSet(exercise.id, index, 'reps', event.target.value)} />
-                    <span className="set-check">
-                      <Check size={16} />
-                    </span>
+                    <button
+                      className="set-delete"
+                      type="button"
+                      aria-label={t('deleteSet', { number: index + 1 })}
+                      onClick={() => removeSet(exercise.id, index)}
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 ))}
                 <button className="add-set" onClick={() => addSet(exercise.id)}>

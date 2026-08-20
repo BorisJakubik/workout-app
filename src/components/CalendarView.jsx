@@ -4,7 +4,7 @@ import { toDateInputValue } from '../utils'
 import { WorkoutRow } from './WorkoutRow'
 import { useTranslation } from '../i18n'
 
-export const CalendarView = ({ workouts, openWorkout }) => {
+export const CalendarView = ({ workouts, openWorkout, embedded = false }) => {
   const { t, locale, weekdays } = useTranslation()
   const today = new Date()
   const [visibleMonth, setVisibleMonth] = useState(new Date(today.getFullYear(), today.getMonth(), 1))
@@ -17,11 +17,17 @@ export const CalendarView = ({ workouts, openWorkout }) => {
   const changeMonth = amount => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + amount, 1))
   const selectDay = day => setSelectedDate(toDateInputValue(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day)))
 
+  const Wrapper = embedded ? 'div' : 'section'
+
   return (
-    <section className="page calendar-page">
-      <p className="eyebrow">{t('trainingDays')}</p>
-      <h1>{t('calendar')}</h1>
-      <p className="muted">{t('trainingDaysHint')}</p>
+    <Wrapper className={embedded ? 'history-calendar' : 'page calendar-page'}>
+      {!embedded && (
+        <>
+          <p className="eyebrow">{t('trainingDays')}</p>
+          <h1>{t('calendar')}</h1>
+          <p className="muted">{t('trainingDaysHint')}</p>
+        </>
+      )}
       <div className="calendar-card">
         <div className="calendar-heading">
           <button onClick={() => changeMonth(-1)} aria-label={t('previousMonth')}>
@@ -72,6 +78,6 @@ export const CalendarView = ({ workouts, openWorkout }) => {
           <div className="empty-day">{t('noWorkout')}</div>
         )}
       </div>
-    </section>
+    </Wrapper>
   )
 }

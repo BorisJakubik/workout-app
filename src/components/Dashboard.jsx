@@ -4,7 +4,7 @@ import { WorkoutRow } from './WorkoutRow'
 import { CategoryIcon } from './CategoryIcon'
 import { useTranslation } from '../i18n'
 
-export const Dashboard = ({ workouts, categories, exercises, stats, startWorkout, setScreen, openWorkout }) => {
+export const Dashboard = ({ workouts, categories, exercises, stats, profileName, startWorkout, setScreen, openWorkout }) => {
   const { t } = useTranslation()
   return (
     <>
@@ -13,7 +13,7 @@ export const Dashboard = ({ workouts, categories, exercises, stats, startWorkout
         <h1>
           {t('letsTrain')}
           <br />
-          <span>Boris.</span>
+          <span>{profileName.split(/\s+/)[0] || 'Boris'}.</span>
         </h1>
         <p className="muted">{t('everySetCounts')}</p>
       </section>

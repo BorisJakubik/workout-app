@@ -104,6 +104,8 @@ const read = key => {
 }
 const initialState = read('fittrack-redux') || {
   language: 'sk',
+  theme: 'dark',
+  profile: { name: 'Boris', surname: '', email: '', photo: '' },
   categories: defaultCategories,
   exercises: defaultExercises,
   workouts: read('fittrack-workouts') || starterWorkouts,
@@ -116,6 +118,17 @@ const fitnessSlice = createSlice({
   reducers: {
     setLanguage(state, action) {
       state.language = action.payload === 'en' ? 'en' : 'sk'
+    },
+    setTheme(state, action) {
+      state.theme = action.payload === 'light' ? 'light' : 'dark'
+    },
+    updateProfile(state, action) {
+      state.profile = {
+        name: action.payload.name.trim(),
+        surname: action.payload.surname.trim(),
+        email: action.payload.email.trim(),
+        photo: action.payload.photo || '',
+      }
     },
     addCategory(state, action) {
       const payload = typeof action.payload === 'string' ? { name: action.payload, icon: 'bench' } : action.payload
@@ -182,6 +195,13 @@ const fitnessSlice = createSlice({
     },
     replaceData(state, action) {
       state.language = action.payload.language || 'sk'
+      state.theme = action.payload.theme === 'light' ? 'light' : 'dark'
+      state.profile = {
+        name: action.payload.profile?.name || 'Boris',
+        surname: action.payload.profile?.surname || '',
+        email: action.payload.profile?.email || '',
+        photo: action.payload.profile?.photo || '',
+      }
       state.categories = action.payload.categories
       state.exercises = action.payload.exercises
       state.workouts = action.payload.workouts
@@ -191,6 +211,8 @@ const fitnessSlice = createSlice({
 })
 export const {
   setLanguage,
+  setTheme,
+  updateProfile,
   addCategory,
   updateCategoryIcon,
   renameCategory,

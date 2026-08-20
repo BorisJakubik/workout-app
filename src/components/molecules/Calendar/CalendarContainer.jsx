@@ -15,7 +15,23 @@ export const CalendarContainer = ({ workouts, openWorkout, embedded = false }) =
   const selectedWorkouts = workouts.filter(workout => toDateInputValue(workout.date) === selectedDate)
   const changeMonth = amount => setVisibleMonth(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + amount, 1))
   const selectDay = day => setSelectedDate(toDateInputValue(new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), day)))
-  return <CalendarView cells={cells} changeMonth={changeMonth} embedded={embedded} locale={locale} openWorkout={openWorkout} selectDay={selectDay} selectedDate={selectedDate} selectedWorkouts={selectedWorkouts} t={t} today={today} visibleMonth={visibleMonth} weekdays={weekdays} workoutDates={workoutDates} />
+  return (
+    <CalendarView
+      cells={cells}
+      changeMonth={changeMonth}
+      embedded={embedded}
+      locale={locale}
+      openWorkout={openWorkout}
+      selectDay={selectDay}
+      selectedDate={selectedDate}
+      selectedWorkouts={selectedWorkouts}
+      t={t}
+      today={today}
+      visibleMonth={visibleMonth}
+      weekdays={weekdays}
+      workoutDates={workoutDates}
+    />
+  )
 }
 
 export { CalendarContainer as CalendarView }

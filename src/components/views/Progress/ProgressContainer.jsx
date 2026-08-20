@@ -2,7 +2,12 @@ import React from 'react'
 import { useTranslation } from '../../../i18n'
 import { ProgressView } from './ProgressView'
 
-const normalizeName = name => name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
+const normalizeName = name =>
+  name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
 
 const getHighestSet = (workouts, aliases) =>
   Math.max(

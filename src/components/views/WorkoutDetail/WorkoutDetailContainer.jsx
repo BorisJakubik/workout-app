@@ -11,21 +11,34 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
   const [menuOpen, setMenuOpen] = useState(false)
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [collapsedExercises, setCollapsedExercises] = useState(() => new Set())
-  const orderedExercises = [...exercises.filter(exercise => exercise.categoryId === workout.categoryId), ...exercises.filter(exercise => exercise.categoryId !== workout.categoryId)]
+  const orderedExercises = [
+    ...exercises.filter(exercise => exercise.categoryId === workout.categoryId),
+    ...exercises.filter(exercise => exercise.categoryId !== workout.categoryId),
+  ]
   const [chosenExercise, setChosenExercise] = useState(orderedExercises[0]?.name || '')
   const menuRef = useRef(null)
   const displayedWorkout = editing ? draft : workout
   const displayedCalorieWeight = displayedWorkout.bodyWeight ?? calorieWeight
   const caloriesBurned = Math.round((Number(displayedWorkout.duration || 0) * STRENGTH_TRAINING_MET * 3.5 * displayedCalorieWeight) / 200)
-  const updateExercise = (exerciseId, updater) => setDraft({ ...draft, exercises: draft.exercises.map(exercise => exercise.id === exerciseId ? updater(exercise) : exercise) })
-  const updateSet = (exerciseId, setIndex, field, value) => updateExercise(exerciseId, exercise => ({ ...exercise, sets: exercise.sets.map((set, index) => index === setIndex ? { ...set, [field]: Math.max(0, Number(value)) } : set) }))
-  const toggleExercise = exerciseId => setCollapsedExercises(current => {
-    const next = new Set(current)
-    if (next.has(exerciseId)) next.delete(exerciseId)
-    else next.add(exerciseId)
-    return next
-  })
-  const save = () => { if (!draft.name.trim()) return; onSave({ ...draft, name: draft.name.trim() }); setEditing(false) }
+  const updateExercise = (exerciseId, updater) =>
+    setDraft({ ...draft, exercises: draft.exercises.map(exercise => (exercise.id === exerciseId ? updater(exercise) : exercise)) })
+  const updateSet = (exerciseId, setIndex, field, value) =>
+    updateExercise(exerciseId, exercise => ({
+      ...exercise,
+      sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: Math.max(0, Number(value)) } : set)),
+    }))
+  const toggleExercise = exerciseId =>
+    setCollapsedExercises(current => {
+      const next = new Set(current)
+      if (next.has(exerciseId)) next.delete(exerciseId)
+      else next.add(exerciseId)
+      return next
+    })
+  const save = () => {
+    if (!draft.name.trim()) return
+    onSave({ ...draft, name: draft.name.trim() })
+    setEditing(false)
+  }
   useEffect(() => {
     if (!menuOpen) return undefined
     const closeMenu = event => {
@@ -35,7 +48,10 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
     }
     document.addEventListener('pointerdown', closeMenu)
     document.addEventListener('keydown', closeMenu)
-    return () => { document.removeEventListener('pointerdown', closeMenu); document.removeEventListener('keydown', closeMenu) }
+    return () => {
+      document.removeEventListener('pointerdown', closeMenu)
+      document.removeEventListener('keydown', closeMenu)
+    }
   }, [menuOpen])
   useEffect(() => {
     if (!deleteModalOpen) return undefined
@@ -43,7 +59,36 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
     document.addEventListener('keydown', closeModal)
     return () => document.removeEventListener('keydown', closeModal)
   }, [deleteModalOpen])
-  return <WorkoutDetailView caloriesBurned={caloriesBurned} chosenExercise={chosenExercise} collapsedExercises={collapsedExercises} deleteModalOpen={deleteModalOpen} displayedCalorieWeight={displayedCalorieWeight} displayedWorkout={displayedWorkout} draft={draft} editing={editing} exercises={exercises} locale={locale} menuOpen={menuOpen} menuRef={menuRef} onBack={onBack} onDelete={onDelete} orderedExercises={orderedExercises} save={save} setChosenExercise={setChosenExercise} setDeleteModalOpen={setDeleteModalOpen} setDraft={setDraft} setEditing={setEditing} setMenuOpen={setMenuOpen} t={t} toggleExercise={toggleExercise} updateExercise={updateExercise} updateSet={updateSet} workout={workout} />
+  return (
+    <WorkoutDetailView
+      caloriesBurned={caloriesBurned}
+      chosenExercise={chosenExercise}
+      collapsedExercises={collapsedExercises}
+      deleteModalOpen={deleteModalOpen}
+      displayedCalorieWeight={displayedCalorieWeight}
+      displayedWorkout={displayedWorkout}
+      draft={draft}
+      editing={editing}
+      exercises={exercises}
+      locale={locale}
+      menuOpen={menuOpen}
+      menuRef={menuRef}
+      onBack={onBack}
+      onDelete={onDelete}
+      orderedExercises={orderedExercises}
+      save={save}
+      setChosenExercise={setChosenExercise}
+      setDeleteModalOpen={setDeleteModalOpen}
+      setDraft={setDraft}
+      setEditing={setEditing}
+      setMenuOpen={setMenuOpen}
+      t={t}
+      toggleExercise={toggleExercise}
+      updateExercise={updateExercise}
+      updateSet={updateSet}
+      workout={workout}
+    />
+  )
 }
 
 export { WorkoutDetailContainer as WorkoutDetail }

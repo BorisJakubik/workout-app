@@ -27,7 +27,17 @@ export const CategoryDropdownContainer = ({ categories, value, onChange }) => {
     setOpen(false)
   }
 
-  return <CategoryDropdownView categories={categories} dropdownRef={dropdownRef} onSelect={selectCategory} onToggle={() => setOpen(current => !current)} open={open} t={t} value={value} />
+  return (
+    <CategoryDropdownView
+      categories={categories}
+      dropdownRef={dropdownRef}
+      onSelect={selectCategory}
+      onToggle={() => setOpen(current => !current)}
+      open={open}
+      t={t}
+      value={value}
+    />
+  )
 }
 
 export { CategoryDropdownContainer as CategoryDropdown }

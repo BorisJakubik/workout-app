@@ -21,7 +21,18 @@ export const SettingsContainer = ({ profile, theme, onSave, onThemeChange }) => 
     reader.readAsDataURL(file)
   }
   const updateField = (field, value) => setDraft(current => ({ ...current, [field]: value }))
-  return <SettingsView draft={draft} onFieldChange={updateField} onPhotoSelect={selectPhoto} onSubmit={submit} onThemeChange={onThemeChange} saved={saved} t={t} theme={theme} />
+  return (
+    <SettingsView
+      draft={draft}
+      onFieldChange={updateField}
+      onPhotoSelect={selectPhoto}
+      onSubmit={submit}
+      onThemeChange={onThemeChange}
+      saved={saved}
+      t={t}
+      theme={theme}
+    />
+  )
 }
 
 export { SettingsContainer as SettingsView }

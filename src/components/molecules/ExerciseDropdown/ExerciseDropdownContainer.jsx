@@ -30,7 +30,19 @@ export const ExerciseDropdownContainer = ({ exercises, categoryId, value, onChan
     onChange(name)
     setOpen(false)
   }
-  return <ExerciseDropdownView canShowAll={!showAll && categoryExercises.length > 0 && otherExercises.length > 0} dropdownRef={dropdownRef} onExpand={() => setShowAll(true)} onSelect={selectExercise} onToggle={() => setOpen(current => !current)} open={open} t={t} value={value} visibleExercises={visibleExercises} />
+  return (
+    <ExerciseDropdownView
+      canShowAll={!showAll && categoryExercises.length > 0 && otherExercises.length > 0}
+      dropdownRef={dropdownRef}
+      onExpand={() => setShowAll(true)}
+      onSelect={selectExercise}
+      onToggle={() => setOpen(current => !current)}
+      open={open}
+      t={t}
+      value={value}
+      visibleExercises={visibleExercises}
+    />
+  )
 }
 
 export { ExerciseDropdownContainer as ExerciseDropdown }

@@ -110,7 +110,8 @@ const dictionary = {
     deleteExercise: 'Vymazať cvik',
     deleteWarning: 'UPOZORNENIE',
     deleteCategoryTitle: 'Vymazať kategóriu?',
-    deleteCategoryConfirm: 'Naozaj chceš vymazať kategóriu „{name}“? Vymažú sa aj všetky cviky v tejto kategórii. Túto akciu nie je možné vrátiť späť.',
+    deleteCategoryConfirm:
+      'Naozaj chceš vymazať kategóriu „{name}“? Vymažú sa aj všetky cviky v tejto kategórii. Túto akciu nie je možné vrátiť späť.',
     deleteExerciseTitle: 'Vymazať cvik?',
     deleteExerciseConfirm: 'Naozaj chceš vymazať cvik „{name}“? Túto akciu nie je možné vrátiť späť.',
     trainingDays: 'TRÉNINGOVÉ DNI',
@@ -245,7 +246,8 @@ const dictionary = {
     deleteExercise: 'Delete exercise',
     deleteWarning: 'WARNING',
     deleteCategoryTitle: 'Delete category?',
-    deleteCategoryConfirm: 'Are you sure you want to delete the “{name}” category? All exercises in this category will also be deleted. This action cannot be undone.',
+    deleteCategoryConfirm:
+      'Are you sure you want to delete the “{name}” category? All exercises in this category will also be deleted. This action cannot be undone.',
     deleteExerciseTitle: 'Delete exercise?',
     deleteExerciseConfirm: 'Are you sure you want to delete the “{name}” exercise? This action cannot be undone.',
     trainingDays: 'TRAINING DAYS',

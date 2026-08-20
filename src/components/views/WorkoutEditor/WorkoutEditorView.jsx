@@ -4,7 +4,23 @@ import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
 import { toDateInputValue } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
 
-export const WorkoutEditorView = ({ addExercise, addSet, cancel, chosen, collapsedExercises, draft, exercises, finish, setChosen, setDraft, setWorkoutDetailsOpen, t, toggleExercise, updateSet, workoutDetailsOpen }) => {
+export const WorkoutEditorView = ({
+  addExercise,
+  addSet,
+  cancel,
+  chosen,
+  collapsedExercises,
+  draft,
+  exercises,
+  finish,
+  setChosen,
+  setDraft,
+  setWorkoutDetailsOpen,
+  t,
+  toggleExercise,
+  updateSet,
+  workoutDetailsOpen,
+}) => {
   return (
     <div className="app-shell editor">
       <header className="editor-header">
@@ -31,15 +47,32 @@ export const WorkoutEditorView = ({ addExercise, addSet, cancel, chosen, collaps
         <section className="workout-meta-card">
           <label>
             {t('workoutDate')}
-            <input className="date-input" type="date" value={toDateInputValue(draft.date)} onChange={event => setDraft({ ...draft, date: `${event.target.value}T12:00:00` })} />
+            <input
+              className="date-input"
+              type="date"
+              value={toDateInputValue(draft.date)}
+              onChange={event => setDraft({ ...draft, date: `${event.target.value}T12:00:00` })}
+            />
           </label>
           <label>
             {t('workoutTime')}{' '}
             <span>
-              <input type="number" min="0" value={draft.duration || 60} placeholder="0" onChange={event => setDraft({ ...draft, duration: Math.max(0, Number(event.target.value)) })} /> min
+              <input
+                type="number"
+                min="0"
+                value={draft.duration || 60}
+                placeholder="0"
+                onChange={event => setDraft({ ...draft, duration: Math.max(0, Number(event.target.value)) })}
+              />{' '}
+              min
             </span>
           </label>
-          <button className="workout-details-toggle" type="button" aria-expanded={workoutDetailsOpen} onClick={() => setWorkoutDetailsOpen(open => !open)}>
+          <button
+            className="workout-details-toggle"
+            type="button"
+            aria-expanded={workoutDetailsOpen}
+            onClick={() => setWorkoutDetailsOpen(open => !open)}
+          >
             <span>
               <strong>{t('additionalWorkoutDetails')}</strong>
               <small>{workoutDetailsOpen ? t('collapseDetails') : t('expandDetails')}</small>
@@ -53,7 +86,14 @@ export const WorkoutEditorView = ({ addExercise, addSet, cancel, chosen, collaps
                   {t('currentWeight')} <small>{t('optional')}</small>
                 </span>
                 <span>
-                  <input type="number" min="0" step="0.1" value={draft.bodyWeight ?? 80} placeholder="—" onChange={event => setDraft({ ...draft, bodyWeight: event.target.value === '' ? null : Math.max(0, Number(event.target.value)) })} />{' '}
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    value={draft.bodyWeight ?? 80}
+                    placeholder="—"
+                    onChange={event => setDraft({ ...draft, bodyWeight: event.target.value === '' ? null : Math.max(0, Number(event.target.value)) })}
+                  />{' '}
                   kg
                 </span>
               </label>
@@ -87,7 +127,11 @@ export const WorkoutEditorView = ({ addExercise, addSet, cancel, chosen, collaps
               </div>
               <label className="notes-field">
                 {t('notes')}
-                <textarea value={draft.notes || ''} onChange={event => setDraft({ ...draft, notes: event.target.value })} placeholder={t('notesPlaceholder')} />
+                <textarea
+                  value={draft.notes || ''}
+                  onChange={event => setDraft({ ...draft, notes: event.target.value })}
+                  placeholder={t('notesPlaceholder')}
+                />
               </label>
             </>
           )}
@@ -106,7 +150,12 @@ export const WorkoutEditorView = ({ addExercise, addSet, cancel, chosen, collaps
                 }
               />
               <div className="exercise-title-actions">
-                <button className="collapse-exercise" aria-label={collapsedExercises.has(exercise.id) ? t('expandSets') : t('collapseSets')} aria-expanded={!collapsedExercises.has(exercise.id)} onClick={() => toggleExercise(exercise.id)}>
+                <button
+                  className="collapse-exercise"
+                  aria-label={collapsedExercises.has(exercise.id) ? t('expandSets') : t('collapseSets')}
+                  aria-expanded={!collapsedExercises.has(exercise.id)}
+                  onClick={() => toggleExercise(exercise.id)}
+                >
                   <ChevronDown className={collapsedExercises.has(exercise.id) ? 'collapsed' : ''} size={18} />
                 </button>
                 <button onClick={() => setDraft({ ...draft, exercises: draft.exercises.filter(item => item.id !== exercise.id) })}>

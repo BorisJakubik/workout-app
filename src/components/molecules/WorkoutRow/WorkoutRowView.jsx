@@ -10,7 +10,9 @@ export const WorkoutRowView = ({ locale, onClick, setCount, t, workout }) => (
     </div>
     <div className="row-main">
       <strong>{workout.name}</strong>
-      <span>{workout.exercises.length} {t('exercises')} · {setCount} {t('sets')}</span>
+      <span>
+        {workout.exercises.length} {t('exercises')} · {setCount} {t('sets')}
+      </span>
     </div>
     <div className="row-volume">
       {workout.rating > 0 ? <RatingStars value={workout.rating} size={11} /> : <span>{t('noRating')}</span>}

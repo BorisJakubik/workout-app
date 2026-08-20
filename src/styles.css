@@ -1192,6 +1192,73 @@ h2 {
   gap: 8px;
   margin-top: 14px;
 }
+.workout-import {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 15px;
+}
+.workout-import-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.workout-import-heading > svg {
+  flex: 0 0 auto;
+  color: var(--lime);
+}
+.workout-import-heading > span {
+  display: flex;
+  flex-direction: column;
+}
+.workout-import-heading strong {
+  color: #e3e8e5;
+  font-size: 13px;
+}
+.workout-import-heading small,
+.workout-import-status {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.workout-import-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+.workout-import-controls input {
+  min-width: 0;
+  border: 1px solid #303934;
+  background: #0c100e;
+  color: white;
+  color-scheme: dark;
+  padding: 11px 12px;
+  outline: none;
+}
+.workout-import-controls input:focus {
+  border-color: var(--lime);
+}
+.workout-import-controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  background: var(--lime);
+  color: #0a1007;
+  padding: 11px 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.workout-import-controls button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+.workout-import-status.available {
+  color: var(--lime);
+}
 .detail-exercise-picker {
   margin: 16px 0 24px;
 }
@@ -1858,6 +1925,7 @@ h2 {
   color: #52615a;
 }
 :root[data-theme='light'] .workout-meta-card input,
+:root[data-theme='light'] .workout-import-controls input,
 :root[data-theme='light'] .notes-field textarea,
 :root[data-theme='light'] .detail-notes textarea,
 :root[data-theme='light'] .detail-set.editing input,
@@ -1867,6 +1935,12 @@ h2 {
 :root[data-theme='light'] .rename-row input {
   border-color: #bdc9c2;
   background: #ffffff;
+  color: #17231c;
+}
+:root[data-theme='light'] .workout-import-controls input {
+  color-scheme: light;
+}
+:root[data-theme='light'] .workout-import-heading strong {
   color: #17231c;
 }
 :root[data-theme='light'] .workout-meta-card .date-input {

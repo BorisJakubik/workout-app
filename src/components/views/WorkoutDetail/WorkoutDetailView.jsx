@@ -238,7 +238,7 @@ export const WorkoutDetailView = ({
                   <button
                     className="add-set"
                     onClick={() =>
-                      updateExercise(exercise.id, item => ({ ...item, sets: [...item.sets, { weight: item.sets.at(-1)?.weight || 0, reps: 8 }] }))
+                      updateExercise(exercise.id, item => ({ ...item, sets: [...item.sets, { weight: item.sets.at(-1)?.weight || 0, reps: 10 }] }))
                     }
                   >
                     <Plus size={16} /> {t('addSet')}

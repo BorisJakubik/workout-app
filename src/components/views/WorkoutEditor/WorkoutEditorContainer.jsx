@@ -2,12 +2,18 @@ import React, { useState } from 'react'
 import { useTranslation } from '../../../i18n'
 import { WorkoutEditorView } from './WorkoutEditorView'
 
-export const WorkoutEditorContainer = ({ draft, exercises, setDraft, finish, cancel }) => {
+export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDraft, finish, cancel }) => {
   const { t } = useTranslation()
   const categoryExercises = exercises.filter(exercise => exercise.categoryId === draft.categoryId)
   const [workoutDetailsOpen, setWorkoutDetailsOpen] = useState(false)
   const [collapsedExercises, setCollapsedExercises] = useState(() => new Set())
   const [chosen, setChosen] = useState(categoryExercises[0]?.name || exercises[0]?.name || '')
+  const [importDate, setImportDate] = useState('')
+  const draftDate = draft.date.slice(0, 10)
+  const importableWorkouts = workouts
+    .filter(workout => workout.completed && workout.date.slice(0, 10) < draftDate)
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+  const workoutToImport = importableWorkouts.find(workout => workout.date.slice(0, 10) === importDate)
   const updateSet = (exerciseId, setIndex, field, value) =>
     setDraft({
       ...draft,
@@ -26,6 +32,18 @@ export const WorkoutEditorContainer = ({ draft, exercises, setDraft, finish, can
         exercise.id === id ? { ...exercise, sets: [...exercise.sets, { reps: 10, weight: exercise.sets.at(-1)?.weight || 0 }] } : exercise,
       ),
     })
+  const importWorkout = () => {
+    if (!workoutToImport) return
+    setDraft({
+      ...draft,
+      exercises: workoutToImport.exercises.map(exercise => ({
+        ...exercise,
+        id: crypto.randomUUID(),
+        sets: exercise.sets.map(set => ({ ...set })),
+      })),
+    })
+    setCollapsedExercises(new Set())
+  }
   const toggleExercise = exerciseId =>
     setCollapsedExercises(current => {
       const next = new Set(current)
@@ -43,12 +61,17 @@ export const WorkoutEditorContainer = ({ draft, exercises, setDraft, finish, can
       draft={draft}
       exercises={exercises}
       finish={finish}
+      importDate={importDate}
+      importWorkout={importWorkout}
+      importableWorkouts={importableWorkouts}
       setChosen={setChosen}
       setDraft={setDraft}
+      setImportDate={setImportDate}
       setWorkoutDetailsOpen={setWorkoutDetailsOpen}
       t={t}
       toggleExercise={toggleExercise}
       updateSet={updateSet}
+      workoutToImport={workoutToImport}
       workoutDetailsOpen={workoutDetailsOpen}
     />
   )

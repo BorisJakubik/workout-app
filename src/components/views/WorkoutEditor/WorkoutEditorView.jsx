@@ -1,5 +1,5 @@
 import React from 'react'
-import { Check, ChevronDown, Plus, Trash2, X } from 'lucide-react'
+import { Check, ChevronDown, Copy, Plus, Trash2, X } from 'lucide-react'
 import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
 import { toDateInputValue } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
@@ -13,12 +13,17 @@ export const WorkoutEditorView = ({
   draft,
   exercises,
   finish,
+  importDate,
+  importWorkout,
+  importableWorkouts,
   setChosen,
   setDraft,
+  setImportDate,
   setWorkoutDetailsOpen,
   t,
   toggleExercise,
   updateSet,
+  workoutToImport,
   workoutDetailsOpen,
 }) => {
   return (
@@ -188,6 +193,35 @@ export const WorkoutEditorView = ({
             )}
           </article>
         ))}
+        <section className="workout-import">
+          <div className="workout-import-heading">
+            <Copy size={18} />
+            <span>
+              <strong>{t('importWorkout')}</strong>
+              <small>{t('importWorkoutHint')}</small>
+            </span>
+          </div>
+          <div className="workout-import-controls">
+            <input
+              aria-label={t('importWorkoutDate')}
+              className="date-input"
+              type="date"
+              max={importableWorkouts[0]?.date.slice(0, 10)}
+              value={importDate}
+              onChange={event => setImportDate(event.target.value)}
+            />
+            <button type="button" disabled={!workoutToImport} onClick={importWorkout}>
+              <Copy size={17} /> {t('import')}
+            </button>
+          </div>
+          {importDate && !workoutToImport && <small className="workout-import-status">{t('noWorkoutToImport')}</small>}
+          {!importDate && importableWorkouts.length === 0 && <small className="workout-import-status">{t('noPreviousWorkouts')}</small>}
+          {workoutToImport && (
+            <small className="workout-import-status available">
+              {t('workoutReadyToImport', { name: workoutToImport.name, count: workoutToImport.exercises.length })}
+            </small>
+          )}
+        </section>
         <div className="exercise-picker">
           <ExerciseDropdown exercises={exercises} categoryId={draft.categoryId} value={chosen} onChange={setChosen} />
           <button onClick={addExercise}>

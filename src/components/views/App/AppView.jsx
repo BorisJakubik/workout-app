@@ -31,6 +31,7 @@ export const AppView = props => {
       <WorkoutEditor
         draft={activeWorkout}
         exercises={exercises}
+        workouts={workouts}
         setDraft={props.onUpdateActiveWorkout}
         finish={props.onFinishWorkout}
         cancel={props.onCancelWorkout}

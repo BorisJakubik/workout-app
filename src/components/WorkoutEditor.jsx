@@ -1,12 +1,32 @@
-import React, { useState } from 'react'
-import { Check, Plus, Trash2, X } from 'lucide-react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Check, ChevronDown, Plus, Trash2, X } from 'lucide-react'
 import { RatingStars } from './RatingStars'
 import { toDateInputValue } from '../utils'
 import { useTranslation } from '../i18n'
 
 export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) => {
   const { t } = useTranslation()
-  const [chosen, setChosen] = useState(exercises[0]?.name || '')
+  const categoryExercises = exercises.filter(exercise => exercise.categoryId === draft.categoryId)
+  const otherExercises = exercises.filter(exercise => exercise.categoryId !== draft.categoryId)
+  const [showAllExercises, setShowAllExercises] = useState(false)
+  const [exerciseDropdownOpen, setExerciseDropdownOpen] = useState(false)
+  const exerciseDropdownRef = useRef(null)
+  const [chosen, setChosen] = useState(categoryExercises[0]?.name || exercises[0]?.name || '')
+  const visibleExercises = showAllExercises || categoryExercises.length === 0 ? [...categoryExercises, ...otherExercises] : categoryExercises
+  useEffect(() => {
+    if (!exerciseDropdownOpen) return undefined
+    const closeDropdown = event => {
+      if (event.type === 'keydown' && event.key !== 'Escape') return
+      if (event.type === 'pointerdown' && exerciseDropdownRef.current?.contains(event.target)) return
+      setExerciseDropdownOpen(false)
+    }
+    document.addEventListener('pointerdown', closeDropdown)
+    document.addEventListener('keydown', closeDropdown)
+    return () => {
+      document.removeEventListener('pointerdown', closeDropdown)
+      document.removeEventListener('keydown', closeDropdown)
+    }
+  }, [exerciseDropdownOpen])
   const updateSet = (exerciseId, setIndex, field, value) =>
     setDraft({
       ...draft,
@@ -163,13 +183,43 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
           </article>
         ))}
         <div className="exercise-picker">
-          <select value={chosen} onChange={event => setChosen(event.target.value)}>
-            {exercises.map(exercise => (
-              <option key={exercise.id} value={exercise.name}>
-                {exercise.name}
-              </option>
-            ))}
-          </select>
+          <div className="exercise-dropdown" ref={exerciseDropdownRef}>
+            <button
+              className="exercise-dropdown-trigger"
+              type="button"
+              aria-haspopup="listbox"
+              aria-expanded={exerciseDropdownOpen}
+              onClick={() => setExerciseDropdownOpen(open => !open)}
+            >
+              <span>{chosen}</span>
+              <ChevronDown size={17} />
+            </button>
+            {exerciseDropdownOpen && (
+              <div className="exercise-dropdown-menu" role="listbox">
+                {visibleExercises.map(exercise => (
+                  <button
+                    className={chosen === exercise.name ? 'selected' : ''}
+                    type="button"
+                    role="option"
+                    aria-selected={chosen === exercise.name}
+                    key={exercise.id}
+                    onClick={() => {
+                      setChosen(exercise.name)
+                      setExerciseDropdownOpen(false)
+                    }}
+                  >
+                    {exercise.name}
+                    {chosen === exercise.name && <Check size={15} />}
+                  </button>
+                ))}
+                {!showAllExercises && categoryExercises.length > 0 && otherExercises.length > 0 && (
+                  <button className="expand-exercises" type="button" onClick={() => setShowAllExercises(true)}>
+                    <span>•••</span> {t('showAllExercises')}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
           <button onClick={addExercise}>
             <Plus /> {t('addExercise')}
           </button>

@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Check, Dumbbell, Plus, Trash2, X } from 'lucide-react'
-import { addCategory, addLibraryExercise, removeCategory, removeLibraryExercise, renameCategory } from '../store'
+import { addCategory, addLibraryExercise, removeCategory, removeLibraryExercise, renameCategory, updateCategoryIcon } from '../store'
 import { useTranslation } from '../i18n'
+import { CategoryIcon, categoryIconOptions } from './CategoryIcon'
 
 export const LibraryView = ({ categories, exercises }) => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
   const [categoryName, setCategoryName] = useState('')
+  const [categoryIcon, setCategoryIcon] = useState('bench')
   const [exerciseName, setExerciseName] = useState('')
   const [categoryId, setCategoryId] = useState(categories[0]?.id || '')
   const [editingId, setEditingId] = useState(null)
@@ -15,7 +17,7 @@ export const LibraryView = ({ categories, exercises }) => {
   const submitCategory = event => {
     event.preventDefault()
     if (!categoryName.trim()) return
-    dispatch(addCategory(categoryName))
+    dispatch(addCategory({ name: categoryName, icon: categoryIcon }))
     setCategoryName('')
   }
   const submitExercise = event => {
@@ -54,6 +56,20 @@ export const LibraryView = ({ categories, exercises }) => {
           <button>
             <Plus size={18} /> {t('add')}
           </button>
+          <div className="category-icon-picker new-category-icons">
+            {categoryIconOptions.map(option => (
+              <button
+                className={categoryIcon === option.id ? 'selected' : ''}
+                type="button"
+                key={option.id}
+                aria-label={t(option.labelKey)}
+                title={t(option.labelKey)}
+                onClick={() => setCategoryIcon(option.id)}
+              >
+                <option.Icon size={20} />
+              </button>
+            ))}
+          </div>
         </form>
       </div>
       <div className="manage-card">
@@ -76,31 +92,49 @@ export const LibraryView = ({ categories, exercises }) => {
         {categories.map(category => (
           <article className="library-group" key={category.id}>
             <div className="library-title">
-              <div>
-                <span>
-                  {exercises.filter(exercise => exercise.categoryId === category.id).length} {t('exercises').toUpperCase()}
-                </span>
-                {editingId === category.id ? (
-                  <div className="rename-row">
-                    <input
-                      autoFocus
-                      value={editedName}
-                      onChange={event => setEditedName(event.target.value)}
-                      onKeyDown={event => event.key === 'Enter' && saveRename()}
-                    />
-                    <button onClick={saveRename}>
-                      <Check size={17} />
+              <div className="library-category-main">
+                <div className="library-category-icon">
+                  <CategoryIcon name={category.icon} size={21} />
+                </div>
+                <div>
+                  <span>
+                    {exercises.filter(exercise => exercise.categoryId === category.id).length} {t('exercises').toUpperCase()}
+                  </span>
+                  {editingId === category.id ? (
+                    <div className="rename-row">
+                      <input
+                        autoFocus
+                        value={editedName}
+                        onChange={event => setEditedName(event.target.value)}
+                        onKeyDown={event => event.key === 'Enter' && saveRename()}
+                      />
+                      <button onClick={saveRename}>
+                        <Check size={17} />
+                      </button>
+                    </div>
+                  ) : (
+                    <button className="editable-title" onClick={() => beginRename(category)}>
+                      <h2>{category.name}</h2>
                     </button>
-                  </div>
-                ) : (
-                  <button className="editable-title" onClick={() => beginRename(category)}>
-                    <h2>{category.name}</h2>
-                  </button>
-                )}
+                  )}
+                </div>
               </div>
               <button onClick={() => dispatch(removeCategory(category.id))}>
                 <Trash2 size={17} />
               </button>
+            </div>
+            <div className="category-icon-picker">
+              {categoryIconOptions.map(option => (
+                <button
+                  className={(category.icon || 'bench') === option.id ? 'selected' : ''}
+                  key={option.id}
+                  aria-label={t(option.labelKey)}
+                  title={t(option.labelKey)}
+                  onClick={() => dispatch(updateCategoryIcon({ id: category.id, icon: option.id }))}
+                >
+                  <option.Icon size={18} />
+                </button>
+              ))}
             </div>
             {exercises
               .filter(exercise => exercise.categoryId === category.id)

@@ -53,7 +53,7 @@ const App = () => {
     return (
       <WorkoutEditor
         draft={activeWorkout}
-        exercises={exercises.filter(exercise => exercise.categoryId === activeWorkout.categoryId)}
+        exercises={exercises}
         setDraft={draft => dispatch(updateActiveWorkout(draft))}
         finish={() => {
           dispatch(finishWorkout())

@@ -1,21 +1,25 @@
 {
-  "language": "sk",
+  "language": "en",
   "categories": [
     {
       "id": "push",
-      "name": "Push tréning"
+      "name": "Prsia biceps",
+      "icon": "arms"
     },
     {
       "id": "pull",
-      "name": "Pull tréning"
+      "name": "Triceps chrbát",
+      "icon": "squat"
     },
     {
       "id": "legs",
-      "name": "Nohy"
+      "name": "Nohy ramená",
+      "icon": "legs"
     },
     {
-      "id": "full-body",
-      "name": "Full body"
+      "id": "c851e65b-fb32-4933-9e5f-10712dcc6951",
+      "name": "Brucho",
+      "icon": "conditioning"
     }
   ],
   "exercises": [
@@ -32,11 +36,6 @@
     {
       "id": "exercise-2",
       "name": "Tlaky nad hlavu",
-      "categoryId": "push"
-    },
-    {
-      "id": "exercise-3",
-      "name": "Upažovanie",
       "categoryId": "push"
     },
     {
@@ -60,143 +59,41 @@
       "categoryId": "legs"
     },
     {
-      "id": "exercise-8",
-      "name": "Drep",
-      "categoryId": "full-body"
+      "id": "70a094d2-8b33-427a-9bf7-a26348c0f9b6",
+      "name": "Predkopávanie na stroji",
+      "categoryId": "legs"
     },
     {
-      "id": "exercise-9",
-      "name": "Bench press",
-      "categoryId": "full-body"
+      "id": "be80ca5f-b316-4141-91df-26601c87f88b",
+      "name": "Bench press na úzko",
+      "categoryId": "pull"
+    },
+    {
+      "id": "69d8b685-ca1c-446f-ae0b-b86867cf6bfa",
+      "name": "Tlaky na ramená s jednoručkami",
+      "categoryId": "legs"
+    },
+    {
+      "id": "4ce2b3ba-e3b2-4242-b8e8-b93084f46620",
+      "name": "Zakopávanie na stroji",
+      "categoryId": "legs"
+    },
+    {
+      "id": "0db696da-7a75-404d-aafa-ea7aadcb03bb",
+      "name": "Výpony na stroji na lýtka",
+      "categoryId": "legs"
+    },
+    {
+      "id": "266f81d1-3dbd-4922-9202-db096cebb8f4",
+      "name": "L-sit",
+      "categoryId": "c851e65b-fb32-4933-9e5f-10712dcc6951"
+    },
+    {
+      "id": "4e4bb5d8-f9cd-435d-a16a-e8f30ba8d49c",
+      "name": "Posilňovaci stroj na brucho",
+      "categoryId": "c851e65b-fb32-4933-9e5f-10712dcc6951"
     }
   ],
-  "workouts": [
-    {
-      "id": 1787163767091,
-      "categoryId": "push",
-      "name": "Push tréning",
-      "date": "2026-08-19T18:22:47.091Z",
-      "duration": 75,
-      "notes": "Bolo to super! dnes to islo jedna radost!",
-      "rating": 4,
-      "completed": true,
-      "exercises": [
-        {
-          "id": "3c005c9e-9402-4b67-9ed7-b4e46361a426",
-          "name": "Tlaky nad hlavu",
-          "sets": [
-            {
-              "reps": 8,
-              "weight": 60
-            },
-            {
-              "reps": 8,
-              "weight": 70
-            },
-            {
-              "reps": 8,
-              "weight": 70
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "categoryId": "push",
-      "name": "Push tréning",
-      "date": "2026-08-18T17:30:00",
-      "duration": 58,
-      "notes": "",
-      "rating": 0,
-      "completed": true,
-      "exercises": [
-        {
-          "id": 11,
-          "name": "Bench press",
-          "sets": [
-            {
-              "reps": 8,
-              "weight": 70
-            },
-            {
-              "reps": 8,
-              "weight": 70
-            },
-            {
-              "reps": 6,
-              "weight": 75
-            }
-          ]
-        },
-        {
-          "id": 12,
-          "name": "Tlaky nad hlavu",
-          "sets": [
-            {
-              "reps": 10,
-              "weight": 30
-            },
-            {
-              "reps": 9,
-              "weight": 30
-            },
-            {
-              "reps": 8,
-              "weight": 30
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "categoryId": "legs",
-      "name": "Nohy",
-      "date": "2026-08-15T18:10:00",
-      "duration": 64,
-      "notes": "",
-      "rating": 0,
-      "completed": true,
-      "exercises": [
-        {
-          "id": 21,
-          "name": "Drep",
-          "sets": [
-            {
-              "reps": 8,
-              "weight": 80
-            },
-            {
-              "reps": 8,
-              "weight": 80
-            },
-            {
-              "reps": 6,
-              "weight": 87
-            }
-          ]
-        },
-        {
-          "id": 22,
-          "name": "Leg press",
-          "sets": [
-            {
-              "reps": 10,
-              "weight": 140
-            },
-            {
-              "reps": 10,
-              "weight": 140
-            },
-            {
-              "reps": 9,
-              "weight": 140
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  "workouts": [],
   "activeWorkout": null
 }

@@ -1,10 +1,10 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const defaultCategories = [
-  { id: 'push', name: 'Push tréning' },
-  { id: 'pull', name: 'Pull tréning' },
-  { id: 'legs', name: 'Nohy' },
-  { id: 'full-body', name: 'Full body' },
+  { id: 'push', name: 'Push tréning', icon: 'bench' },
+  { id: 'pull', name: 'Pull tréning', icon: 'deadlift' },
+  { id: 'legs', name: 'Nohy', icon: 'squat' },
+  { id: 'full-body', name: 'Full body', icon: 'full-body' },
 ]
 const defaultExercises = [
   ['Bench press', 'push'],
@@ -118,7 +118,12 @@ const fitnessSlice = createSlice({
       state.language = action.payload === 'en' ? 'en' : 'sk'
     },
     addCategory(state, action) {
-      state.categories.push({ id: crypto.randomUUID(), name: action.payload.trim() })
+      const payload = typeof action.payload === 'string' ? { name: action.payload, icon: 'bench' } : action.payload
+      state.categories.push({ id: crypto.randomUUID(), name: payload.name.trim(), icon: payload.icon || 'bench' })
+    },
+    updateCategoryIcon(state, action) {
+      const category = state.categories.find(item => item.id === action.payload.id)
+      if (category) category.icon = action.payload.icon
     },
     renameCategory(state, action) {
       const category = state.categories.find(c => c.id === action.payload.id)
@@ -187,6 +192,7 @@ const fitnessSlice = createSlice({
 export const {
   setLanguage,
   addCategory,
+  updateCategoryIcon,
   renameCategory,
   removeCategory,
   addLibraryExercise,

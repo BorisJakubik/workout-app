@@ -1,6 +1,7 @@
 import React from 'react'
 import { Activity, Dumbbell, Plus, Trophy } from 'lucide-react'
 import { WorkoutRow } from './WorkoutRow'
+import { CategoryIcon } from './CategoryIcon'
 import { useTranslation } from '../i18n'
 
 export const Dashboard = ({ workouts, categories, exercises, stats, startWorkout, setScreen, openWorkout }) => {
@@ -47,7 +48,7 @@ export const Dashboard = ({ workouts, categories, exercises, stats, startWorkout
           {categories.map((category, index) => (
             <button className="type-card" key={category.id} onClick={() => startWorkout(category.id)}>
               <span className="type-number">{String(index + 1).padStart(2, '0')}</span>
-              <Dumbbell />
+              <CategoryIcon name={category.icon} />
               <div>
                 <strong>{category.name}</strong>
                 <small>

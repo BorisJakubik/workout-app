@@ -1,14 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from '../../../i18n'
 import { WorkoutEditorView } from './WorkoutEditorView'
 
 export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDraft, finish, cancel }) => {
   const { t } = useTranslation()
   const categoryExercises = exercises.filter(exercise => exercise.categoryId === draft.categoryId)
+  const selectedExerciseNames = new Set(draft.exercises.map(exercise => exercise.name.trim().toLocaleLowerCase()))
+  const availableExercises = exercises.filter(
+    (exercise, index, allExercises) =>
+      !selectedExerciseNames.has(exercise.name.trim().toLocaleLowerCase()) &&
+      allExercises.findIndex(item => item.name.trim().toLocaleLowerCase() === exercise.name.trim().toLocaleLowerCase()) === index,
+  )
   const [workoutDetailsOpen, setWorkoutDetailsOpen] = useState(false)
   const [collapsedExercises, setCollapsedExercises] = useState(() => new Set())
   const [chosen, setChosen] = useState(categoryExercises[0]?.name || exercises[0]?.name || '')
   const [importDate, setImportDate] = useState('')
+  useEffect(() => {
+    if (!availableExercises.some(exercise => exercise.name === chosen)) {
+      setChosen(availableExercises.find(exercise => exercise.categoryId === draft.categoryId)?.name || availableExercises[0]?.name || '')
+    }
+  }, [availableExercises, chosen, draft.categoryId])
   const draftDate = draft.date.slice(0, 10)
   const importableWorkouts = workouts
     .filter(workout => workout.completed && workout.date.slice(0, 10) < draftDate)
@@ -23,8 +34,10 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
           : { ...exercise, sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: Math.max(0, Number(value)) } : set)) },
       ),
     })
-  const addExercise = () =>
-    chosen && setDraft({ ...draft, exercises: [...draft.exercises, { id: crypto.randomUUID(), name: chosen, sets: [{ reps: 10, weight: 0 }] }] })
+  const addExercise = () => {
+    if (!availableExercises.some(exercise => exercise.name === chosen)) return
+    setDraft({ ...draft, exercises: [...draft.exercises, { id: crypto.randomUUID(), name: chosen, sets: [{ reps: 10, weight: 0 }] }] })
+  }
   const addSet = id =>
     setDraft({
       ...draft,
@@ -59,7 +72,7 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       chosen={chosen}
       collapsedExercises={collapsedExercises}
       draft={draft}
-      exercises={exercises}
+      exercises={availableExercises}
       finish={finish}
       importDate={importDate}
       importWorkout={importWorkout}

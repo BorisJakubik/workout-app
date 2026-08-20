@@ -253,7 +253,7 @@ export const WorkoutDetailView = ({
             <ExerciseDropdown exercises={exercises} categoryId={workout.categoryId} value={chosenExercise} onChange={setChosenExercise} />
             <button
               onClick={() => {
-                if (!chosenExercise) return
+                if (!chosenExercise || !exercises.some(exercise => exercise.name === chosenExercise)) return
                 setDraft({
                   ...draft,
                   exercises: [...draft.exercises, { id: crypto.randomUUID(), name: chosenExercise, sets: [{ reps: 10, weight: 0 }] }],

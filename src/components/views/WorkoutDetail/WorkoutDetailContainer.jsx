@@ -11,9 +11,15 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
   const [menuOpen, setMenuOpen] = useState(false)
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [collapsedExercises, setCollapsedExercises] = useState(() => new Set())
+  const selectedExerciseNames = new Set(draft.exercises.map(exercise => exercise.name.trim().toLocaleLowerCase()))
+  const availableExercises = exercises.filter(
+    (exercise, index, allExercises) =>
+      !selectedExerciseNames.has(exercise.name.trim().toLocaleLowerCase()) &&
+      allExercises.findIndex(item => item.name.trim().toLocaleLowerCase() === exercise.name.trim().toLocaleLowerCase()) === index,
+  )
   const orderedExercises = [
-    ...exercises.filter(exercise => exercise.categoryId === workout.categoryId),
-    ...exercises.filter(exercise => exercise.categoryId !== workout.categoryId),
+    ...availableExercises.filter(exercise => exercise.categoryId === workout.categoryId),
+    ...availableExercises.filter(exercise => exercise.categoryId !== workout.categoryId),
   ]
   const [chosenExercise, setChosenExercise] = useState(orderedExercises[0]?.name || '')
   const menuRef = useRef(null)
@@ -27,6 +33,11 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
       ...exercise,
       sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: Math.max(0, Number(value)) } : set)),
     }))
+  useEffect(() => {
+    if (!orderedExercises.some(exercise => exercise.name === chosenExercise)) {
+      setChosenExercise(orderedExercises[0]?.name || '')
+    }
+  }, [chosenExercise, orderedExercises])
   const toggleExercise = exerciseId =>
     setCollapsedExercises(current => {
       const next = new Set(current)
@@ -69,7 +80,7 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
       displayedWorkout={displayedWorkout}
       draft={draft}
       editing={editing}
-      exercises={exercises}
+      exercises={availableExercises}
       locale={locale}
       menuOpen={menuOpen}
       menuRef={menuRef}

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { Check, Plus, Trash2, X } from 'lucide-react';
-import { RatingStars } from './RatingStars';
-import { toDateInputValue } from '../utils';
+import React, { useState } from 'react'
+import { Check, Plus, Trash2, X } from 'lucide-react'
+import { RatingStars } from './RatingStars'
+import { toDateInputValue } from '../utils'
+import { useTranslation } from '../i18n'
 
 export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) => {
-  const [chosen, setChosen] = useState(exercises[0]?.name || '');
+  const { t } = useTranslation()
+  const [chosen, setChosen] = useState(exercises[0]?.name || '')
   const updateSet = (exerciseId, setIndex, field, value) =>
     setDraft({
       ...draft,
@@ -13,16 +15,16 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
           ? exercise
           : { ...exercise, sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: Math.max(0, Number(value)) } : set)) },
       ),
-    });
+    })
   const addExercise = () =>
-    chosen && setDraft({ ...draft, exercises: [...draft.exercises, { id: crypto.randomUUID(), name: chosen, sets: [{ reps: 8, weight: 0 }] }] });
+    chosen && setDraft({ ...draft, exercises: [...draft.exercises, { id: crypto.randomUUID(), name: chosen, sets: [{ reps: 8, weight: 0 }] }] })
   const addSet = id =>
     setDraft({
       ...draft,
       exercises: draft.exercises.map(exercise =>
         exercise.id === id ? { ...exercise, sets: [...exercise.sets, { reps: 8, weight: exercise.sets.at(-1)?.weight || 0 }] } : exercise,
       ),
-    });
+    })
   return (
     <div className="app-shell editor">
       <header className="editor-header">
@@ -30,25 +32,25 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
           <X />
         </button>
         <div className="active-title">
-          <p className="eyebrow">AKTÍVNY TRÉNING</p>
-          <input value={draft.name} onChange={event => setDraft({ ...draft, name: event.target.value })} aria-label="Názov tréningu" />
+          <p className="eyebrow">{t('activeWorkout')}</p>
+          <input value={draft.name} onChange={event => setDraft({ ...draft, name: event.target.value })} aria-label={t('chooseWorkout')} />
         </div>
         <button className="finish-top" onClick={finish}>
-          <Check size={18} /> Hotovo
+          <Check size={18} /> {t('done')}
         </button>
       </header>
       <main>
         <div className="live-banner">
           <span className="pulse" />
           <div>
-            <strong>Tréning prebieha</strong>
-            <small>Priebežne sa ukladá do Reduxu</small>
+            <strong>{t('workoutInProgress')}</strong>
+            <small>{t('savedToRedux')}</small>
           </div>
           <span className="timer">LIVE</span>
         </div>
         <section className="workout-meta-card">
           <label>
-            Dátum tréningu
+            {t('workoutDate')}
             <input
               className="date-input"
               type="date"
@@ -57,7 +59,7 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
             />
           </label>
           <label>
-            Čas tréningu{' '}
+            {t('workoutTime')}{' '}
             <span>
               <input
                 type="number"
@@ -71,16 +73,16 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
           </label>
           <div className="rating-field">
             <span>
-              Hodnotenie <small>voliteľné</small>
+              {t('rating')} <small>{t('optional')}</small>
             </span>
             <RatingStars value={draft.rating || 0} onChange={rating => setDraft({ ...draft, rating })} />
           </div>
           <label className="notes-field">
-            Poznámky
+            {t('notes')}
             <textarea
               value={draft.notes || ''}
               onChange={event => setDraft({ ...draft, notes: event.target.value })}
-              placeholder="Ako sa ti trénovalo? Technika, energia, poznámky na nabudúce…"
+              placeholder={t('notesPlaceholder')}
             />
           </label>
         </section>
@@ -102,9 +104,9 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
               </button>
             </div>
             <div className="set-head">
-              <span>SÉRIA</span>
+              <span>{t('set')}</span>
               <span>KG</span>
-              <span>OPAK.</span>
+              <span>{t('reps')}</span>
               <span />
             </div>
             {exercise.sets.map((set, index) => (
@@ -118,7 +120,7 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
               </div>
             ))}
             <button className="add-set" onClick={() => addSet(exercise.id)}>
-              <Plus size={16} /> Pridať sériu
+              <Plus size={16} /> {t('addSet')}
             </button>
           </article>
         ))}
@@ -131,13 +133,13 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
             ))}
           </select>
           <button onClick={addExercise}>
-            <Plus /> Pridať cvik
+            <Plus /> {t('addExercise')}
           </button>
         </div>
         <button className="finish-workout" onClick={finish}>
-          <Check /> Dokončiť tréning
+          <Check /> {t('finishWorkout')}
         </button>
       </main>
     </div>
-  );
-};
+  )
+}

@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
-import { Check, ChevronLeft, Edit3, Plus, Trash2, X } from 'lucide-react';
-import { RatingStars } from './RatingStars';
-import { toDateInputValue } from '../utils';
+import React, { useState } from 'react'
+import { Check, ChevronLeft, Edit3, Plus, Trash2, X } from 'lucide-react'
+import { RatingStars } from './RatingStars'
+import { toDateInputValue } from '../utils'
+import { useTranslation } from '../i18n'
 
 export const WorkoutDetail = ({ workout, onBack, onSave }) => {
-  const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState(workout);
-  const displayedWorkout = editing ? draft : workout;
+  const { t, locale } = useTranslation()
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState(workout)
+  const displayedWorkout = editing ? draft : workout
   const updateExercise = (exerciseId, updater) =>
-    setDraft({ ...draft, exercises: draft.exercises.map(exercise => (exercise.id === exerciseId ? updater(exercise) : exercise)) });
+    setDraft({ ...draft, exercises: draft.exercises.map(exercise => (exercise.id === exerciseId ? updater(exercise) : exercise)) })
   const updateSet = (exerciseId, setIndex, field, value) =>
     updateExercise(exerciseId, exercise => ({
       ...exercise,
       sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: Math.max(0, Number(value)) } : set)),
-    }));
+    }))
   const save = () => {
-    if (!draft.name.trim()) return;
-    onSave({ ...draft, name: draft.name.trim() });
-    setEditing(false);
-  };
+    if (!draft.name.trim()) return
+    onSave({ ...draft, name: draft.name.trim() })
+    setEditing(false)
+  }
 
   return (
     <div className="app-shell detail-page">
@@ -27,7 +29,7 @@ export const WorkoutDetail = ({ workout, onBack, onSave }) => {
           <ChevronLeft />
         </button>
         <div className="detail-header-title">
-          <p className="eyebrow">{editing ? 'ÚPRAVA TRÉNINGU' : 'DETAIL TRÉNINGU'}</p>
+          <p className="eyebrow">{editing ? t('editWorkout') : t('workoutDetail')}</p>
           {editing ? <input value={draft.name} onChange={event => setDraft({ ...draft, name: event.target.value })} /> : <h2>{workout.name}</h2>}
         </div>
         {editing ? (
@@ -35,14 +37,14 @@ export const WorkoutDetail = ({ workout, onBack, onSave }) => {
             <button
               className="icon-btn"
               onClick={() => {
-                setDraft(workout);
-                setEditing(false);
+                setDraft(workout)
+                setEditing(false)
               }}
             >
               <X />
             </button>
             <button className="finish-top" onClick={save}>
-              <Check size={18} /> Uložiť
+              <Check size={18} /> {t('save')}
             </button>
           </div>
         ) : (
@@ -55,7 +57,7 @@ export const WorkoutDetail = ({ workout, onBack, onSave }) => {
         <div className="detail-hero">
           {editing ? (
             <label className="detail-date-edit">
-              Dátum
+              {t('workoutDate')}
               <input
                 type="date"
                 value={toDateInputValue(draft.date)}
@@ -63,13 +65,15 @@ export const WorkoutDetail = ({ workout, onBack, onSave }) => {
               />
             </label>
           ) : (
-            <span>{new Intl.DateTimeFormat('sk-SK', { dateStyle: 'long' }).format(new Date(displayedWorkout.date))}</span>
+            <span>{new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(new Date(displayedWorkout.date))}</span>
           )}
           <strong>{displayedWorkout.duration} min</strong>
-          <small>{displayedWorkout.exercises.reduce((sum, exercise) => sum + exercise.sets.length, 0)} sérií</small>
+          <small>
+            {displayedWorkout.exercises.reduce((sum, exercise) => sum + exercise.sets.length, 0)} {t('sets')}
+          </small>
           {editing && (
             <label className="duration-edit">
-              Trvanie{' '}
+              {t('duration')}{' '}
               <input
                 type="number"
                 min="1"
@@ -80,20 +84,20 @@ export const WorkoutDetail = ({ workout, onBack, onSave }) => {
             </label>
           )}
           <div className="detail-rating">
-            <span>Hodnotenie</span>
+            <span>{t('rating')}</span>
             <RatingStars value={displayedWorkout.rating || 0} onChange={editing ? rating => setDraft({ ...draft, rating }) : undefined} />
           </div>
         </div>
         <section className="detail-notes">
-          <p className="eyebrow">POZNÁMKY</p>
+          <p className="eyebrow">{t('notes')}</p>
           {editing ? (
             <textarea
               value={draft.notes || ''}
               onChange={event => setDraft({ ...draft, notes: event.target.value })}
-              placeholder="Zapíš si poznámky k tréningu…"
+              placeholder={t('detailNotesPlaceholder')}
             />
           ) : (
-            <p>{workout.notes?.trim() || 'K tomuto tréningu zatiaľ nemáš poznámky.'}</p>
+            <p>{workout.notes?.trim() || t('noNotes')}</p>
           )}
         </section>
         {displayedWorkout.exercises.map((exercise, index) => (
@@ -112,9 +116,9 @@ export const WorkoutDetail = ({ workout, onBack, onSave }) => {
               )}
             </div>
             <div className={`detail-set header ${editing ? 'editing' : ''}`}>
-              <span>Séria</span>
-              <span>Váha</span>
-              <span>Opakovania</span>
+              <span>{t('set')}</span>
+              <span>KG</span>
+              <span>{t('reps')}</span>
               {editing && <span />}
             </div>
             {exercise.sets.map((set, setIndex) => (
@@ -153,12 +157,12 @@ export const WorkoutDetail = ({ workout, onBack, onSave }) => {
                   updateExercise(exercise.id, item => ({ ...item, sets: [...item.sets, { weight: item.sets.at(-1)?.weight || 0, reps: 8 }] }))
                 }
               >
-                <Plus size={16} /> Pridať sériu
+                <Plus size={16} /> {t('addSet')}
               </button>
             )}
           </article>
         ))}
       </main>
     </div>
-  );
-};
+  )
+}

@@ -1,21 +1,25 @@
-import React from 'react';
-import { Star } from 'lucide-react';
+import React from 'react'
+import { Star } from 'lucide-react'
+import { useTranslation } from '../i18n'
 
-export const RatingStars = ({ value = 0, onChange, size = 22 }) => (
-  <div className="rating-stars" aria-label={`Hodnotenie ${value} z 5`}>
-    {[1, 2, 3, 4, 5].map(star => {
-      const StarWrapper = onChange ? 'button' : 'span';
-      return (
-        <StarWrapper
-          key={star}
-          type={onChange ? 'button' : undefined}
-          className={star <= value ? 'selected' : ''}
-          onClick={onChange ? () => onChange(star === value ? 0 : star) : undefined}
-          aria-label={`${star} hviezdičiek`}
-        >
-          <Star size={size} fill={star <= value ? 'currentColor' : 'none'} />
-        </StarWrapper>
-      );
-    })}
-  </div>
-);
+export const RatingStars = ({ value = 0, onChange, size = 22 }) => {
+  const { t } = useTranslation()
+  return (
+    <div className="rating-stars" aria-label={t('ratingLabel', { value })}>
+      {[1, 2, 3, 4, 5].map(star => {
+        const StarWrapper = onChange ? 'button' : 'span'
+        return (
+          <StarWrapper
+            key={star}
+            type={onChange ? 'button' : undefined}
+            className={star <= value ? 'selected' : ''}
+            onClick={onChange ? () => onChange(star === value ? 0 : star) : undefined}
+            aria-label={t('starsLabel', { value: star })}
+          >
+            <Star size={size} fill={star <= value ? 'currentColor' : 'none'} />
+          </StarWrapper>
+        )
+      })}
+    </div>
+  )
+}

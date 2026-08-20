@@ -167,7 +167,7 @@ const fitnessSlice = createSlice({
         bodyWeight: null,
         bodyFatPercentage: null,
         completed: false,
-        exercises: first ? [{ id: crypto.randomUUID(), name: first.name, sets: [{ reps: 8, weight: 0 }] }] : [],
+        exercises: first ? [{ id: crypto.randomUUID(), name: first.name, sets: [{ reps: 10, weight: 0 }] }] : [],
       }
     },
     updateActiveWorkout(state, action) {

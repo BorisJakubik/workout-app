@@ -1,10 +1,8 @@
 import React from 'react'
-import { WorkoutRow } from './WorkoutRow'
-import { useTranslation } from '../i18n'
-import { CalendarView } from './CalendarView'
+import { WorkoutRow } from '../../molecules/WorkoutRow/WorkoutRowContainer'
+import { CalendarView } from '../../molecules/Calendar/CalendarContainer'
 
-export const HistoryView = ({ workouts, openWorkout }) => {
-  const { t } = useTranslation()
+export const HistoryView = ({ workouts, openWorkout, t }) => {
   return (
     <section className="page">
       <p className="eyebrow">{t('workoutJourney')}</p>

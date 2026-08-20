@@ -1,11 +1,9 @@
 import React from 'react'
 import { Activity, Dumbbell, Plus, Trophy } from 'lucide-react'
-import { WorkoutRow } from './WorkoutRow'
-import { CategoryIcon } from './CategoryIcon'
-import { useTranslation } from '../i18n'
+import { WorkoutRow } from '../../molecules/WorkoutRow/WorkoutRowContainer'
+import { CategoryIcon } from '../../atoms/CategoryIcon/CategoryIconView'
 
-export const Dashboard = ({ workouts, categories, exercises, stats, profileName, startWorkout, setScreen, openWorkout }) => {
-  const { t } = useTranslation()
+export const DashboardView = ({ workouts, categories, exercises, stats, profileName, startWorkout, setScreen, openWorkout, t }) => {
   return (
     <>
       <section className="hero">

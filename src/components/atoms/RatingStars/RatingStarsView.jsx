@@ -1,9 +1,7 @@
 import React from 'react'
 import { Star } from 'lucide-react'
-import { useTranslation } from '../i18n'
 
-export const RatingStars = ({ value = 0, onChange, size = 22 }) => {
-  const { t } = useTranslation()
+export const RatingStarsView = ({ value = 0, onChange, size = 22, t }) => {
   return (
     <div className="rating-stars" aria-label={t('ratingLabel', { value })}>
       {[1, 2, 3, 4, 5].map(star => {

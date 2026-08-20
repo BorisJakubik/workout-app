@@ -551,6 +551,164 @@ h2 {
   font-size: 8px;
   white-space: nowrap;
 }
+.powerlifting-card {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 20px;
+}
+.powerlifting-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.powerlifting-heading h2 {
+  margin-top: 4px;
+}
+.powerlifting-heading > svg {
+  width: 30px;
+  height: 30px;
+  color: var(--lime);
+}
+.powerlifting-lifts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 20px;
+  background: var(--line);
+}
+.powerlifting-lift {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 16px 12px;
+  background: #0c100e;
+}
+.powerlifting-lift span {
+  min-height: 32px;
+  color: #cbd2ce;
+  font-size: 11px;
+}
+.powerlifting-lift strong {
+  font: 800 21px 'Manrope';
+  white-space: nowrap;
+}
+.powerlifting-lift small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 8px;
+}
+.powerlifting-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  background: var(--lime);
+  color: #0b100c;
+  padding: 16px;
+}
+.powerlifting-total span {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.powerlifting-total strong {
+  font: 800 26px 'Manrope';
+  white-space: nowrap;
+}
+.weight-progress-card {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 20px;
+}
+.weight-progress-card .section-heading h2 {
+  margin-top: 4px;
+}
+.weight-chart {
+  height: 210px;
+  margin-top: 22px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(
+    to bottom,
+    transparent 24%,
+    var(--line) 25%,
+    transparent 26%,
+    transparent 49%,
+    var(--line) 50%,
+    transparent 51%,
+    transparent 74%,
+    var(--line) 75%,
+    transparent 76%
+  );
+}
+.weight-chart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.weight-chart line {
+  stroke: #3c4641;
+  stroke-width: 0.5;
+}
+.weight-chart polyline {
+  fill: none;
+  stroke: var(--lime);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+.weight-chart circle {
+  fill: var(--lime);
+  stroke: #0c100e;
+  stroke-width: 2px;
+}
+.weight-chart-labels {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 12px 2px 4px;
+}
+.weight-chart-labels div {
+  display: flex;
+  min-width: 72px;
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+}
+.weight-chart-labels strong {
+  font: 800 12px 'Manrope';
+}
+.weight-chart-labels small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 8px;
+}
+.weight-chart-empty {
+  margin: 20px 0 0;
+  border: 1px dashed #303934;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+@media (max-width: 430px) {
+  .powerlifting-lifts {
+    grid-template-columns: 1fr;
+  }
+  .powerlifting-lift {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+  .powerlifting-lift span {
+    min-height: 0;
+  }
+  .powerlifting-lift small {
+    grid-column: 1 / -1;
+  }
+}
 .milestone {
   display: flex;
   align-items: center;
@@ -711,6 +869,23 @@ h2 {
 .detail-hero small {
   color: #39451f;
 }
+.detail-calories {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(11 16 12 / 20%);
+}
+.detail-calories > span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.detail-calories > strong {
+  margin: 3px 0 1px;
+  font: 800 24px 'Manrope';
+}
 .detail-exercise {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -792,6 +967,111 @@ h2 {
 .edit-actions .finish-top {
   margin-left: 0;
 }
+.workout-actions {
+  position: relative;
+  margin-left: auto;
+}
+.workout-actions-trigger {
+  margin-left: 0;
+}
+.workout-actions-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  min-width: 180px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: 0 14px 30px rgb(0 0 0 / 35%);
+}
+.workout-actions-menu button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  color: white;
+  padding: 11px 12px;
+  font: 700 12px 'Manrope';
+  text-align: left;
+  cursor: pointer;
+}
+.workout-actions-menu button:hover,
+.workout-actions-menu button:focus-visible {
+  background: #252d28;
+  outline: none;
+}
+.workout-actions-menu button.danger {
+  color: #ff7474;
+}
+.modal-backdrop {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgb(3 5 4 / 78%);
+  backdrop-filter: blur(4px);
+}
+.delete-workout-modal {
+  width: min(100%, 420px);
+  border: 1px solid #3b302f;
+  background: #121614;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 55%);
+  padding: 24px;
+}
+.delete-workout-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  margin-bottom: 20px;
+  background: #321d1d;
+  color: #ff7474;
+}
+.delete-workout-modal h2 {
+  margin: 5px 0 10px;
+  font: 800 22px 'Manrope';
+}
+.delete-workout-modal p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.delete-workout-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 26px;
+}
+.delete-workout-modal-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  padding: 0 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.modal-cancel {
+  background: transparent;
+}
+.modal-delete {
+  border-color: #d94b4b !important;
+  background: #d94b4b;
+  color: white;
+}
+.delete-workout-modal-actions button:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
 .duration-edit {
   display: flex;
   align-items: center;
@@ -806,6 +1086,43 @@ h2 {
   background: #d3ff72;
   color: #0b100c;
   padding: 6px;
+  text-align: center;
+}
+.detail-body-metrics {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(11 16 12 / 20%);
+}
+.detail-body-metrics > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10px;
+}
+.detail-body-metrics > span strong {
+  margin: 0;
+  font: 800 17px 'Manrope';
+}
+.detail-body-metrics.editing label {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.detail-body-metrics.editing label > small {
+  color: #526235;
+}
+.detail-body-metrics.editing input {
+  width: 66px;
+  border: 1px solid #637d25;
+  background: #d3ff72;
+  color: #0b100c;
+  padding: 7px;
   text-align: center;
 }
 .detail-exercise-title input {

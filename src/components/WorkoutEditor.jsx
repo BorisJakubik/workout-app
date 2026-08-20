@@ -71,6 +71,44 @@ export const WorkoutEditor = ({ draft, exercises, setDraft, finish, cancel }) =>
               min
             </span>
           </label>
+          <label>
+            <span>
+              {t('currentWeight')} <small>{t('optional')}</small>
+            </span>
+            <span>
+              <input
+                type="number"
+                min="0"
+                step="0.1"
+                value={draft.bodyWeight ?? ''}
+                placeholder="—"
+                onChange={event => setDraft({ ...draft, bodyWeight: event.target.value === '' ? null : Math.max(0, Number(event.target.value)) })}
+              />{' '}
+              kg
+            </span>
+          </label>
+          <label>
+            <span>
+              {t('bodyFatPercentage')} <small>{t('optional')}</small>
+            </span>
+            <span>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                step="0.1"
+                value={draft.bodyFatPercentage ?? ''}
+                placeholder="—"
+                onChange={event =>
+                  setDraft({
+                    ...draft,
+                    bodyFatPercentage: event.target.value === '' ? null : Math.min(100, Math.max(0, Number(event.target.value))),
+                  })
+                }
+              />{' '}
+              %
+            </span>
+          </label>
           <div className="rating-field">
             <span>
               {t('rating')} <small>{t('optional')}</small>

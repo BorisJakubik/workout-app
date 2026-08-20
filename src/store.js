@@ -146,6 +146,8 @@ const fitnessSlice = createSlice({
         duration: 0,
         notes: '',
         rating: 0,
+        bodyWeight: null,
+        bodyFatPercentage: null,
         completed: false,
         exercises: first ? [{ id: crypto.randomUUID(), name: first.name, sets: [{ reps: 8, weight: 0 }] }] : [],
       }
@@ -170,6 +172,9 @@ const fitnessSlice = createSlice({
       const index = state.workouts.findIndex(workout => workout.id === action.payload.id)
       if (index !== -1) state.workouts[index] = { ...action.payload, completed: true }
     },
+    deleteWorkout(state, action) {
+      state.workouts = state.workouts.filter(workout => workout.id !== action.payload)
+    },
     replaceData(state, action) {
       state.language = action.payload.language || 'sk'
       state.categories = action.payload.categories
@@ -191,6 +196,7 @@ export const {
   cancelWorkout,
   finishWorkout,
   updateWorkout,
+  deleteWorkout,
   replaceData,
 } = fitnessSlice.actions
 export const store = configureStore({ reducer: { fitness: fitnessSlice.reducer } })

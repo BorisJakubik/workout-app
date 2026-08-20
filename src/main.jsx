@@ -2,7 +2,17 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { BarChart3, CalendarDays, Dumbbell, History, Home, Plus } from 'lucide-react'
-import { cancelWorkout, finishWorkout, initializeData, setLanguage, startWorkout, store, updateActiveWorkout, updateWorkout } from './store'
+import {
+  cancelWorkout,
+  deleteWorkout,
+  finishWorkout,
+  initializeData,
+  setLanguage,
+  startWorkout,
+  store,
+  updateActiveWorkout,
+  updateWorkout,
+} from './store'
 import { useTranslation } from './i18n'
 import { Dashboard } from './components/Dashboard'
 import { CalendarView } from './components/CalendarView'
@@ -56,16 +66,30 @@ const App = () => {
       />
     )
   if (selectedWorkout)
-    return (
-      <WorkoutDetail
-        workout={selectedWorkout}
-        onBack={() => setSelectedWorkout(null)}
-        onSave={updated => {
-          dispatch(updateWorkout(updated))
-          setSelectedWorkout(updated)
-        }}
-      />
-    )
+    return (() => {
+      const previousWeight = workouts
+        .filter(
+          workout => workout.id !== selectedWorkout.id && new Date(workout.date) <= new Date(selectedWorkout.date) && workout.bodyWeight != null,
+        )
+        .sort((a, b) => new Date(b.date) - new Date(a.date))[0]?.bodyWeight
+      const calorieWeight = selectedWorkout.bodyWeight ?? previousWeight ?? 80
+
+      return (
+        <WorkoutDetail
+          workout={selectedWorkout}
+          calorieWeight={calorieWeight}
+          onBack={() => setSelectedWorkout(null)}
+          onSave={updated => {
+            dispatch(updateWorkout(updated))
+            setSelectedWorkout(updated)
+          }}
+          onDelete={() => {
+            dispatch(deleteWorkout(selectedWorkout.id))
+            setSelectedWorkout(null)
+          }}
+        />
+      )
+    })()
 
   return (
     <div className="app-shell">

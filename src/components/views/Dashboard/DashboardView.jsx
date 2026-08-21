@@ -32,7 +32,7 @@ export const DashboardView = ({ workouts, categories, exercises, stats, profileN
           <strong>
             {weightFromKg(stats.best, weightUnit)} {weightUnit}
           </strong>
-          <span>{t('highestWeight')}</span>
+          <span>{stats.bestExerciseKey ? t(stats.bestExerciseKey) : t('highestWeight')}</span>
         </div>
       </section>
       <section>

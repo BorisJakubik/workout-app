@@ -26,7 +26,7 @@ const LineProgressCard = ({ ariaLabel, emptyLabel, eyebrow, getValue, history, p
             />
           ))}
         </div>
-        <div className="weight-chart-labels">
+        <div className="weight-chart-labels" style={{ gridTemplateColumns: `repeat(${history.length}, minmax(0, 1fr))` }}>
           {history.map(item => (
             <div key={item.id}>
               <strong>{getValue(item)}</strong>
@@ -131,7 +131,7 @@ export const ProgressView = ({
         <strong>
           {weightFromKg(stats.best, weightUnit)} {weightUnit}
         </strong>
-        <span>{t('highestWeight')}</span>
+        <span>{stats.bestExerciseKey ? t(stats.bestExerciseKey) : t('highestWeight')}</span>
       </div>
     </div>
   </section>

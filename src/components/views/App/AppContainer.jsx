@@ -16,6 +16,33 @@ import {
 import { useTranslation } from '../../../i18n'
 import { AppView } from './AppView'
 
+const bigThreeLifts = [
+  { key: 'benchPress', aliases: ['bench press', 'benchpress'] },
+  { key: 'deadlift', aliases: ['mrtvy tah', 'deadlift'] },
+  { key: 'squat', aliases: ['drep', 'squat'] },
+]
+
+const normalizeExerciseName = name =>
+  name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+
+const getBestBigThreeLift = workouts =>
+  workouts.reduce(
+    (best, workout) =>
+      workout.exercises.reduce((workoutBest, exercise) => {
+        const normalizedName = normalizeExerciseName(exercise.name)
+        const lift = bigThreeLifts.find(item => item.aliases.some(alias => normalizedName.includes(alias)))
+        if (!lift) return workoutBest
+
+        const weight = Math.max(0, ...exercise.sets.map(set => Number(set.weight || 0)))
+        return weight > workoutBest.value ? { value: weight, exerciseKey: lift.key } : workoutBest
+      }, best),
+    { value: 0, exerciseKey: null },
+  )
+
 export const AppContainer = () => {
   const dispatch = useDispatch()
   const { language, t } = useTranslation()
@@ -67,14 +94,15 @@ export const AppContainer = () => {
       document.removeEventListener('keydown', closeMenu)
     }
   }, [profileMenuOpen])
-  const stats = useMemo(
-    () => ({
+  const stats = useMemo(() => {
+    const bestBigThreeLift = getBestBigThreeLift(workouts)
+    return {
       count: workouts.length,
       totalMinutes: workouts.reduce((sum, workout) => sum + Number(workout.duration || 0), 0),
-      best: Math.max(0, ...workouts.flatMap(workout => workout.exercises.flatMap(exercise => exercise.sets.map(set => Number(set.weight || 0))))),
-    }),
-    [workouts],
-  )
+      best: bestBigThreeLift.value,
+      bestExerciseKey: bestBigThreeLift.exerciseKey,
+    }
+  }, [workouts])
   const start = categoryId => {
     dispatch(startWorkout(categoryId))
     setScreen('workout')

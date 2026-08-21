@@ -3,22 +3,22 @@
   "categories": [
     {
       "id": "push",
-      "name": "Prsia biceps",
+      "name": "Chest & Biceps",
       "icon": "arms"
     },
     {
       "id": "pull",
-      "name": "Triceps chrbát",
+      "name": "Triceps & Back",
       "icon": "squat"
     },
     {
       "id": "legs",
-      "name": "Nohy ramená",
+      "name": "Legs & Shoulders",
       "icon": "legs"
     },
     {
       "id": "c851e65b-fb32-4933-9e5f-10712dcc6951",
-      "name": "Brucho",
+      "name": "Abs",
       "icon": "conditioning"
     }
   ],
@@ -30,27 +30,27 @@
     },
     {
       "id": "exercise-1",
-      "name": "Tlaky s jednoručkami",
+      "name": "Dumbbell bench press",
       "categoryId": "push"
     },
     {
       "id": "exercise-2",
-      "name": "Tlaky nad hlavu",
+      "name": "Overhead press",
       "categoryId": "push"
     },
     {
       "id": "exercise-4",
-      "name": "Mŕtvy ťah",
+      "name": "Deadlift",
       "categoryId": "pull"
     },
     {
       "id": "exercise-5",
-      "name": "Zhyby",
+      "name": "Pull-ups",
       "categoryId": "pull"
     },
     {
       "id": "exercise-6",
-      "name": "Drep",
+      "name": "Squat",
       "categoryId": "legs"
     },
     {
@@ -60,27 +60,27 @@
     },
     {
       "id": "70a094d2-8b33-427a-9bf7-a26348c0f9b6",
-      "name": "Predkopávanie na stroji",
+      "name": "Machine leg extension",
       "categoryId": "legs"
     },
     {
       "id": "be80ca5f-b316-4141-91df-26601c87f88b",
-      "name": "Bench press na úzko",
+      "name": "Close-grip bench press",
       "categoryId": "pull"
     },
     {
       "id": "69d8b685-ca1c-446f-ae0b-b86867cf6bfa",
-      "name": "Tlaky na ramená s jednoručkami",
+      "name": "Dumbbell shoulder press",
       "categoryId": "legs"
     },
     {
       "id": "4ce2b3ba-e3b2-4242-b8e8-b93084f46620",
-      "name": "Zakopávanie na stroji",
+      "name": "Machine leg curl",
       "categoryId": "legs"
     },
     {
       "id": "0db696da-7a75-404d-aafa-ea7aadcb03bb",
-      "name": "Výpony na stroji na lýtka",
+      "name": "Machine calf raises",
       "categoryId": "legs"
     },
     {
@@ -90,10 +90,3430 @@
     },
     {
       "id": "4e4bb5d8-f9cd-435d-a16a-e8f30ba8d49c",
-      "name": "Posilňovaci stroj na brucho",
+      "name": "Abdominal crunch machine",
       "categoryId": "c851e65b-fb32-4933-9e5f-10712dcc6951"
+    },
+    {
+      "id": "8b539b49-5d95-4626-ba42-026bef9f2f74",
+      "name": "Incline dumbbell bench press",
+      "categoryId": "push"
+    },
+    {
+      "id": "dd14e67a-d633-45ea-9128-967a971488ad",
+      "name": "High cable crossover",
+      "categoryId": "push"
+    },
+    {
+      "id": "db8ecc81-1954-4324-b601-f170659b0397",
+      "name": "Pec deck fly",
+      "categoryId": "push"
+    },
+    {
+      "id": "6422df8c-a3c6-4409-bcec-932eacbe4823",
+      "name": "Barbell curl",
+      "categoryId": "push"
+    },
+    {
+      "id": "f95dc3bb-f5c1-4595-8327-488dd6a36903",
+      "name": "Alternating dumbbell curl",
+      "categoryId": "push"
+    },
+    {
+      "id": "af787750-ca6d-47fc-a3e3-49734ddad320",
+      "name": "Preacher curl",
+      "categoryId": "push"
+    },
+    {
+      "id": "0aa98a71-e1c5-44c3-beb9-f553d4ad200c",
+      "name": "Standing cable lateral raise",
+      "categoryId": "legs"
+    },
+    {
+      "id": "7c6de461-c7a1-4f53-91e9-8d1c84da27aa",
+      "name": "Wide-grip seated machine row",
+      "categoryId": "pull"
+    },
+    {
+      "id": "9e2a61bb-916d-4777-aeca-787a6ef7d767",
+      "name": "Close-grip seated machine row",
+      "categoryId": "pull"
+    },
+    {
+      "id": "edecfd0d-e9c6-4198-ac3d-ec1e7bd1b542",
+      "name": "Parallel bar dips",
+      "categoryId": "pull"
+    },
+    {
+      "id": "70229ded-9803-41cd-b304-aa93b9360bf5",
+      "name": "Neutral-grip lat pulldown",
+      "categoryId": "pull"
+    },
+    {
+      "id": "bf95a57d-17cb-48d3-a783-0929fe80ef11",
+      "name": "Wide-grip lat pulldown",
+      "categoryId": "pull"
+    },
+    {
+      "id": "1cd99048-ad67-4e85-9b7a-f540cf6550df",
+      "name": "Underhand one-arm dumbbell row",
+      "categoryId": "pull"
+    },
+    {
+      "id": "e1e27854-4387-48dc-9e0d-b7d8575db3a3",
+      "name": "Reverse pec deck fly",
+      "categoryId": "legs"
+    },
+    {
+      "id": "0ff279bd-4de7-4249-8ec7-cd8caa24e5c8",
+      "name": "Seated cable row",
+      "categoryId": "pull"
+    },
+    {
+      "id": "80e6d327-b8d9-4b17-bc0f-080cc22a40bd",
+      "name": "Overhead cable triceps extension",
+      "categoryId": "pull"
+    },
+    {
+      "id": "f66ac525-52d8-47f0-9349-6ea2d4458997",
+      "name": "Standing cable triceps pushdown",
+      "categoryId": "pull"
+    },
+    {
+      "id": "a03d8ff9-9323-4706-9d05-322ac033c462",
+      "name": "Standing straight-arm pulldown",
+      "categoryId": "pull"
+    },
+    {
+      "id": "7c6b8ed1-a617-4b91-ace4-bef6ecde48a4",
+      "name": "Dumbbell lateral raise",
+      "categoryId": "legs"
+    },
+    {
+      "id": "5953a27c-492d-421c-b679-d3714c1862d8",
+      "name": "Dumbbell front raise",
+      "categoryId": "legs"
+    },
+    {
+      "id": "f13d253a-5c4a-4153-844a-686082eeb499",
+      "name": "Smith machine shoulder press",
+      "categoryId": "legs"
+    },
+    {
+      "id": "779ccb9a-221e-4139-a4a2-b8c01f683e10",
+      "name": "Low cable biceps curl",
+      "categoryId": "push"
+    },
+    {
+      "id": "31a14169-924f-4ee3-9456-38a6f94670a9",
+      "name": "Overhead dumbbell triceps extension",
+      "categoryId": "pull"
     }
   ],
-  "workouts": [],
+  "workouts": [
+    {
+      "id": 1787342782277,
+      "categoryId": "pull",
+      "name": "Triceps & Back",
+      "date": "2026-07-28T12:00:00",
+      "duration": 60,
+      "notes": "Energia fajn ku koncu dochadzala energia zopar ludi, spanok podpriemerny ale ok predworkout",
+      "rating": 4,
+      "bodyWeight": 108,
+      "bodyFatPercentage": 31,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "71f6a1ec-25ac-40d8-beae-b2db9a660943",
+          "name": "Deadlift",
+          "sets": [
+            {
+              "reps": 6,
+              "weight": 70
+            },
+            {
+              "reps": 3,
+              "weight": 90
+            },
+            {
+              "reps": 3,
+              "weight": 120
+            },
+            {
+              "reps": 2,
+              "weight": 130
+            },
+            {
+              "reps": 1,
+              "weight": 130
+            },
+            {
+              "reps": 1,
+              "weight": 135
+            }
+          ]
+        },
+        {
+          "id": "30368fe3-c787-4615-92f7-c24b4f3f09bd",
+          "name": "Standing cable triceps pushdown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "d9d3b520-f994-468a-9e08-9ed38b005541",
+          "name": "Overhead cable triceps extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 8,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 20
+            }
+          ]
+        },
+        {
+          "id": "62edb695-ac52-44bc-9f48-cbc8f8d8f7c3",
+          "name": "Standing straight-arm pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "60ad5ba8-d4ab-4bdf-9262-dcd4f3aace69",
+          "name": "Parallel bar dips",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 6,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "d094c4d8-6adf-49a6-badd-32027905e6c6",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 25,
+              "weight": 80
+            },
+            {
+              "reps": 25,
+              "weight": 80
+            },
+            {
+              "reps": 25,
+              "weight": 80
+            },
+            {
+              "reps": 25,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "cbb66557-0eee-4a3c-ae01-52859a8d9a35",
+          "name": "Wide-grip lat pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 10,
+              "weight": 75
+            },
+            {
+              "reps": 10,
+              "weight": 85
+            }
+          ]
+        },
+        {
+          "id": "a627e36d-9cf3-4cb2-88df-a558daac3ce2",
+          "name": "Close-grip seated machine row",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787317884600,
+      "categoryId": "pull",
+      "name": "Triceps & Back",
+      "date": "2026-08-21T12:00:00",
+      "duration": 85,
+      "notes": "Potil som sa ako hovado, zabudol som si uterak, tak teraz musim vyprat pozicany a vratit. Rano som energiu moc nemal ale v posilke som tahal.",
+      "rating": 4,
+      "bodyWeight": 106.2,
+      "bodyFatPercentage": 30.4,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "e685fcc5-a2d2-43f7-aee7-f6f162d237c0",
+          "name": "Deadlift",
+          "sets": [
+            {
+              "reps": 6,
+              "weight": 70
+            },
+            {
+              "reps": 4,
+              "weight": 100
+            },
+            {
+              "reps": 4,
+              "weight": 120
+            },
+            {
+              "reps": 1,
+              "weight": 142.5
+            },
+            {
+              "reps": 3,
+              "weight": 130
+            }
+          ]
+        },
+        {
+          "id": "e5fbd1de-37cc-4c68-a38a-7ac5399ef98b",
+          "name": "Standing cable triceps pushdown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 8,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "0bae8667-210c-4cbd-8017-c9332f2f2dc3",
+          "name": "Overhead cable triceps extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 8,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 8,
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "f0bf48e3-6fa9-4f58-b291-7423eff5cb07",
+          "name": "Standing straight-arm pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "4cee6555-4240-4aa7-b850-af836d6dca1b",
+          "name": "Wide-grip seated machine row",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 70
+            },
+            {
+              "reps": 10,
+              "weight": 75
+            },
+            {
+              "reps": 8,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "a77e805e-35f3-4fa5-a13a-d480cb6a3d10",
+          "name": "Parallel bar dips",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 6,
+              "weight": 6
+            },
+            {
+              "reps": 7,
+              "weight": 8
+            },
+            {
+              "reps": 6,
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "91120760-72c2-4395-b388-88ee7c243302",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 30,
+              "weight": 80
+            },
+            {
+              "reps": 30,
+              "weight": 80
+            },
+            {
+              "reps": 30,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "4426a76f-e5fa-46d4-98f2-55592c3b64a0",
+          "name": "Wide-grip lat pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 10,
+              "weight": 75
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787304017457,
+      "categoryId": "legs",
+      "name": "Legs & Shoulders",
+      "date": "2026-07-26T12:00:00",
+      "duration": 70,
+      "notes": "Rano chilli con carne, preworkout, banan melon a monster. Energia super trochu ma naduvalo potenie ok v posilke par ludi. ",
+      "rating": 4,
+      "bodyWeight": null,
+      "bodyFatPercentage": null,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "3d0f406f-c718-4f2f-9664-32b5bba5201a",
+          "name": "Squat",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 8,
+              "weight": 80
+            },
+            {
+              "reps": 6,
+              "weight": 90
+            },
+            {
+              "reps": 3,
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "5128bd79-a8ba-418a-8332-eaa0a2fb617f",
+          "name": "Machine leg extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            }
+          ]
+        },
+        {
+          "id": "9c758784-5365-4b64-9ba1-3afb0f0b6c08",
+          "name": "Machine leg curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            }
+          ]
+        },
+        {
+          "id": "c71a5946-3501-4d1f-86c3-5ebd4bfb11b6",
+          "name": "L-sit",
+          "sets": [
+            {
+              "reps": 12,
+              "weight": 0
+            },
+            {
+              "reps": 12,
+              "weight": 0
+            },
+            {
+              "reps": 12,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "ff0f9a62-6859-4430-940c-abe75fb16d5a",
+          "name": "Reverse pec deck fly",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 8,
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "49b2c9b5-e3bf-4a81-9f42-fb7f4d0a7e15",
+          "name": "Dumbbell shoulder press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 22
+            },
+            {
+              "reps": 8,
+              "weight": 24
+            },
+            {
+              "reps": 7,
+              "weight": 26
+            }
+          ]
+        },
+        {
+          "id": "1c257d4d-4506-459b-8a5d-7e88d804ef09",
+          "name": "Dumbbell lateral raise",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 10
+            },
+            {
+              "reps": 10,
+              "weight": 12
+            },
+            {
+              "reps": 8,
+              "weight": 14
+            },
+            {
+              "reps": 7,
+              "weight": 14
+            },
+            {
+              "reps": 3,
+              "weight": 10
+            }
+          ]
+        },
+        {
+          "id": "0c0e38b0-2b29-4381-8ddb-c9744a1ba4d5",
+          "name": "Machine calf raises",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0.5
+            },
+            {
+              "reps": 10,
+              "weight": 0.5
+            },
+            {
+              "reps": 8,
+              "weight": 0.75
+            },
+            {
+              "reps": 6,
+              "weight": 0.75
+            }
+          ]
+        },
+        {
+          "id": "87668cb0-8321-4fb9-a2a6-17e3394f6b03",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 20,
+              "weight": 80
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787303481984,
+      "categoryId": "push",
+      "name": "Chest & Biceps",
+      "date": "2026-07-24T12:00:00",
+      "duration": 8,
+      "notes": "Trci mi bruch vacsie tricko! Energia vyborna ale citil som loket.",
+      "rating": 4,
+      "bodyWeight": 109,
+      "bodyFatPercentage": null,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "e4d969d6-169d-4aa3-95ff-57e97505428f",
+          "name": "Bench press",
+          "sets": [
+            {
+              "reps": 6,
+              "weight": 60
+            },
+            {
+              "reps": 4,
+              "weight": 75
+            },
+            {
+              "reps": 4,
+              "weight": 85
+            },
+            {
+              "reps": 4,
+              "weight": 85
+            },
+            {
+              "reps": 4,
+              "weight": 87.5
+            },
+            {
+              "reps": 3,
+              "weight": 90
+            }
+          ]
+        },
+        {
+          "id": "d6d9be95-e963-4375-983c-756e0556143f",
+          "name": "High cable crossover",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            },
+            {
+              "weight": 35,
+              "reps": 8
+            },
+            {
+              "weight": 40,
+              "reps": 5
+            },
+            {
+              "reps": 6,
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "573a2a59-228a-4234-936d-7b00a765d427",
+          "name": "Pec deck fly",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "weight": 55,
+              "reps": 10
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            },
+            {
+              "weight": 65,
+              "reps": 10
+            },
+            {
+              "reps": 10,
+              "weight": 70
+            }
+          ]
+        },
+        {
+          "id": "4841a17f-0157-42cb-8bea-74ae8afc6462",
+          "name": "Incline dumbbell bench press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 8,
+              "weight": 24
+            },
+            {
+              "reps": 6,
+              "weight": 30
+            },
+            {
+              "reps": 6,
+              "weight": 32
+            },
+            {
+              "reps": 6,
+              "weight": 34
+            }
+          ]
+        },
+        {
+          "id": "b10d6eb5-bb64-4cb5-a997-e0157ef19be4",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 25,
+              "weight": 80
+            },
+            {
+              "reps": 25,
+              "weight": 80
+            },
+            {
+              "reps": 25,
+              "weight": 80
+            },
+            {
+              "reps": 25,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "d63c196b-5ffe-46a0-9e4e-6f9f1bcc99e4",
+          "name": "Barbell curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 6,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "4acab3d6-65da-4468-b764-3a823310762d",
+          "name": "Preacher curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "1368a9d8-520b-4b4a-9f70-3a26d244232c",
+          "name": "Alternating dumbbell curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 12
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787270753181,
+      "categoryId": "pull",
+      "name": "Triceps & Back",
+      "date": "2026-07-22T12:00:00",
+      "duration": 78,
+      "notes": "Cvicilo sa mi fajn ku koncu dochadzala energia.",
+      "rating": 4,
+      "bodyWeight": 108.5,
+      "bodyFatPercentage": 31.2,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "1200321e-9fdd-41d8-89ae-199642a1bd15",
+          "name": "Deadlift",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 6,
+              "weight": 100
+            },
+            {
+              "reps": 4,
+              "weight": 120
+            },
+            {
+              "reps": 1,
+              "weight": 130
+            }
+          ]
+        },
+        {
+          "id": "b4474ef3-e392-4f4c-a4a8-96b4ea81570a",
+          "name": "Standing cable triceps pushdown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 7,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "addf7905-1d93-402a-aaed-a51eb911fd50",
+          "name": "Overhead cable triceps extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 8,
+              "weight": 35
+            },
+            {
+              "reps": 6,
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "81098494-77ae-4532-b441-bb211ead7c0e",
+          "name": "Standing straight-arm pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "087866e0-795f-495c-89c1-71be2c127842",
+          "name": "Wide-grip seated machine row",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "971e40ed-9fc4-46e6-84f5-57ae651de9b8",
+          "name": "Parallel bar dips",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 9,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "dbf1eb28-6374-49ba-a133-e14bba61ada1",
+          "name": "Neutral-grip lat pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 8,
+              "weight": 75
+            },
+            {
+              "reps": 5,
+              "weight": 85
+            }
+          ]
+        },
+        {
+          "id": "cd96b575-fc6b-49a3-9036-2454a5a80834",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 20,
+              "weight": 80
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787270185893,
+      "categoryId": "legs",
+      "name": "Legs & Shoulders",
+      "date": "2026-07-20T12:00:00",
+      "duration": 79,
+      "notes": "Dneska som sa citil slaby v posilke bolo dost ludi a neaml som energiu rano som nejedol. Zvysil som kila napredkopavanie a zakopavanie inak to bola bieda.",
+      "rating": 2,
+      "bodyWeight": null,
+      "bodyFatPercentage": null,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "92054b5f-7274-4243-ba6f-03331c722578",
+          "name": "Squat",
+          "sets": [
+            {
+              "reps": 8,
+              "weight": 60
+            },
+            {
+              "reps": 6,
+              "weight": 80
+            },
+            {
+              "reps": 1,
+              "weight": 90
+            }
+          ]
+        },
+        {
+          "id": "808688e4-487b-4603-a162-7ef8199bd5cb",
+          "name": "Machine leg extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "cc64dce5-e52d-46b6-8242-9d10f8120e08",
+          "name": "Machine leg curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "1edd41b1-713d-42e3-8b6b-f3ac737cbed8",
+          "name": "Smith machine shoulder press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "weight": 40,
+              "reps": 10
+            },
+            {
+              "weight": 45,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "id": "9db297cb-5289-4764-842e-9ae2e15cebca",
+          "name": "L-sit",
+          "sets": [
+            {
+              "reps": 20,
+              "weight": 0
+            },
+            {
+              "reps": 12,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "51954f90-0919-4b73-9998-c8efb8a6f5a9",
+          "name": "Leg press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 100
+            },
+            {
+              "reps": 10,
+              "weight": 150
+            },
+            {
+              "reps": 10,
+              "weight": 175
+            },
+            {
+              "reps": 10,
+              "weight": 200
+            }
+          ]
+        },
+        {
+          "id": "4a869929-7dfd-4da7-91ef-f55f3c20d5cc",
+          "name": "Standing cable lateral raise",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 5
+            },
+            {
+              "reps": 10,
+              "weight": 10
+            },
+            {
+              "reps": 10,
+              "weight": 10
+            },
+            {
+              "reps": 8,
+              "weight": 15
+            }
+          ]
+        },
+        {
+          "id": "cd9f521c-5239-4832-a84d-31b796532c4c",
+          "name": "Reverse pec deck fly",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            }
+          ]
+        },
+        {
+          "id": "dffdc526-3179-47d4-8b78-86bacfadb16b",
+          "name": "Dumbbell front raise",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787269633753,
+      "categoryId": "push",
+      "name": "Chest & Biceps",
+      "date": "2026-07-18T12:00:00",
+      "duration": 110,
+      "notes": "Cvicil som dlho ale inak spokojny.",
+      "rating": 4,
+      "bodyWeight": 109,
+      "bodyFatPercentage": 31.3,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "a5c62a66-8596-4967-b6e2-91ba1a0c07fa",
+          "name": "Bench press",
+          "sets": [
+            {
+              "reps": 6,
+              "weight": 60
+            },
+            {
+              "reps": 6,
+              "weight": 72.5
+            },
+            {
+              "reps": 5,
+              "weight": 82.5
+            },
+            {
+              "reps": 5,
+              "weight": 82.5
+            },
+            {
+              "reps": 4,
+              "weight": 85
+            }
+          ]
+        },
+        {
+          "id": "d21d8b04-fa08-4751-b004-bdff59261ac9",
+          "name": "High cable crossover",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            },
+            {
+              "weight": 35,
+              "reps": 6
+            },
+            {
+              "weight": 40,
+              "reps": 3
+            }
+          ]
+        },
+        {
+          "id": "9b768c42-9ec3-4f88-8cb9-63f4788d36a8",
+          "name": "Pec deck fly",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "weight": 50,
+              "reps": 10
+            },
+            {
+              "weight": 55,
+              "reps": 10
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 10,
+              "weight": 70
+            }
+          ]
+        },
+        {
+          "id": "cf3695bc-e50b-4393-8848-ae39c1d84887",
+          "name": "Preacher curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            },
+            {
+              "weight": 35,
+              "reps": 10
+            },
+            {
+              "reps": 6,
+              "weight": 40
+            },
+            {
+              "reps": 3,
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "ebf27aa6-a503-4274-8c4b-62c17e1a23ad",
+          "name": "Incline dumbbell bench press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 24
+            },
+            {
+              "reps": 10,
+              "weight": 28
+            },
+            {
+              "reps": 8,
+              "weight": 30
+            },
+            {
+              "reps": 6,
+              "weight": 32
+            }
+          ]
+        },
+        {
+          "id": "b8061014-38d0-4f7b-a97e-e5440373dcec",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 30,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "c0bdf8e4-39ef-4f35-9829-bbf40eea4831",
+          "name": "Low cable biceps curl",
+          "sets": [
+            {
+              "weight": 20,
+              "reps": 10
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "id": "9df2f807-e431-4c59-8132-512d06e89743",
+          "name": "Barbell curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 6,
+              "weight": 40
+            },
+            {
+              "reps": 4,
+              "weight": 45
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787268790692,
+      "categoryId": "pull",
+      "name": "Triceps & Back",
+      "date": "2026-07-16T12:00:00",
+      "duration": 68,
+      "notes": "Odcvicene rychlo, energia super posetril som triceps. Dvihal som vacsie vahy, ale slabo som to precitil, prazdna posilka.",
+      "rating": 4,
+      "bodyWeight": 110,
+      "bodyFatPercentage": 31.5,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "46127a11-a9fa-46c9-bf58-23fe3a1da667",
+          "name": "Deadlift",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 80
+            },
+            {
+              "reps": 6,
+              "weight": 100
+            },
+            {
+              "reps": 4,
+              "weight": 110
+            },
+            {
+              "reps": 3,
+              "weight": 120
+            }
+          ]
+        },
+        {
+          "id": "d01b7555-d7cf-438f-909b-ac8ba393e0c4",
+          "name": "Standing cable triceps pushdown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "a1f93c7c-d1c9-4901-b9b1-9f2e3aed9a30",
+          "name": "Overhead cable triceps extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "92d5dd7b-a769-40c0-95e9-8f4830095a5b",
+          "name": "L-sit",
+          "sets": [
+            {
+              "reps": 12,
+              "weight": 0
+            },
+            {
+              "reps": 12,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "1b9f1cec-3eba-4714-8735-9c21299424a1",
+          "name": "Standing straight-arm pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "6586ae0d-a2a6-4ff7-bbd8-d429fe68fe5e",
+          "name": "Wide-grip seated machine row",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 8,
+              "weight": 65
+            },
+            {
+              "reps": 10,
+              "weight": 70
+            }
+          ]
+        },
+        {
+          "id": "155b568e-19d5-46a4-97e4-5a8d3db785e9",
+          "name": "Wide-grip lat pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 8,
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "fa8fcb64-e645-402b-802e-019fe5cca546",
+          "name": "Overhead dumbbell triceps extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 14
+            },
+            {
+              "weight": 18,
+              "reps": 10
+            },
+            {
+              "weight": 20,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787267720191,
+      "categoryId": "legs",
+      "name": "Legs & Shoulders",
+      "date": "2026-07-14T12:00:00",
+      "duration": 100,
+      "notes": "Prazdna posilka ale bol som tam dlho lebo som sa zakecal s Ludom a Davidom 1:40. Odcvicil som toho dost, drep mi skoro zlomil chrbat :D energia ok",
+      "rating": 4,
+      "bodyWeight": null,
+      "bodyFatPercentage": null,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "84f3e7bd-039e-47f0-9aca-bd68073c4676",
+          "name": "Squat",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 70
+            },
+            {
+              "reps": 8,
+              "weight": 80
+            },
+            {
+              "reps": 4,
+              "weight": 90
+            },
+            {
+              "reps": 1,
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "3cc5282a-a802-4546-82ef-c89629844947",
+          "name": "Machine leg extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "21f1b0a4-23ba-4bbe-8639-21cc0d4c8dd6",
+          "name": "Machine leg curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "36d1146e-7d45-40f3-bf9b-c873060509b4",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 12,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "a5c4bc0d-5cdf-48c5-9de0-14417bb10d48",
+          "name": "Smith machine shoulder press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "weight": 45,
+              "reps": 10
+            },
+            {
+              "weight": 50,
+              "reps": 10
+            },
+            {
+              "weight": 55,
+              "reps": 10
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "id": "55ccb1cc-b86e-4835-83e7-3f7f5b496a97",
+          "name": "Dumbbell lateral raise",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 12
+            },
+            {
+              "reps": 10,
+              "weight": 12
+            },
+            {
+              "reps": 10,
+              "weight": 14
+            }
+          ]
+        },
+        {
+          "id": "8d28b6d7-47f5-45c0-a8cb-6336eeab6adb",
+          "name": "Dumbbell front raise",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 10
+            },
+            {
+              "reps": 10,
+              "weight": 12
+            },
+            {
+              "reps": 10,
+              "weight": 12
+            },
+            {
+              "reps": 10,
+              "weight": 14
+            }
+          ]
+        },
+        {
+          "id": "5ebf2e80-2df9-45bc-a5df-b9b020dffc68",
+          "name": "Machine calf raises",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 8,
+              "weight": 0
+            },
+            {
+              "reps": 8,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "81f58b33-bb80-47ed-b751-b00d2237d01f",
+          "name": "L-sit",
+          "sets": [
+            {
+              "reps": 12,
+              "weight": 0
+            },
+            {
+              "reps": 12,
+              "weight": 0
+            },
+            {
+              "reps": 12,
+              "weight": 0
+            },
+            {
+              "reps": 12,
+              "weight": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787266871268,
+      "categoryId": "push",
+      "name": "Chest & Biceps",
+      "date": "2026-07-12T12:00:00",
+      "duration": 87,
+      "notes": "Cardio bicykel 30km",
+      "rating": 3,
+      "bodyWeight": 110,
+      "bodyFatPercentage": null,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "ec21a80f-7acf-40de-906a-9d74053bce18",
+          "name": "Bench press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 70
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            },
+            {
+              "reps": 5,
+              "weight": 80
+            },
+            {
+              "reps": 5,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "d17fffd8-149e-431f-aa73-1399ee9a03df",
+          "name": "High cable crossover",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 8
+            },
+            {
+              "weight": 30,
+              "reps": 8
+            },
+            {
+              "weight": 35,
+              "reps": 6
+            }
+          ]
+        },
+        {
+          "id": "b85f7075-283e-49d9-b942-db5ecf543893",
+          "name": "Pec deck fly",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "weight": 50,
+              "reps": 10
+            },
+            {
+              "weight": 55,
+              "reps": 10
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "id": "6525831d-a032-43a6-997a-839e07b17351",
+          "name": "Preacher curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            },
+            {
+              "weight": 35,
+              "reps": 10
+            },
+            {
+              "reps": 6,
+              "weight": 40
+            },
+            {
+              "reps": 4,
+              "weight": 45
+            }
+          ]
+        },
+        {
+          "id": "5f453589-8f0c-4433-913c-f69ad4edd513",
+          "name": "Incline dumbbell bench press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 22
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 28
+            },
+            {
+              "reps": 7,
+              "weight": 30
+            }
+          ]
+        },
+        {
+          "id": "f8e7f56d-6dc0-4e58-8fa7-ec515b6cb936",
+          "name": "Alternating dumbbell curl",
+          "sets": [
+            {
+              "reps": 15,
+              "weight": 12
+            }
+          ]
+        },
+        {
+          "id": "ab2a50cd-ab63-4eb0-83ef-adee006c6369",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 20,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "d3479143-32d7-4b3f-a89a-596a207a4756",
+          "name": "Low cable biceps curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 15
+            },
+            {
+              "weight": 20,
+              "reps": 10
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            },
+            {
+              "weight": 35,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787266161243,
+      "categoryId": "pull",
+      "name": "Triceps & Back",
+      "date": "2026-07-10T12:00:00",
+      "duration": 92,
+      "notes": "Nalada strosku horsia G2 prehralo nad NA. Spanok super 10h, energia super. Preworkout monster, tvaroh, protein, karelab, bez madmonqu. Prazdna posilka celenka bola super.",
+      "rating": 5,
+      "bodyWeight": 110.6,
+      "bodyFatPercentage": 31.8,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "3bbf364e-2126-4824-9af0-cb62a5d1d829",
+          "name": "Deadlift",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 80
+            },
+            {
+              "reps": 8,
+              "weight": 90
+            },
+            {
+              "reps": 6,
+              "weight": 100
+            },
+            {
+              "reps": 4,
+              "weight": 110
+            }
+          ]
+        },
+        {
+          "id": "691dcf11-3f65-41cb-9106-89d49a2d7f18",
+          "name": "Standing cable triceps pushdown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "e11e33af-d8d9-40e6-aba1-47e25dcb601b",
+          "name": "Overhead cable triceps extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "08f618d3-895f-47cd-a3f7-53a3fda050ae",
+          "name": "L-sit",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "70deb58d-62e1-4fcc-b5ac-5977c662e67d",
+          "name": "Parallel bar dips",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 9,
+              "weight": 0
+            },
+            {
+              "reps": 6,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "c4f1dc9e-0bac-4cff-95cd-1a8daac15aff",
+          "name": "Neutral-grip lat pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 65
+            },
+            {
+              "reps": 8,
+              "weight": 75
+            }
+          ]
+        },
+        {
+          "id": "4813bc2d-f6d2-491b-bdfa-be9faf078a95",
+          "name": "Seated cable row",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 8,
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "770f45ec-8e63-43c8-a63a-c25da6c236e8",
+          "name": "Machine calf raises",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 8,
+              "weight": 0
+            },
+            {
+              "reps": 8,
+              "weight": 0
+            },
+            {
+              "reps": 6,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "2eadff20-0081-4e09-9cd7-2a65212129f3",
+          "name": "Standing straight-arm pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787264837204,
+      "categoryId": "legs",
+      "name": "Legs & Shoulders",
+      "date": "2026-07-08T12:00:00",
+      "duration": 74,
+      "notes": "Nechcelo sa mi mal som rano blbu naladu ale G2 vyhralo takze mi to zlepsilo naladu. Jedlo vela sacharidov 2kg melonu tvaroh, madmonq, protein. Posilka prazdna ku koncu sa naplnila. Potrebujem zpevnit chrbat na drepy. Neodcvicil som lytka :(",
+      "rating": 4,
+      "bodyWeight": null,
+      "bodyFatPercentage": null,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "024ba5de-02d3-443e-898d-6ed8b1f0784f",
+          "name": "Squat",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 6,
+              "weight": 70
+            },
+            {
+              "reps": 6,
+              "weight": 80
+            },
+            {
+              "reps": 2,
+              "weight": 90
+            }
+          ]
+        },
+        {
+          "id": "2ba652b2-a165-47b5-a980-afcf79341e3d",
+          "name": "Machine leg extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "5601ef4a-bf98-4de8-9e29-50735c4c0548",
+          "name": "Machine leg curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "3946a2e4-2b11-49d0-8dd5-f3bb31073150",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 80
+            },
+            {
+              "reps": 15,
+              "weight": 80
+            },
+            {
+              "reps": 15,
+              "weight": 80
+            },
+            {
+              "reps": 15,
+              "weight": 80
+            },
+            {
+              "reps": 15,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "d69b8eaa-812c-442e-ac36-909915db6c99",
+          "name": "Dumbbell shoulder press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 18
+            },
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 22
+            },
+            {
+              "reps": 8,
+              "weight": 24
+            },
+            {
+              "reps": 3,
+              "weight": 26
+            }
+          ]
+        },
+        {
+          "id": "40a82e75-091d-4fb2-a8e2-ba3b011cf95d",
+          "name": "Smith machine shoulder press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "weight": 35,
+              "reps": 10
+            },
+            {
+              "weight": 40,
+              "reps": 10
+            },
+            {
+              "weight": 45,
+              "reps": 10
+            },
+            {
+              "weight": 50,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "id": "e75d1c80-5935-400d-8382-58d63bda2df6",
+          "name": "Dumbbell lateral raise",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 8
+            },
+            {
+              "reps": 10,
+              "weight": 10
+            },
+            {
+              "reps": 10,
+              "weight": 10
+            },
+            {
+              "reps": 10,
+              "weight": 12
+            },
+            {
+              "reps": 10,
+              "weight": 14
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787264308107,
+      "categoryId": "push",
+      "name": "Chest & Biceps",
+      "date": "2026-07-06T12:00:00",
+      "duration": 94,
+      "notes": "Spal som mizerne preworkout madmonq, tvaroh s bananom a proteinom. Energia ok, trochu ma mrzi ze som nevytlacil 90kg viac krat, inak som spokojny. Rano som citil triceps z predchadzajuceho treningu.",
+      "rating": 4,
+      "bodyWeight": 111.3,
+      "bodyFatPercentage": 31.7,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "425f9dd5-295a-4cd4-8911-f54df95e69da",
+          "name": "Bench press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            },
+            {
+              "reps": 5,
+              "weight": 80
+            },
+            {
+              "reps": 1,
+              "weight": 90
+            }
+          ]
+        },
+        {
+          "id": "d7ac73d5-6f03-45d9-885f-9b3c7cca3a85",
+          "name": "Incline dumbbell bench press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 18
+            },
+            {
+              "weight": 20,
+              "reps": 10
+            },
+            {
+              "weight": 22,
+              "reps": 10
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 26,
+              "reps": 8
+            },
+            {
+              "reps": 6,
+              "weight": 28
+            }
+          ]
+        },
+        {
+          "id": "e7197913-c236-4749-82ff-5fc72f48fe3f",
+          "name": "High cable crossover",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            },
+            {
+              "weight": 35,
+              "reps": 6
+            }
+          ]
+        },
+        {
+          "id": "61321de2-ce7f-4d9c-8dc3-1972218f8fb9",
+          "name": "Pec deck fly",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "weight": 50,
+              "reps": 10
+            },
+            {
+              "weight": 55,
+              "reps": 10
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            },
+            {
+              "weight": 65,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "id": "efc36da7-334f-4c0a-8e87-339d91e4dab4",
+          "name": "Barbell curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "weight": 20,
+              "reps": 10
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "b778e405-6370-4af4-9fba-ef38d3c1aeb7",
+          "name": "Preacher curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            },
+            {
+              "reps": 8,
+              "weight": 35
+            },
+            {
+              "reps": 6,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "0b4cb9a3-bf97-4fea-beef-0f6e4863b943",
+          "name": "L-sit",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "weight": 0,
+              "reps": 10
+            },
+            {
+              "weight": 0,
+              "reps": 10
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787263602925,
+      "categoryId": "pull",
+      "name": "Triceps & Back",
+      "date": "2026-07-04T12:00:00",
+      "duration": 93,
+      "notes": "Citil som sa slabsie a menej motivovane rano ma bolela hlava jedol som vajicka miesto sacharidov spal som nic moc posledne dni. Ale nejako som to odcvicil, prazdna posilka.",
+      "rating": 3,
+      "bodyWeight": null,
+      "bodyFatPercentage": null,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "8ee1bbe3-624d-4a10-9ed3-9e7dda917ba1",
+          "name": "Deadlift",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 80
+            },
+            {
+              "reps": 10,
+              "weight": 80
+            },
+            {
+              "reps": 6,
+              "weight": 90
+            },
+            {
+              "reps": 4,
+              "weight": 100
+            }
+          ]
+        },
+        {
+          "id": "6fd4074a-02a7-4fcd-bb20-5c254b15f3c3",
+          "name": "Parallel bar dips",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 8,
+              "weight": 0
+            },
+            {
+              "reps": 4,
+              "weight": 0
+            },
+            {
+              "reps": 5,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "ff84b465-f189-41cc-a510-45e660da20ff",
+          "name": "Standing cable triceps pushdown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 8,
+              "weight": 35
+            }
+          ]
+        },
+        {
+          "id": "a5622992-74ed-48ea-a406-96d6dc1a2a2a",
+          "name": "Overhead cable triceps extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 8,
+              "weight": 40
+            }
+          ]
+        },
+        {
+          "id": "50c5c9db-7cb7-42f7-a676-8c7367c0b089",
+          "name": "Wide-grip lat pulldown",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 8,
+              "weight": 65
+            }
+          ]
+        },
+        {
+          "id": "3b487a59-6163-4816-9d1d-a6be15396cfc",
+          "name": "Wide-grip seated machine row",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            },
+            {
+              "reps": 8,
+              "weight": 60
+            }
+          ]
+        },
+        {
+          "id": "7914843b-f3e2-4b53-b3b9-94b8d2d715ce",
+          "name": "Underhand one-arm dumbbell row",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 18
+            },
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 22
+            },
+            {
+              "reps": 10,
+              "weight": 22
+            }
+          ]
+        },
+        {
+          "id": "896d4fc3-7d65-42c9-8c2c-fbc1b1e8a890",
+          "name": "L-sit",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "reps": 10,
+              "weight": 0
+            }
+          ]
+        },
+        {
+          "id": "3310aa7d-5536-4c9f-ba33-4c0b50529a01",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 11,
+              "weight": 80
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787242646940,
+      "categoryId": "legs",
+      "name": "Legs & Shoulders",
+      "date": "2026-07-02T12:00:00",
+      "duration": 68,
+      "notes": "Trocha unaveny po vine, dost som sa zapotil hlavne pri drepoch. Odcvicil som len 3 cviky na nohy. Dosiel som po druhej hodine, bolo tam 10 deti. Ku koncu prislo dalsich 10 ludi. Full house.",
+      "rating": 3,
+      "bodyWeight": null,
+      "bodyFatPercentage": null,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "c211bbec-ed2d-4933-992d-e0f49f44732d",
+          "name": "Squat",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 70
+            }
+          ]
+        },
+        {
+          "id": "b9e61366-21fa-40ed-8996-fdb81bab677a",
+          "name": "Machine leg extension",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            },
+            {
+              "reps": 10,
+              "weight": 55
+            }
+          ]
+        },
+        {
+          "id": "41566c83-be9c-4563-8dcc-4cee483174e6",
+          "name": "Machine leg curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 30
+            },
+            {
+              "reps": 10,
+              "weight": 35
+            },
+            {
+              "reps": 10,
+              "weight": 40
+            },
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "reps": 10,
+              "weight": 50
+            }
+          ]
+        },
+        {
+          "id": "55145527-dbbc-4fe5-8320-979c67a5b618",
+          "name": "Abdominal crunch machine",
+          "sets": [
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 20,
+              "weight": 80
+            },
+            {
+              "reps": 20,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "a23888c3-7006-4d4f-b9da-a19ec0517c45",
+          "name": "Dumbbell shoulder press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 16
+            },
+            {
+              "reps": 10,
+              "weight": 18
+            },
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "reps": 10,
+              "weight": 22
+            },
+            {
+              "reps": 7,
+              "weight": 25
+            }
+          ]
+        },
+        {
+          "id": "d2889ae1-5b40-4aef-87e7-eeecdc44f8df",
+          "name": "Standing cable lateral raise",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 10
+            },
+            {
+              "weight": 10,
+              "reps": 10
+            },
+            {
+              "weight": 10,
+              "reps": 10
+            },
+            {
+              "weight": 10,
+              "reps": 10
+            },
+            {
+              "weight": 15,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "id": "da4c518e-1324-472a-a1da-9fe2fcea3a89",
+          "name": "Smith machine shoulder press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 25
+            },
+            {
+              "weight": 30,
+              "reps": 10
+            },
+            {
+              "weight": 35,
+              "reps": 10
+            },
+            {
+              "weight": 40,
+              "reps": 10
+            },
+            {
+              "weight": 45,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1787236834934,
+      "categoryId": "push",
+      "name": "Chest & Biceps",
+      "date": "2026-06-30T12:00:00",
+      "duration": 90,
+      "notes": "Mierna bolest v lavom bicepse pri scottovej lavici.",
+      "rating": 4,
+      "bodyWeight": 110.5,
+      "bodyFatPercentage": 31.5,
+      "completed": true,
+      "exercises": [
+        {
+          "id": "c9ab1a8e-d9a5-4b6c-b01c-4ff23f98fdb9",
+          "name": "Bench press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 10,
+              "weight": 60
+            },
+            {
+              "reps": 8,
+              "weight": 70
+            },
+            {
+              "reps": 6,
+              "weight": 80
+            },
+            {
+              "reps": 5,
+              "weight": 80
+            }
+          ]
+        },
+        {
+          "id": "c5c168eb-75e2-4619-bc0d-45e4e60f5c72",
+          "name": "Incline dumbbell bench press",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 18
+            },
+            {
+              "weight": 20,
+              "reps": 8
+            },
+            {
+              "weight": 22,
+              "reps": 8
+            },
+            {
+              "weight": 25,
+              "reps": 8
+            },
+            {
+              "weight": 28,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "id": "7a837d89-8ec1-497a-847e-60beaa51bb00",
+          "name": "High cable crossover",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 15
+            },
+            {
+              "weight": 20,
+              "reps": 10
+            },
+            {
+              "weight": 20,
+              "reps": 10
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 7
+            }
+          ]
+        },
+        {
+          "id": "394af799-f7d1-4e6c-928f-1d1012451be6",
+          "name": "Pec deck fly",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 45
+            },
+            {
+              "weight": 45,
+              "reps": 10
+            },
+            {
+              "weight": 50,
+              "reps": 10
+            },
+            {
+              "weight": 55,
+              "reps": 10
+            },
+            {
+              "weight": 60,
+              "reps": 10
+            }
+          ]
+        },
+        {
+          "id": "456f1f81-94f6-487a-b82d-eff961cb48f5",
+          "name": "Barbell curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "id": "c3ec6ee2-6902-4017-89c3-e536d2512f29",
+          "name": "Preacher curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 20
+            },
+            {
+              "weight": 25,
+              "reps": 10
+            },
+            {
+              "weight": 30,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "id": "cbfc2b1a-0848-4f1c-bd25-e9be89791354",
+          "name": "Alternating dumbbell curl",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 10
+            },
+            {
+              "weight": 12,
+              "reps": 10
+            },
+            {
+              "weight": 12,
+              "reps": 10
+            },
+            {
+              "weight": 14,
+              "reps": 8
+            },
+            {
+              "weight": 16,
+              "reps": 8
+            }
+          ]
+        },
+        {
+          "id": "6cbbd3aa-157c-49aa-9e7e-9277daab6ab0",
+          "name": "L-sit",
+          "sets": [
+            {
+              "reps": 10,
+              "weight": 0
+            },
+            {
+              "weight": 0,
+              "reps": 10
+            },
+            {
+              "weight": 0,
+              "reps": 10
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "theme": "light",
+  "profile": {
+    "name": "Boris",
+    "surname": "Jakubik",
+    "email": "",
+    "photo": ""
+  },
+  "weightUnit": "kg",
   "activeWorkout": null
 }

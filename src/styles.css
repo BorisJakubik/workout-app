@@ -963,20 +963,18 @@ h2 {
   transform: translate(-50%, -50%);
 }
 .weight-chart-labels {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
+  display: grid;
   padding: 12px 2px 4px;
 }
 .weight-chart-labels div {
   display: flex;
-  min-width: 72px;
-  flex: 1;
+  min-width: 0;
   flex-direction: column;
   text-align: center;
 }
 .weight-chart-labels strong {
   font: 800 12px 'Manrope';
+  white-space: nowrap;
 }
 .weight-chart-labels small {
   margin-top: 3px;

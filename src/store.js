@@ -1,5 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { localizeExerciseNames, localizeWorkoutExerciseNames } from './exerciseTranslations'
+import { localizeWorkoutNames, translateWorkoutName } from './workoutTranslations'
 
 const defaultCategories = [
   { id: 'push', name: 'Push tréning', icon: 'bench' },
@@ -121,9 +122,13 @@ const fitnessSlice = createSlice({
     setLanguage(state, action) {
       const language = action.payload === 'en' ? 'en' : 'sk'
       state.language = language
+      state.categories = localizeWorkoutNames(state.categories, language)
       state.exercises = localizeExerciseNames(state.exercises, language)
-      state.workouts = localizeWorkoutExerciseNames(state.workouts, language)
-      if (state.activeWorkout) state.activeWorkout.exercises = localizeExerciseNames(state.activeWorkout.exercises, language)
+      state.workouts = localizeWorkoutNames(localizeWorkoutExerciseNames(state.workouts, language), language)
+      if (state.activeWorkout) {
+        state.activeWorkout.name = translateWorkoutName(state.activeWorkout.name, language)
+        state.activeWorkout.exercises = localizeExerciseNames(state.activeWorkout.exercises, language)
+      }
     },
     setTheme(state, action) {
       state.theme = action.payload === 'light' ? 'light' : 'dark'
@@ -226,11 +231,15 @@ const fitnessSlice = createSlice({
         email: action.payload.profile?.email || '',
         photo: action.payload.profile?.photo || '',
       }
-      state.categories = action.payload.categories
+      state.categories = localizeWorkoutNames(action.payload.categories, language)
       state.exercises = localizeExerciseNames(action.payload.exercises, language)
-      state.workouts = localizeWorkoutExerciseNames(action.payload.workouts, language)
+      state.workouts = localizeWorkoutNames(localizeWorkoutExerciseNames(action.payload.workouts, language), language)
       state.activeWorkout = action.payload.activeWorkout
-        ? { ...action.payload.activeWorkout, exercises: localizeExerciseNames(action.payload.activeWorkout.exercises, language) }
+        ? {
+            ...action.payload.activeWorkout,
+            name: translateWorkoutName(action.payload.activeWorkout.name, language),
+            exercises: localizeExerciseNames(action.payload.activeWorkout.exercises, language),
+          }
         : null
     },
   },

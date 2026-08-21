@@ -60,7 +60,7 @@ const getBigThreeProgress = workouts => {
   return getProgress(history, workout => workout.value)
 }
 
-export const ProgressContainer = ({ workouts, stats }) => {
+export const ProgressContainer = ({ workouts, stats, weightUnit }) => {
   const { t, locale } = useTranslation()
   const recent = workouts.slice(0, 6).reverse()
   const powerlifting = [
@@ -80,6 +80,7 @@ export const ProgressContainer = ({ workouts, stats }) => {
       stats={stats}
       t={t}
       weightProgress={getMeasurementProgress(workouts, 'bodyWeight')}
+      weightUnit={weightUnit}
     />
   )
 }

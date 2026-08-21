@@ -1,5 +1,5 @@
 import React from 'react'
-import { BarChart3, Dumbbell, History as HistoryIcon, Home, Plus, Settings } from 'lucide-react'
+import { BarChart3, CheckCircle2, Dumbbell, History as HistoryIcon, Home, Plus, Settings, X } from 'lucide-react'
 import { NavButton } from '../../atoms/NavButton/NavButtonView'
 import { Dashboard } from '../Dashboard/DashboardContainer'
 import { History } from '../History/HistoryContainer'
@@ -8,6 +8,17 @@ import { ProgressView } from '../Progress/ProgressContainer'
 import { SettingsView } from '../Settings/SettingsContainer'
 import { WorkoutDetail } from '../WorkoutDetail/WorkoutDetailContainer'
 import { WorkoutEditor } from '../WorkoutEditor/WorkoutEditorContainer'
+
+const WorkoutConfirmation = ({ confirmation, onDismiss, closeLabel }) =>
+  confirmation && (
+    <div className="workout-confirmation" role="status" aria-live="polite">
+      <CheckCircle2 size={21} aria-hidden="true" />
+      <span>{confirmation.message}</span>
+      <button type="button" onClick={onDismiss} aria-label={closeLabel}>
+        <X size={17} />
+      </button>
+    </div>
+  )
 
 export const AppView = props => {
   const {
@@ -25,6 +36,7 @@ export const AppView = props => {
     t,
     theme,
     workouts,
+    weightUnit,
   } = props
   if (screen === 'workout' && activeWorkout)
     return (
@@ -35,18 +47,23 @@ export const AppView = props => {
         setDraft={props.onUpdateActiveWorkout}
         finish={props.onFinishWorkout}
         cancel={props.onCancelWorkout}
+        weightUnit={weightUnit}
       />
     )
   if (selectedWorkout)
     return (
-      <WorkoutDetail
-        workout={selectedWorkout}
-        exercises={exercises}
-        calorieWeight={calorieWeight}
-        onBack={() => props.openWorkout(null)}
-        onSave={props.onSaveWorkout}
-        onDelete={props.onDeleteWorkout}
-      />
+      <>
+        <WorkoutDetail
+          workout={selectedWorkout}
+          exercises={exercises}
+          calorieWeight={calorieWeight}
+          onBack={() => props.openWorkout(null)}
+          onSave={props.onSaveWorkout}
+          onDelete={props.onDeleteWorkout}
+          weightUnit={weightUnit}
+        />
+        <WorkoutConfirmation confirmation={props.workoutConfirmation} onDismiss={props.onDismissWorkoutConfirmation} closeLabel={t('dismiss')} />
+      </>
     )
   const initials = `${profile.name.trim()[0] || ''}${profile.surname.trim()[0] || ''}`.toUpperCase() || 'U'
   const fullName = [profile.name, profile.surname].filter(Boolean).join(' ')
@@ -94,12 +111,22 @@ export const AppView = props => {
             startWorkout={props.onStartWorkout}
             setScreen={props.onScreenChange}
             openWorkout={props.openWorkout}
+            weightUnit={weightUnit}
           />
         )}
         {screen === 'history' && <History workouts={workouts} openWorkout={props.openWorkout} />}
-        {screen === 'progress' && <ProgressView workouts={workouts} stats={stats} />}
+        {screen === 'progress' && <ProgressView workouts={workouts} stats={stats} weightUnit={weightUnit} />}
         {screen === 'library' && <LibraryView categories={categories} exercises={exercises} />}
-        {screen === 'settings' && <SettingsView profile={profile} theme={theme} onThemeChange={props.onThemeChange} onSave={props.onUpdateProfile} />}
+        {screen === 'settings' && (
+          <SettingsView
+            profile={profile}
+            theme={theme}
+            weightUnit={weightUnit}
+            onThemeChange={props.onThemeChange}
+            onWeightUnitChange={props.onWeightUnitChange}
+            onSave={props.onUpdateProfile}
+          />
+        )}
       </main>
       <nav className="bottom-nav">
         <NavButton active={screen === 'home'} icon={Home} label={t('home')} onClick={() => props.onScreenChange('home')} />
@@ -110,6 +137,7 @@ export const AppView = props => {
         <NavButton active={screen === 'progress'} icon={BarChart3} label={t('progress')} onClick={() => props.onScreenChange('progress')} />
         <NavButton active={screen === 'library'} icon={Dumbbell} label={t('exercisesNav')} onClick={() => props.onScreenChange('library')} />
       </nav>
+      <WorkoutConfirmation confirmation={props.workoutConfirmation} onDismiss={props.onDismissWorkoutConfirmation} closeLabel={t('dismiss')} />
     </div>
   )
 }

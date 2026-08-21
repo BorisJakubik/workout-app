@@ -2,8 +2,9 @@ import React from 'react'
 import { Activity, Dumbbell, Plus, Trophy } from 'lucide-react'
 import { WorkoutRow } from '../../molecules/WorkoutRow/WorkoutRowContainer'
 import { CategoryIcon } from '../../atoms/CategoryIcon/CategoryIconView'
+import { weightFromKg } from '../../../utils'
 
-export const DashboardView = ({ workouts, categories, exercises, stats, profileName, startWorkout, setScreen, openWorkout, t }) => {
+export const DashboardView = ({ workouts, categories, exercises, stats, profileName, startWorkout, setScreen, openWorkout, t, weightUnit }) => {
   return (
     <>
       <section className="hero">
@@ -28,7 +29,9 @@ export const DashboardView = ({ workouts, categories, exercises, stats, profileN
         </div>
         <div className="stat-card accent">
           <Trophy />
-          <strong>{stats.best} kg</strong>
+          <strong>
+            {weightFromKg(stats.best, weightUnit)} {weightUnit}
+          </strong>
           <span>{t('highestWeight')}</span>
         </div>
       </section>

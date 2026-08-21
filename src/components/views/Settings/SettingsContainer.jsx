@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from '../../../i18n'
 import { SettingsView } from './SettingsView'
 
-export const SettingsContainer = ({ profile, theme, onSave, onThemeChange }) => {
+export const SettingsContainer = ({ profile, theme, weightUnit, onSave, onThemeChange, onWeightUnitChange }) => {
   const { t } = useTranslation()
   const [draft, setDraft] = useState(profile)
   const [saved, setSaved] = useState(false)
@@ -31,6 +31,8 @@ export const SettingsContainer = ({ profile, theme, onSave, onThemeChange }) => 
       saved={saved}
       t={t}
       theme={theme}
+      weightUnit={weightUnit}
+      onWeightUnitChange={onWeightUnitChange}
     />
   )
 }

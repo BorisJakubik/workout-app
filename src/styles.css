@@ -1516,8 +1516,9 @@ h2 {
 }
 .delete-workout-modal {
   width: min(100%, 420px);
-  border: 1px solid #3b302f;
-  background: #121614;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: inherit;
   box-shadow: 0 24px 70px rgb(0 0 0 / 55%);
   padding: 24px;
 }
@@ -1559,11 +1560,67 @@ h2 {
 }
 .modal-cancel {
   background: transparent;
+  color: inherit;
 }
 .modal-delete {
   border-color: #d94b4b !important;
   background: #d94b4b;
   color: white;
+}
+.workout-confirmation {
+  position: fixed;
+  z-index: 120;
+  top: 20px;
+  left: 50%;
+  display: flex;
+  width: min(calc(100% - 32px), 440px);
+  min-height: 54px;
+  align-items: center;
+  gap: 11px;
+  border: 1px solid color-mix(in srgb, var(--lime) 55%, var(--line));
+  background: var(--panel);
+  color: inherit;
+  box-shadow: 0 16px 42px rgb(0 0 0 / 30%);
+  padding: 11px 12px 11px 15px;
+  transform: translateX(-50%);
+  animation: workout-confirmation-in 180ms ease-out;
+}
+.workout-confirmation > svg {
+  flex: 0 0 auto;
+  color: var(--lime);
+}
+.workout-confirmation span {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+}
+.workout-confirmation button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.workout-confirmation button:hover,
+.workout-confirmation button:focus-visible {
+  background: color-mix(in srgb, var(--lime) 12%, transparent);
+  color: inherit;
+  outline: none;
+}
+@keyframes workout-confirmation-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workout-confirmation {
+    animation: none;
+  }
 }
 .delete-workout-modal-actions button:focus-visible {
   outline: 2px solid var(--lime);

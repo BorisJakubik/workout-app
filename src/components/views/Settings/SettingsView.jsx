@@ -1,7 +1,7 @@
 import React from 'react'
-import { Camera, Check, Moon, Sun, Trash2 } from 'lucide-react'
+import { Camera, Check, Moon, Scale, Sun, Trash2 } from 'lucide-react'
 
-export const SettingsView = ({ draft, onFieldChange, onPhotoSelect, onSubmit, onThemeChange, saved, t, theme }) => (
+export const SettingsView = ({ draft, onFieldChange, onPhotoSelect, onSubmit, onThemeChange, onWeightUnitChange, saved, t, theme, weightUnit }) => (
   <section className="page settings-page">
     <p className="eyebrow">{t('preferences')}</p>
     <h1>{t('settings')}</h1>
@@ -26,6 +26,31 @@ export const SettingsView = ({ draft, onFieldChange, onPhotoSelect, onSubmit, on
           <span>
             <strong>{t('lightMode')}</strong>
             <small>{t('lightModeHint')}</small>
+          </span>
+        </button>
+      </div>
+    </div>
+    <div className="settings-card">
+      <div className="settings-card-heading">
+        <div>
+          <p className="eyebrow">{t('units')}</p>
+          <h2>{t('weightUnit')}</h2>
+        </div>
+        <Scale />
+      </div>
+      <div className="theme-options">
+        <button className={weightUnit === 'kg' ? 'selected' : ''} onClick={() => onWeightUnitChange('kg')}>
+          <strong>kg</strong>
+          <span>
+            <strong>{t('kilograms')}</strong>
+            <small>{t('kilogramsHint')}</small>
+          </span>
+        </button>
+        <button className={weightUnit === 'lbs' ? 'selected' : ''} onClick={() => onWeightUnitChange('lbs')}>
+          <strong>lb</strong>
+          <span>
+            <strong>{t('pounds')}</strong>
+            <small>{t('poundsHint')}</small>
           </span>
         </button>
       </div>

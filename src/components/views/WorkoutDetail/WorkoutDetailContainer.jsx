@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from '../../../i18n'
 import { WorkoutDetailView } from './WorkoutDetailView'
+import { weightToKg } from '../../../utils'
 
 const STRENGTH_TRAINING_MET = 6
 
-export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBack, onSave, onDelete }) => {
+export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBack, onSave, onDelete, weightUnit }) => {
   const { t, locale } = useTranslation()
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(workout)
@@ -31,7 +32,9 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
   const updateSet = (exerciseId, setIndex, field, value) =>
     updateExercise(exerciseId, exercise => ({
       ...exercise,
-      sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: Math.max(0, Number(value)) } : set)),
+      sets: exercise.sets.map((set, index) =>
+        index === setIndex ? { ...set, [field]: Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)) } : set,
+      ),
     }))
   useEffect(() => {
     if (!orderedExercises.some(exercise => exercise.name === chosenExercise)) {
@@ -98,6 +101,7 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
       updateExercise={updateExercise}
       updateSet={updateSet}
       workout={workout}
+      weightUnit={weightUnit}
     />
   )
 }

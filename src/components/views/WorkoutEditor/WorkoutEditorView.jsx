@@ -1,7 +1,7 @@
 import React from 'react'
 import { Check, ChevronDown, Copy, Plus, Trash2, X } from 'lucide-react'
 import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
-import { toDateInputValue } from '../../../utils'
+import { toDateInputValue, weightFromKg, weightToKg } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
 
 export const WorkoutEditorView = ({
@@ -26,6 +26,7 @@ export const WorkoutEditorView = ({
   updateSet,
   workoutToImport,
   workoutDetailsOpen,
+  weightUnit,
 }) => {
   return (
     <div className="app-shell editor">
@@ -96,11 +97,16 @@ export const WorkoutEditorView = ({
                     type="number"
                     min="0"
                     step="0.1"
-                    value={draft.bodyWeight ?? 80}
+                    value={weightFromKg(draft.bodyWeight ?? 80, weightUnit)}
                     placeholder="—"
-                    onChange={event => setDraft({ ...draft, bodyWeight: event.target.value === '' ? null : Math.max(0, Number(event.target.value)) })}
+                    onChange={event =>
+                      setDraft({
+                        ...draft,
+                        bodyWeight: event.target.value === '' ? null : Math.max(0, weightToKg(event.target.value, weightUnit)),
+                      })
+                    }
                   />{' '}
-                  kg
+                  {weightUnit}
                 </span>
               </label>
               <label>
@@ -173,14 +179,20 @@ export const WorkoutEditorView = ({
               <div className="exercise-sets">
                 <div className="set-head">
                   <span>{t('set')}</span>
-                  <span>KG</span>
+                  <span>{weightUnit.toUpperCase()}</span>
                   <span>{t('reps')}</span>
                   <span />
                 </div>
                 {exercise.sets.map((set, index) => (
                   <div className="set-row" key={index}>
                     <span className="set-index">{index + 1}</span>
-                    <input type="number" value={set.weight} onChange={event => updateSet(exercise.id, index, 'weight', event.target.value)} />
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      value={weightFromKg(set.weight, weightUnit)}
+                      onChange={event => updateSet(exercise.id, index, 'weight', event.target.value)}
+                    />
                     <input type="number" value={set.reps} onChange={event => updateSet(exercise.id, index, 'reps', event.target.value)} />
                     <button
                       className="set-delete"

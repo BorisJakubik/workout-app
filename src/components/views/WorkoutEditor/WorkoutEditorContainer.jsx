@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from '../../../i18n'
 import { WorkoutEditorView } from './WorkoutEditorView'
+import { weightToKg } from '../../../utils'
 
-export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDraft, finish, cancel }) => {
+export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDraft, finish, cancel, weightUnit }) => {
   const { t } = useTranslation()
   const categoryExercises = exercises.filter(exercise => exercise.categoryId === draft.categoryId)
   const selectedExerciseNames = new Set(draft.exercises.map(exercise => exercise.name.trim().toLocaleLowerCase()))
@@ -31,7 +32,12 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       exercises: draft.exercises.map(exercise =>
         exercise.id !== exerciseId
           ? exercise
-          : { ...exercise, sets: exercise.sets.map((set, index) => (index === setIndex ? { ...set, [field]: Math.max(0, Number(value)) } : set)) },
+          : {
+              ...exercise,
+              sets: exercise.sets.map((set, index) =>
+                index === setIndex ? { ...set, [field]: Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)) } : set,
+              ),
+            },
       ),
     })
   const addExercise = () => {
@@ -94,6 +100,7 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       updateSet={updateSet}
       workoutToImport={workoutToImport}
       workoutDetailsOpen={workoutDetailsOpen}
+      weightUnit={weightUnit}
     />
   )
 }

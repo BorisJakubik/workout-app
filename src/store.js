@@ -105,6 +105,7 @@ const read = key => {
 const initialState = read('fittrack-redux') || {
   language: 'sk',
   theme: 'dark',
+  weightUnit: 'kg',
   profile: { name: 'Boris', surname: '', email: '', photo: '' },
   categories: defaultCategories,
   exercises: defaultExercises,
@@ -121,6 +122,9 @@ const fitnessSlice = createSlice({
     },
     setTheme(state, action) {
       state.theme = action.payload === 'light' ? 'light' : 'dark'
+    },
+    setWeightUnit(state, action) {
+      state.weightUnit = action.payload === 'lbs' ? 'lbs' : 'kg'
     },
     updateProfile(state, action) {
       state.profile = {
@@ -209,6 +213,7 @@ const fitnessSlice = createSlice({
     replaceData(state, action) {
       state.language = action.payload.language || 'sk'
       state.theme = action.payload.theme === 'light' ? 'light' : 'dark'
+      state.weightUnit = action.payload.weightUnit === 'lbs' ? 'lbs' : 'kg'
       state.profile = {
         name: action.payload.profile?.name || 'Boris',
         surname: action.payload.profile?.surname || '',
@@ -225,6 +230,7 @@ const fitnessSlice = createSlice({
 export const {
   setLanguage,
   setTheme,
+  setWeightUnit,
   updateProfile,
   addCategory,
   updateCategoryIcon,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ChevronDown, Plus, Trash2 } from 'lucide-react'
 import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
-import { toDateInputValue } from '../../../utils'
+import { toDateInputValue, weightFromKg, weightToKg } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
 import { DeleteWorkoutModalView } from '../../molecules/DeleteWorkoutModal/DeleteWorkoutModalView'
 import { WorkoutDetailHeaderView } from '../../molecules/WorkoutDetailHeader/WorkoutDetailHeaderView'
@@ -35,6 +35,7 @@ export const WorkoutDetailView = ({
   updateExercise,
   updateSet,
   workout,
+  weightUnit,
 }) => {
   return (
     <div className="app-shell detail-page">
@@ -82,7 +83,9 @@ export const WorkoutDetailView = ({
           <div className="detail-calories">
             <span>{t('caloriesBurned')}</span>
             <strong>{caloriesBurned.toLocaleString(locale)} kcal</strong>
-            <small>{t('calorieCalculation', { met: STRENGTH_TRAINING_MET, weight: displayedCalorieWeight })}</small>
+            <small>
+              {t('calorieCalculation', { met: STRENGTH_TRAINING_MET, weight: weightFromKg(displayedCalorieWeight, weightUnit), unit: weightUnit })}
+            </small>
           </div>
           {editing && (
             <label className="duration-edit">
@@ -105,11 +108,16 @@ export const WorkoutDetailView = ({
                     type="number"
                     min="0"
                     step="0.1"
-                    value={draft.bodyWeight ?? ''}
+                    value={weightFromKg(draft.bodyWeight, weightUnit) ?? ''}
                     placeholder="—"
-                    onChange={event => setDraft({ ...draft, bodyWeight: event.target.value === '' ? null : Math.max(0, Number(event.target.value)) })}
+                    onChange={event =>
+                      setDraft({
+                        ...draft,
+                        bodyWeight: event.target.value === '' ? null : Math.max(0, weightToKg(event.target.value, weightUnit)),
+                      })
+                    }
                   />{' '}
-                  kg
+                  {weightUnit}
                 </span>
               </label>
               <label>
@@ -138,7 +146,10 @@ export const WorkoutDetailView = ({
               <div className="detail-body-metrics">
                 {displayedWorkout.bodyWeight != null && (
                   <span>
-                    {t('currentWeight')} <strong>{displayedWorkout.bodyWeight} kg</strong>
+                    {t('currentWeight')}{' '}
+                    <strong>
+                      {weightFromKg(displayedWorkout.bodyWeight, weightUnit)} {weightUnit}
+                    </strong>
                   </span>
                 )}
                 {displayedWorkout.bodyFatPercentage != null && (
@@ -196,7 +207,7 @@ export const WorkoutDetailView = ({
               <>
                 <div className={`detail-set header ${editing ? 'editing' : ''}`}>
                   <span>{t('set')}</span>
-                  <span>KG</span>
+                  <span>{weightUnit.toUpperCase()}</span>
                   <span>{t('reps')}</span>
                   {editing && <span />}
                 </div>
@@ -207,11 +218,14 @@ export const WorkoutDetailView = ({
                       <input
                         type="number"
                         min="0"
-                        value={set.weight}
+                        step="0.1"
+                        value={weightFromKg(set.weight, weightUnit)}
                         onChange={event => updateSet(exercise.id, setIndex, 'weight', event.target.value)}
                       />
                     ) : (
-                      <span>{set.weight} kg</span>
+                      <span>
+                        {weightFromKg(set.weight, weightUnit)} {weightUnit}
+                      </span>
                     )}
                     {editing ? (
                       <input

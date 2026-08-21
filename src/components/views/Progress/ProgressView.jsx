@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dumbbell, Trophy } from 'lucide-react'
-import { formatDate } from '../../../utils'
+import { formatDate, weightFromKg } from '../../../utils'
 
 const LineProgressCard = ({ ariaLabel, emptyLabel, eyebrow, getValue, history, points, polyline, title, locale }) => (
   <div className="weight-progress-card">
@@ -52,6 +52,7 @@ export const ProgressView = ({
   stats,
   t,
   weightProgress,
+  weightUnit,
 }) => (
   <section className="page">
     <p className="eyebrow">{t('results')}</p>
@@ -82,14 +83,18 @@ export const ProgressView = ({
         {powerlifting.map(lift => (
           <div className="powerlifting-lift" key={lift.key}>
             <span>{t(lift.key)}</span>
-            <strong>{lift.value} kg</strong>
+            <strong>
+              {weightFromKg(lift.value, weightUnit)} {weightUnit}
+            </strong>
             <small>{t('heaviestSet')}</small>
           </div>
         ))}
       </div>
       <div className="powerlifting-total">
         <span>{t('powerliftingTotal')}</span>
-        <strong>{powerliftingTotal} kg</strong>
+        <strong>
+          {weightFromKg(powerliftingTotal, weightUnit)} {weightUnit}
+        </strong>
       </div>
     </div>
     <LineProgressCard
@@ -97,7 +102,7 @@ export const ProgressView = ({
       ariaLabel={t('weightHistory')}
       emptyLabel={t('noWeightData')}
       eyebrow={t('bodyWeightProgress')}
-      getValue={workout => `${workout.bodyWeight} kg`}
+      getValue={workout => `${weightFromKg(workout.bodyWeight, weightUnit)} ${weightUnit}`}
       locale={locale}
       title={t('weightHistory')}
     />
@@ -106,7 +111,7 @@ export const ProgressView = ({
       ariaLabel={t('bigThreeTotalProgress')}
       emptyLabel={t('noBigThreeData')}
       eyebrow={t('powerlifting')}
-      getValue={workout => `${workout.value} kg`}
+      getValue={workout => `${weightFromKg(workout.value, weightUnit)} ${weightUnit}`}
       locale={locale}
       title={t('bigThreeTotalProgress')}
     />
@@ -123,7 +128,9 @@ export const ProgressView = ({
       <Trophy />
       <div>
         <small>{t('personalRecord')}</small>
-        <strong>{stats.best} kg</strong>
+        <strong>
+          {weightFromKg(stats.best, weightUnit)} {weightUnit}
+        </strong>
         <span>{t('highestWeight')}</span>
       </div>
     </div>

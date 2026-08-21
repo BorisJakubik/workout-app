@@ -7,6 +7,7 @@ import {
   initializeData,
   setLanguage,
   setTheme,
+  setWeightUnit,
   startWorkout,
   updateActiveWorkout,
   updateProfile,
@@ -20,6 +21,7 @@ export const AppContainer = () => {
   const { language, t } = useTranslation()
   const { workouts, categories, exercises, activeWorkout } = useSelector(state => state.fitness)
   const theme = useSelector(state => state.fitness.theme || 'dark')
+  const weightUnit = useSelector(state => (state.fitness.weightUnit === 'lbs' ? 'lbs' : 'kg'))
   const storedProfile = useSelector(state => state.fitness.profile)
   const profile = {
     name: storedProfile?.name || 'Boris',
@@ -30,6 +32,7 @@ export const AppContainer = () => {
   const [screen, setScreen] = useState(activeWorkout ? 'workout' : 'home')
   const [selectedWorkout, setSelectedWorkout] = useState(null)
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
+  const [workoutConfirmation, setWorkoutConfirmation] = useState(null)
   const profileMenuRef = useRef(null)
   useEffect(() => {
     initializeData()
@@ -40,6 +43,11 @@ export const AppContainer = () => {
   useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
+  useEffect(() => {
+    if (!workoutConfirmation) return undefined
+    const timeout = window.setTimeout(() => setWorkoutConfirmation(null), 3500)
+    return () => window.clearTimeout(timeout)
+  }, [workoutConfirmation])
   useEffect(() => {
     if (!profileMenuOpen) return undefined
     const closeMenu = event => {
@@ -69,6 +77,7 @@ export const AppContainer = () => {
   const saveSelected = updated => {
     dispatch(updateWorkout(updated))
     setSelectedWorkout(updated)
+    setWorkoutConfirmation({ id: Date.now(), message: t('workoutSaved', { name: updated.name }) })
   }
   const deleteSelected = () => {
     dispatch(deleteWorkout(selectedWorkout.id))
@@ -92,8 +101,10 @@ export const AppContainer = () => {
       }}
       onDeleteWorkout={deleteSelected}
       onFinishWorkout={() => {
+        const workoutName = activeWorkout?.name || t('workout')
         dispatch(finishWorkout())
         setScreen('home')
+        setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) })
       }}
       onLanguageChange={() => dispatch(setLanguage(language === 'sk' ? 'en' : 'sk'))}
       onProfileMenuToggle={() => setProfileMenuOpen(open => !open)}
@@ -101,6 +112,7 @@ export const AppContainer = () => {
       onScreenChange={setScreen}
       onStartWorkout={start}
       onThemeChange={value => dispatch(setTheme(value))}
+      onWeightUnitChange={value => dispatch(setWeightUnit(value))}
       onUpdateActiveWorkout={draft => dispatch(updateActiveWorkout(draft))}
       onUpdateProfile={value => dispatch(updateProfile(value))}
       openWorkout={setSelectedWorkout}
@@ -113,6 +125,9 @@ export const AppContainer = () => {
       t={t}
       theme={theme}
       workouts={workouts}
+      workoutConfirmation={workoutConfirmation}
+      onDismissWorkoutConfirmation={() => setWorkoutConfirmation(null)}
+      weightUnit={weightUnit}
     />
   )
 }

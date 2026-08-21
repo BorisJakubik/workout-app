@@ -1051,6 +1051,11 @@ h2 {
 .create-form.stacked {
   grid-template-columns: 1fr;
 }
+.exercise-selection-hint {
+  margin-top: -2px;
+  color: var(--muted);
+  font-size: 11px;
+}
 .new-category-icons {
   grid-column: 1 / -1;
 }
@@ -1921,6 +1926,47 @@ h2 {
   padding: 12px;
   outline: none;
   line-height: 1.5;
+}
+.notes-dictation {
+  position: relative;
+}
+.notes-dictation textarea {
+  display: block;
+}
+.dictation-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 9px;
+  border: 1px solid #465149;
+  border-radius: 999px;
+  background: transparent;
+  color: #cbd2ce;
+  padding: 7px 11px;
+  font: inherit;
+  cursor: pointer;
+}
+.dictation-button:hover,
+.dictation-button:focus-visible {
+  border-color: var(--lime);
+  color: var(--lime);
+  outline: none;
+}
+.dictation-button.listening {
+  border-color: #ef5b5b;
+  color: #ff8585;
+}
+.dictation-message {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.dictation-message.listening {
+  color: var(--lime);
+}
+.dictation-message.error {
+  color: #ff8585;
 }
 .notes-field textarea:focus,
 .detail-notes textarea:focus {

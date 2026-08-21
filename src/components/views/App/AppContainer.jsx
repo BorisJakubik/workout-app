@@ -41,6 +41,11 @@ export const AppContainer = () => {
     document.documentElement.lang = language
   }, [language])
   useEffect(() => {
+    if (!selectedWorkout) return
+    const localizedWorkout = workouts.find(workout => workout.id === selectedWorkout.id)
+    if (localizedWorkout && localizedWorkout !== selectedWorkout) setSelectedWorkout(localizedWorkout)
+  }, [workouts, selectedWorkout])
+  useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
   useEffect(() => {

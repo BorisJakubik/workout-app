@@ -5,6 +5,7 @@ import { toDateInputValue, weightFromKg, weightToKg } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
 import { DeleteWorkoutModalView } from '../../molecules/DeleteWorkoutModal/DeleteWorkoutModalView'
 import { WorkoutDetailHeaderView } from '../../molecules/WorkoutDetailHeader/WorkoutDetailHeaderView'
+import { NotesDictation } from '../../molecules/NotesDictation/NotesDictation'
 
 const STRENGTH_TRAINING_MET = 6
 
@@ -168,10 +169,12 @@ export const WorkoutDetailView = ({
         <section className="detail-notes">
           <p className="eyebrow">{t('notes')}</p>
           {editing ? (
-            <textarea
+            <NotesDictation
+              locale={locale}
               value={draft.notes || ''}
-              onChange={event => setDraft({ ...draft, notes: event.target.value })}
+              onChange={notes => setDraft({ ...draft, notes })}
               placeholder={t('detailNotesPlaceholder')}
+              t={t}
             />
           ) : (
             <p>{workout.notes?.trim() || t('noNotes')}</p>
@@ -218,14 +221,12 @@ export const WorkoutDetailView = ({
                       <input
                         type="number"
                         min="0"
-                        step="0.1"
-                        value={weightFromKg(set.weight, weightUnit)}
+                        step={weightFromKg(5, weightUnit)}
+                        value={weightFromKg(set.weight, weightUnit) ?? ''}
                         onChange={event => updateSet(exercise.id, setIndex, 'weight', event.target.value)}
                       />
                     ) : (
-                      <span>
-                        {weightFromKg(set.weight, weightUnit)} {weightUnit}
-                      </span>
+                      <span>{set.weight == null ? '—' : `${weightFromKg(set.weight, weightUnit)} ${weightUnit}`}</span>
                     )}
                     {editing ? (
                       <input
@@ -254,7 +255,7 @@ export const WorkoutDetailView = ({
                   <button
                     className="add-set"
                     onClick={() =>
-                      updateExercise(exercise.id, item => ({ ...item, sets: [...item.sets, { weight: item.sets.at(-1)?.weight || 0, reps: 10 }] }))
+                      updateExercise(exercise.id, item => ({ ...item, sets: [...item.sets, { weight: item.sets.at(-1)?.weight ?? 0, reps: 10 }] }))
                     }
                   >
                     <Plus size={16} /> {t('addSet')}

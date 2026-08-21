@@ -1,4 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
+import { localizeExerciseNames, localizeWorkoutExerciseNames } from './exerciseTranslations'
 
 const defaultCategories = [
   { id: 'push', name: 'Push tréning', icon: 'bench' },
@@ -118,7 +119,11 @@ const fitnessSlice = createSlice({
   initialState,
   reducers: {
     setLanguage(state, action) {
-      state.language = action.payload === 'en' ? 'en' : 'sk'
+      const language = action.payload === 'en' ? 'en' : 'sk'
+      state.language = language
+      state.exercises = localizeExerciseNames(state.exercises, language)
+      state.workouts = localizeWorkoutExerciseNames(state.workouts, language)
+      if (state.activeWorkout) state.activeWorkout.exercises = localizeExerciseNames(state.activeWorkout.exercises, language)
     },
     setTheme(state, action) {
       state.theme = action.payload === 'light' ? 'light' : 'dark'
@@ -178,7 +183,7 @@ const fitnessSlice = createSlice({
         categoryId: category.id,
         name: category.name,
         date: `${new Date(Date.now() - new Date().getTimezoneOffset() * 60_000).toISOString().slice(0, 10)}T12:00:00`,
-        duration: 0,
+        duration: 60,
         notes: '',
         rating: 0,
         bodyWeight: null,
@@ -211,7 +216,8 @@ const fitnessSlice = createSlice({
       state.workouts = state.workouts.filter(workout => workout.id !== action.payload)
     },
     replaceData(state, action) {
-      state.language = action.payload.language || 'sk'
+      const language = action.payload.language === 'en' ? 'en' : 'sk'
+      state.language = language
       state.theme = action.payload.theme === 'light' ? 'light' : 'dark'
       state.weightUnit = action.payload.weightUnit === 'lbs' ? 'lbs' : 'kg'
       state.profile = {
@@ -221,9 +227,11 @@ const fitnessSlice = createSlice({
         photo: action.payload.profile?.photo || '',
       }
       state.categories = action.payload.categories
-      state.exercises = action.payload.exercises
-      state.workouts = action.payload.workouts
-      state.activeWorkout = action.payload.activeWorkout || null
+      state.exercises = localizeExerciseNames(action.payload.exercises, language)
+      state.workouts = localizeWorkoutExerciseNames(action.payload.workouts, language)
+      state.activeWorkout = action.payload.activeWorkout
+        ? { ...action.payload.activeWorkout, exercises: localizeExerciseNames(action.payload.activeWorkout.exercises, language) }
+        : null
     },
   },
 })

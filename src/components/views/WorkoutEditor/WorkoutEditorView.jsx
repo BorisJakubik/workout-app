@@ -3,6 +3,7 @@ import { Check, ChevronDown, Copy, Plus, Trash2, X } from 'lucide-react'
 import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
 import { toDateInputValue, weightFromKg, weightToKg } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
+import { NotesDictation } from '../../molecules/NotesDictation/NotesDictation'
 
 export const WorkoutEditorView = ({
   addExercise,
@@ -16,6 +17,7 @@ export const WorkoutEditorView = ({
   importDate,
   importWorkout,
   importableWorkouts,
+  locale,
   removeSet,
   setChosen,
   setDraft,
@@ -67,7 +69,7 @@ export const WorkoutEditorView = ({
               <input
                 type="number"
                 min="0"
-                value={draft.duration || 60}
+                value={draft.duration ?? 60}
                 placeholder="0"
                 onChange={event => setDraft({ ...draft, duration: Math.max(0, Number(event.target.value)) })}
               />{' '}
@@ -139,10 +141,12 @@ export const WorkoutEditorView = ({
               </div>
               <label className="notes-field">
                 {t('notes')}
-                <textarea
+                <NotesDictation
+                  locale={locale}
                   value={draft.notes || ''}
-                  onChange={event => setDraft({ ...draft, notes: event.target.value })}
+                  onChange={notes => setDraft({ ...draft, notes })}
                   placeholder={t('notesPlaceholder')}
+                  t={t}
                 />
               </label>
             </>
@@ -189,8 +193,8 @@ export const WorkoutEditorView = ({
                     <input
                       type="number"
                       min="0"
-                      step="0.1"
-                      value={weightFromKg(set.weight, weightUnit)}
+                      step={weightFromKg(5, weightUnit)}
+                      value={weightFromKg(set.weight, weightUnit) ?? ''}
                       onChange={event => updateSet(exercise.id, index, 'weight', event.target.value)}
                     />
                     <input type="number" value={set.reps} onChange={event => updateSet(exercise.id, index, 'reps', event.target.value)} />

@@ -33,7 +33,13 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
     updateExercise(exerciseId, exercise => ({
       ...exercise,
       sets: exercise.sets.map((set, index) =>
-        index === setIndex ? { ...set, [field]: Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)) } : set,
+        index === setIndex
+          ? {
+              ...set,
+              [field]:
+                field === 'weight' && value === '' ? undefined : Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)),
+            }
+          : set,
       ),
     }))
   useEffect(() => {

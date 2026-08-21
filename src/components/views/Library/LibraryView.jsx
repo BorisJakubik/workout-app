@@ -6,6 +6,7 @@ import { DeleteLibraryItemModalView } from '../../molecules/DeleteLibraryItemMod
 
 export const LibraryView = props => {
   const { categories, categoryIcon, categoryId, categoryName, editedName, editingId, exerciseName, exercises, t } = props
+  const exerciseOptions = [...new Set(exercises.map(exercise => exercise.name.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b))
   return (
     <section className="page">
       <p className="eyebrow">{t('customPlan')}</p>
@@ -46,7 +47,18 @@ export const LibraryView = props => {
       <div className="manage-card">
         <h2>{t('newExercise')}</h2>
         <form className="create-form stacked" onSubmit={props.onSubmitExercise}>
-          <input value={exerciseName} onChange={event => props.onExerciseNameChange(event.target.value)} placeholder={t('exercisePlaceholder')} />
+          <input
+            list="library-exercise-options"
+            value={exerciseName}
+            onChange={event => props.onExerciseNameChange(event.target.value)}
+            placeholder={t('exercisePlaceholder')}
+          />
+          <datalist id="library-exercise-options">
+            {exerciseOptions.map(name => (
+              <option value={name} key={name} />
+            ))}
+          </datalist>
+          <small className="exercise-selection-hint">{t('exerciseSelectionHint')}</small>
           <CategoryDropdown categories={categories} value={categoryId} onChange={props.onCategoryIdChange} />
           <button>
             <Plus size={18} /> {t('addExerciseButton')}

@@ -4,7 +4,7 @@ import { WorkoutEditorView } from './WorkoutEditorView'
 import { weightToKg } from '../../../utils'
 
 export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDraft, finish, cancel, weightUnit }) => {
-  const { t } = useTranslation()
+  const { t, locale } = useTranslation()
   const categoryExercises = exercises.filter(exercise => exercise.categoryId === draft.categoryId)
   const selectedExerciseNames = new Set(draft.exercises.map(exercise => exercise.name.trim().toLocaleLowerCase()))
   const availableExercises = exercises.filter(
@@ -35,7 +35,15 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
           : {
               ...exercise,
               sets: exercise.sets.map((set, index) =>
-                index === setIndex ? { ...set, [field]: Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)) } : set,
+                index === setIndex
+                  ? {
+                      ...set,
+                      [field]:
+                        field === 'weight' && value === ''
+                          ? undefined
+                          : Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)),
+                    }
+                  : set,
               ),
             },
       ),
@@ -48,7 +56,7 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
     setDraft({
       ...draft,
       exercises: draft.exercises.map(exercise =>
-        exercise.id === id ? { ...exercise, sets: [...exercise.sets, { reps: 10, weight: exercise.sets.at(-1)?.weight || 0 }] } : exercise,
+        exercise.id === id ? { ...exercise, sets: [...exercise.sets, { reps: 10, weight: exercise.sets.at(-1)?.weight ?? 0 }] } : exercise,
       ),
     })
   const removeSet = (exerciseId, setIndex) =>
@@ -90,6 +98,7 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       importDate={importDate}
       importWorkout={importWorkout}
       importableWorkouts={importableWorkouts}
+      locale={locale}
       removeSet={removeSet}
       setChosen={setChosen}
       setDraft={setDraft}

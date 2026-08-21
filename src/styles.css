@@ -389,7 +389,8 @@ h2 {
   margin-bottom: auto;
 }
 .stat-card strong {
-  font: 800 21px 'Manrope';
+  font: 800 clamp(15px, 4.5vw, 21px) 'Manrope';
+  white-space: nowrap;
 }
 .stat-card span {
   color: var(--muted);

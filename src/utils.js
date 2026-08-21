@@ -5,6 +5,15 @@ export const toDateInputValue = value => {
   return new Date(date.getTime() - offset).toISOString().slice(0, 10)
 }
 
+export const formatDuration = totalMinutes => {
+  const minutes = Math.max(0, Math.floor(Number(totalMinutes) || 0))
+  const days = Math.floor(minutes / 1440)
+  const hours = Math.floor((minutes % 1440) / 60)
+  const remainingMinutes = minutes % 60
+
+  return days > 0 ? `${days} d ${hours} h ${remainingMinutes} min` : `${hours} h ${remainingMinutes} min`
+}
+
 export const POUNDS_PER_KILOGRAM = 2.20462
 
 export const weightFromKg = (value, unit = 'kg') => {

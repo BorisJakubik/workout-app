@@ -2,7 +2,7 @@ import React from 'react'
 import { Activity, Dumbbell, Plus, Trophy } from 'lucide-react'
 import { WorkoutRow } from '../../molecules/WorkoutRow/WorkoutRowContainer'
 import { CategoryIcon } from '../../atoms/CategoryIcon/CategoryIconView'
-import { weightFromKg } from '../../../utils'
+import { formatDuration, weightFromKg } from '../../../utils'
 
 export const DashboardView = ({ workouts, categories, exercises, stats, profileName, startWorkout, setScreen, openWorkout, t, weightUnit }) => {
   return (
@@ -24,7 +24,7 @@ export const DashboardView = ({ workouts, categories, exercises, stats, profileN
         </div>
         <div className="stat-card">
           <Dumbbell />
-          <strong>{stats.totalMinutes} min</strong>
+          <strong>{formatDuration(stats.totalMinutes)}</strong>
           <span>{t('totalTime')}</span>
         </div>
         <div className="stat-card accent">

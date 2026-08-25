@@ -12,6 +12,7 @@ export const WorkoutDetailHeaderView = ({
   onMenuToggle,
   onNameChange,
   onSave,
+  isValid,
   t,
   workout,
 }) => (
@@ -28,7 +29,7 @@ export const WorkoutDetailHeaderView = ({
         <button className="icon-btn" onClick={onCancelEdit}>
           <X />
         </button>
-        <button className="finish-top" onClick={onSave}>
+        <button className="finish-top" onClick={onSave} disabled={!isValid}>
           <Check size={18} /> {t('save')}
         </button>
       </div>

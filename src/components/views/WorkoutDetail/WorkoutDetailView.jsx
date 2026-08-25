@@ -19,6 +19,7 @@ export const WorkoutDetailView = ({
   draft,
   editing,
   exercises,
+  isValid,
   locale,
   menuOpen,
   menuRef,
@@ -48,6 +49,7 @@ export const WorkoutDetailView = ({
         onMenuToggle={() => setMenuOpen(open => !open)}
         onNameChange={name => setDraft({ ...draft, name })}
         onSave={save}
+        isValid={isValid}
         t={t}
         workout={editing ? draft : workout}
         onCancelEdit={() => {
@@ -94,8 +96,9 @@ export const WorkoutDetailView = ({
               <input
                 type="number"
                 min="1"
-                value={draft.duration}
-                onChange={event => setDraft({ ...draft, duration: Math.max(1, Number(event.target.value)) })}
+                value={draft.duration ?? ''}
+                required
+                onChange={event => setDraft({ ...draft, duration: event.target.value === '' ? null : Number(event.target.value) })}
               />{' '}
               min
             </label>
@@ -223,6 +226,7 @@ export const WorkoutDetailView = ({
                         min="0"
                         step={weightFromKg(5, weightUnit)}
                         value={weightFromKg(set.weight, weightUnit) ?? ''}
+                        required
                         onChange={event => updateSet(exercise.id, setIndex, 'weight', event.target.value)}
                       />
                     ) : (
@@ -232,7 +236,8 @@ export const WorkoutDetailView = ({
                       <input
                         type="number"
                         min="0"
-                        value={set.reps}
+                        value={set.reps ?? ''}
+                        required
                         onChange={event => updateSet(exercise.id, setIndex, 'reps', event.target.value)}
                       />
                     ) : (

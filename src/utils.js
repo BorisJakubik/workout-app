@@ -28,3 +28,19 @@ export const weightToKg = (value, unit = 'kg') => {
   const weight = Number(value)
   return unit === 'lbs' ? Number((weight / POUNDS_PER_KILOGRAM).toFixed(8)) : weight
 }
+
+const isFilledNumber = value => value !== '' && value != null && Number.isFinite(Number(value))
+
+export const isValidWorkout = workout =>
+  Boolean(
+    workout?.name?.trim() &&
+      isFilledNumber(workout.duration) &&
+      Number(workout.duration) > 0 &&
+      workout.exercises?.length &&
+      workout.exercises.every(
+        exercise =>
+          exercise.name?.trim() &&
+          exercise.sets?.length &&
+          exercise.sets.every(set => isFilledNumber(set.weight) && Number(set.weight) >= 0 && isFilledNumber(set.reps) && Number(set.reps) > 0),
+      ),
+  )

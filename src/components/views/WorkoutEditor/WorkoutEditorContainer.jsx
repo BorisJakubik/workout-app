@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from '../../../i18n'
 import { WorkoutEditorView } from './WorkoutEditorView'
-import { weightToKg } from '../../../utils'
+import { isValidWorkout, weightToKg } from '../../../utils'
 
 export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDraft, finish, cancel, weightUnit }) => {
   const { t, locale } = useTranslation()
@@ -39,9 +39,7 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
                   ? {
                       ...set,
                       [field]:
-                        field === 'weight' && value === ''
-                          ? undefined
-                          : Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)),
+                        value === '' ? null : Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)),
                     }
                   : set,
               ),
@@ -98,6 +96,7 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       importDate={importDate}
       importWorkout={importWorkout}
       importableWorkouts={importableWorkouts}
+      isValid={isValidWorkout(draft)}
       locale={locale}
       removeSet={removeSet}
       setChosen={setChosen}

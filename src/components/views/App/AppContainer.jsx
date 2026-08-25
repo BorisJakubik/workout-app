@@ -22,6 +22,7 @@ import { getProfile, saveProfile } from '../../../services/profiles'
 import { AuthView } from '../Auth/AuthView'
 import { useTranslation } from '../../../i18n'
 import { AppView } from './AppView'
+import { isValidWorkout } from '../../../utils'
 
 const bigThreeLifts = [
   { key: 'benchPress', aliases: ['bench press', 'benchpress'] },
@@ -155,8 +156,9 @@ export const AppContainer = () => {
       }}
       onDeleteWorkout={deleteSelected}
       onFinishWorkout={() => {
+        if (!isValidWorkout(activeWorkout)) return
         const workoutName = activeWorkout?.name || t('workout')
-        const draft = { ...activeWorkout, completed: true, duration: activeWorkout.duration > 0 ? activeWorkout.duration : 1 }
+        const draft = { ...activeWorkout, completed: true }
         createWorkout(draft).then(saved => { dispatch(updateActiveWorkout(saved)); dispatch(finishWorkout()); setScreen('home'); setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) }) }).catch(reason => setError(reason.message))
       }}
       onLanguageChange={() => dispatch(setLanguage(language === 'sk' ? 'en' : 'sk'))}

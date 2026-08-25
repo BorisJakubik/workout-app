@@ -17,6 +17,7 @@ export const WorkoutEditorView = ({
   importDate,
   importWorkout,
   importableWorkouts,
+  isValid,
   locale,
   removeSet,
   setChosen,
@@ -40,7 +41,7 @@ export const WorkoutEditorView = ({
           <p className="eyebrow">{t('activeWorkout')}</p>
           <input value={draft.name} onChange={event => setDraft({ ...draft, name: event.target.value })} aria-label={t('chooseWorkout')} />
         </div>
-        <button className="finish-top" onClick={finish}>
+        <button className="finish-top" onClick={finish} disabled={!isValid}>
           <Check size={18} /> {t('done')}
         </button>
       </header>
@@ -68,10 +69,11 @@ export const WorkoutEditorView = ({
             <span>
               <input
                 type="number"
-                min="0"
-                value={draft.duration ?? 60}
-                placeholder="0"
-                onChange={event => setDraft({ ...draft, duration: Math.max(0, Number(event.target.value)) })}
+                min="1"
+                value={draft.duration ?? ''}
+                placeholder="60"
+                required
+                onChange={event => setDraft({ ...draft, duration: event.target.value === '' ? null : Number(event.target.value) })}
               />{' '}
               min
             </span>
@@ -195,9 +197,10 @@ export const WorkoutEditorView = ({
                       min="0"
                       step={weightFromKg(5, weightUnit)}
                       value={weightFromKg(set.weight, weightUnit) ?? ''}
+                      required
                       onChange={event => updateSet(exercise.id, index, 'weight', event.target.value)}
                     />
-                    <input type="number" value={set.reps} onChange={event => updateSet(exercise.id, index, 'reps', event.target.value)} />
+                    <input type="number" min="1" value={set.reps ?? ''} required onChange={event => updateSet(exercise.id, index, 'reps', event.target.value)} />
                     <button
                       className="set-delete"
                       type="button"
@@ -250,7 +253,7 @@ export const WorkoutEditorView = ({
             <Plus /> {t('addExercise')}
           </button>
         </div>
-        <button className="finish-workout" onClick={finish}>
+        <button className="finish-workout" onClick={finish} disabled={!isValid}>
           <Check /> {t('finishWorkout')}
         </button>
       </main>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from '../../../i18n'
 import { WorkoutDetailView } from './WorkoutDetailView'
-import { weightToKg } from '../../../utils'
+import { isValidWorkout, weightToKg } from '../../../utils'
 
 const STRENGTH_TRAINING_MET = 6
 
@@ -36,8 +36,7 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
         index === setIndex
           ? {
               ...set,
-              [field]:
-                field === 'weight' && value === '' ? undefined : Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)),
+              [field]: value === '' ? null : Math.max(0, field === 'weight' ? weightToKg(value, weightUnit) : Number(value)),
             }
           : set,
       ),
@@ -55,7 +54,7 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
       return next
     })
   const save = () => {
-    if (!draft.name.trim()) return
+    if (!isValidWorkout(draft)) return
     onSave({ ...draft, name: draft.name.trim() })
     setEditing(false)
   }
@@ -90,6 +89,7 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
       draft={draft}
       editing={editing}
       exercises={availableExercises}
+      isValid={isValidWorkout(draft)}
       locale={locale}
       menuOpen={menuOpen}
       menuRef={menuRef}

@@ -737,6 +737,11 @@ h2 {
   gap: 5px;
   border-radius: 3px;
 }
+.finish-top:disabled,
+.finish-workout:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
 .live-banner {
   display: flex;
   align-items: center;
@@ -830,6 +835,10 @@ h2 {
 }
 .set-row input:focus {
   border-color: var(--lime);
+}
+.set-row input:invalid,
+.duration-edit input:invalid {
+  border-color: #d98282;
 }
 .set-delete {
   width: 26px;

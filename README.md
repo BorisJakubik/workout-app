@@ -24,7 +24,7 @@ RLS means a signed-in user can access only their own profile, library and workou
 
 ## JSON import
 
-`data/fitness-data.json` is now only a one-time backup source, never read by the app. After creating your account, run `IMPORT_EMAIL=... IMPORT_PASSWORD=... npm run import:json`. The importer signs in with the anon key and therefore remains constrained by the same RLS policies; it never needs a service-role key.
+`data/fitness-data.json` is now only a one-time backup source, never read by the app. Put `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`, then run `IMPORT_EMAIL=... IMPORT_PASSWORD=... npm run import:json`. The importer signs in with the anon key and therefore remains constrained by the same RLS policies; it never needs a service-role key.
 
 ## Scripts
 

@@ -37,6 +37,85 @@ input {
 button {
   color: inherit;
 }
+.auth-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+}
+.auth-card {
+  width: min(100%, 420px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgb(17 22 20 / 94%);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 40%);
+  padding: 32px;
+}
+.auth-card .brand-mark {
+  margin-bottom: 22px;
+  border-radius: 7px;
+}
+.auth-card h1 {
+  margin: 0;
+  font: 800 42px/1 'Manrope', sans-serif;
+  letter-spacing: -2px;
+}
+.auth-card > p {
+  margin: 12px 0 26px;
+  color: var(--muted);
+}
+.auth-card form {
+  display: grid;
+  gap: 16px;
+}
+.auth-card label {
+  display: grid;
+  gap: 7px;
+  color: #dfe8e2;
+  font-size: 14px;
+  font-weight: 700;
+}
+.auth-card input {
+  width: 100%;
+  border: 1px solid #3a4640;
+  border-radius: 9px;
+  outline: none;
+  background: #0b100d;
+  color: #f3f8f4;
+  padding: 12px 13px;
+}
+.auth-card input:focus {
+  border-color: var(--lime);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lime) 18%, transparent);
+}
+.primary-button,
+.text-button {
+  width: 100%;
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.primary-button {
+  border: 1px solid var(--lime);
+  background: var(--lime);
+  color: #071006;
+}
+.primary-button:hover:not(:disabled) { filter: brightness(1.08); }
+.primary-button:disabled { cursor: wait; opacity: .65; }
+.text-button {
+  margin-top: 12px;
+  border: 1px solid #3a4640;
+  background: transparent;
+  color: #eef5f0;
+}
+.text-button:hover { border-color: var(--lime); color: var(--lime); }
+.form-error { margin: 0; color: #ff9b9b; font-size: 13px; }
+:root[data-theme='light'] .auth-card { background: rgb(255 255 255 / 94%); }
+:root[data-theme='light'] .auth-card label { color: #17231c; }
+:root[data-theme='light'] .auth-card input { border-color: #bdc9c2; background: #fff; color: #17231c; }
+:root[data-theme='light'] .text-button { border-color: #bdc9c2; color: #17231c; }
+@media (max-width: 420px) { .auth-page { padding: 16px; } .auth-card { padding: 26px 20px; } }
 .app-shell {
   width: min(100%, 720px);
   margin: 0 auto;

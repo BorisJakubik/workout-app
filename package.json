@@ -13,7 +13,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src",
-    "import:json": "node scripts/import-json-to-supabase.mjs"
+    "import:json": "node --env-file=.env scripts/import-json-to-supabase.mjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "2.5.0",

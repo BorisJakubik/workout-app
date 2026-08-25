@@ -14,7 +14,7 @@ create table public.workouts (
   notes text not null default '', rating integer not null default 0 check (rating between 0 and 5),
   body_weight numeric, body_fat_percentage numeric, created_at timestamptz not null default now(), updated_at timestamptz not null default now()
 );
-create table public.workout_exercises (id uuid primary key default gen_random_uuid(), workout_id uuid not null references public.workouts(id) on delete cascade, exercise_id uuid references public.exercises(id) on delete set null, exercise_name text not null, position integer not null default 0);
+create table public.workout_exercises (id uuid primary key default gen_random_uuid(), workout_id uuid not null references public.workouts(id) on delete cascade, exercise_id text references public.exercises(id) on delete set null, exercise_name text not null, position integer not null default 0);
 create table public.exercise_sets (id uuid primary key default gen_random_uuid(), workout_exercise_id uuid not null references public.workout_exercises(id) on delete cascade, reps integer not null check (reps >= 0), weight numeric not null default 0 check (weight >= 0), position integer not null default 0);
 alter table public.profiles enable row level security; alter table public.categories enable row level security; alter table public.exercises enable row level security; alter table public.workouts enable row level security; alter table public.workout_exercises enable row level security; alter table public.exercise_sets enable row level security;
 create policy "own profile" on public.profiles for all using (id = auth.uid()) with check (id = auth.uid());

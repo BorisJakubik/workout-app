@@ -38,6 +38,27 @@ input {
 button {
   color: inherit;
 }
+.app-state {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--muted);
+}
+.app-loader {
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--line);
+  border-top-color: var(--lime);
+  border-radius: 50%;
+  animation: app-loader-spin 0.8s linear infinite;
+}
+@keyframes app-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .auth-page {
   display: grid;
   min-height: 100vh;

@@ -18,6 +18,10 @@ The app is at `http://127.0.0.1:5173`. The browser receives only the public Supa
 1. Create a [Supabase](https://supabase.com/dashboard) project and enable Email/password in Authentication.
 2. Run [`supabase/migrations/20260825_initial_schema.sql`](supabase/migrations/20260825_initial_schema.sql) in SQL Editor. It creates profiles, categories, exercises, workouts, workout exercises and sets, with RLS policies.
 3. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`, then restart the server.
+
+## CAPTCHA for sign-in and account creation
+
+The app uses Cloudflare Turnstile with Supabase Auth. Create a Turnstile widget for the app domain and set its site key as `VITE_TURNSTILE_SITE_KEY` locally and in Vercel. In Supabase, go to Authentication → Bot and Abuse Protection, enable CAPTCHA protection, choose Cloudflare Turnstile, and enter the widget's secret key. Both settings are required before users can sign in or create an account.
 4. Register an account. If email confirmation is enabled, confirm the email before signing in.
 
 RLS means a signed-in user can access only their own profile, library and workout records. Ownership for sets and workout exercises is inherited from the parent workout.

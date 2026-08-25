@@ -1,4 +1,4 @@
 import { requireSupabase } from '../lib/supabase'
-export const signIn = ({ email, password }) => requireSupabase().auth.signInWithPassword({ email, password })
-export const signUp = ({ email, password }) => requireSupabase().auth.signUp({ email, password })
+export const signIn = ({ email, password, captchaToken }) => requireSupabase().auth.signInWithPassword({ email, password, options: { captchaToken } })
+export const signUp = ({ email, password, captchaToken }) => requireSupabase().auth.signUp({ email, password, options: { captchaToken } })
 export const signOut = () => requireSupabase().auth.signOut()

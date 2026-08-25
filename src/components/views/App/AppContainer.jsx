@@ -4,7 +4,6 @@ import {
   cancelWorkout,
   deleteWorkout,
   finishWorkout,
-  initializeData,
   setLanguage,
   setTheme,
   setWeightUnit,
@@ -12,7 +11,15 @@ import {
   updateActiveWorkout,
   updateProfile,
   updateWorkout,
+  store,
+  replaceData,
 } from '../../../store'
+import { supabase } from '../../../lib/supabase'
+import { signIn, signOut, signUp } from '../../../services/auth'
+import { getWorkouts, createWorkout, updateWorkout as saveWorkout, deleteWorkout as removeWorkout } from '../../../services/workouts'
+import { getCatalog } from '../../../services/catalog'
+import { getProfile, saveProfile } from '../../../services/profiles'
+import { AuthView } from '../Auth/AuthView'
 import { useTranslation } from '../../../i18n'
 import { AppView } from './AppView'
 
@@ -60,10 +67,23 @@ export const AppContainer = () => {
   const [selectedWorkout, setSelectedWorkout] = useState(null)
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
   const [workoutConfirmation, setWorkoutConfirmation] = useState(null)
+  const [session, setSession] = useState(undefined)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const profileMenuRef = useRef(null)
   useEffect(() => {
-    initializeData()
+    if (!supabase) { setSession(null); setError('Supabase nie je nakonfigurovaný.'); return undefined }
+    supabase.auth.getSession().then(({ data }) => setSession(data.session))
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession))
+    return () => listener.subscription.unsubscribe()
   }, [])
+  useEffect(() => {
+    if (!session) return
+    setLoading(true); setError('')
+    Promise.all([getWorkouts(), getCatalog(), getProfile(session.user.id)]).then(([remoteWorkouts, catalog, remoteProfile]) => {
+      dispatch(replaceData({ ...store.getState().fitness, ...catalog, workouts: remoteWorkouts, profile: { ...remoteProfile, email: session.user.email || '' } }))
+    }).catch(reason => setError(reason.message || 'Dáta sa nepodarilo načítať.')).finally(() => setLoading(false))
+  }, [session])
   useEffect(() => {
     document.documentElement.lang = language
   }, [language])
@@ -108,14 +128,15 @@ export const AppContainer = () => {
     setScreen('workout')
   }
   const saveSelected = updated => {
-    dispatch(updateWorkout(updated))
-    setSelectedWorkout(updated)
-    setWorkoutConfirmation({ id: Date.now(), message: t('workoutSaved', { name: updated.name }) })
+    saveWorkout(updated).then(saved => { dispatch(updateWorkout(saved)); setSelectedWorkout(saved); setWorkoutConfirmation({ id: Date.now(), message: t('workoutSaved', { name: saved.name }) }) }).catch(reason => setError(reason.message))
   }
   const deleteSelected = () => {
-    dispatch(deleteWorkout(selectedWorkout.id))
-    setSelectedWorkout(null)
+    removeWorkout(selectedWorkout.id).then(() => { dispatch(deleteWorkout(selectedWorkout.id)); setSelectedWorkout(null) }).catch(reason => setError(reason.message))
   }
+  const authenticate = async (method, credentials) => { setLoading(true); setError(''); const { data, error: authError } = await method(credentials); setLoading(false); if (authError) setError(authError.message); else if (!data.session && method === signUp) setError('Účet bol vytvorený. Skontrolujte e-mail a potom sa prihláste.') }
+  if (session === undefined) return <div className="app-state" role="status">Načítavam prihlásenie…</div>
+  if (!session) return <AuthView loading={loading} error={error} onLogin={credentials => authenticate(signIn, credentials)} onRegister={credentials => authenticate(signUp, credentials)} />
+  if (loading) return <div className="app-state" role="status">Načítavam tréningy…</div>
   const previousWeight =
     selectedWorkout &&
     workouts
@@ -135,19 +156,19 @@ export const AppContainer = () => {
       onDeleteWorkout={deleteSelected}
       onFinishWorkout={() => {
         const workoutName = activeWorkout?.name || t('workout')
-        dispatch(finishWorkout())
-        setScreen('home')
-        setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) })
+        const draft = { ...activeWorkout, completed: true, duration: activeWorkout.duration > 0 ? activeWorkout.duration : 1 }
+        createWorkout(draft).then(saved => { dispatch(updateActiveWorkout(saved)); dispatch(finishWorkout()); setScreen('home'); setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) }) }).catch(reason => setError(reason.message))
       }}
       onLanguageChange={() => dispatch(setLanguage(language === 'sk' ? 'en' : 'sk'))}
       onProfileMenuToggle={() => setProfileMenuOpen(open => !open)}
+      onLogout={() => signOut()}
       onSaveWorkout={saveSelected}
       onScreenChange={setScreen}
       onStartWorkout={start}
       onThemeChange={value => dispatch(setTheme(value))}
       onWeightUnitChange={value => dispatch(setWeightUnit(value))}
       onUpdateActiveWorkout={draft => dispatch(updateActiveWorkout(draft))}
-      onUpdateProfile={value => dispatch(updateProfile(value))}
+      onUpdateProfile={value => saveProfile(session.user.id, value).then(() => dispatch(updateProfile(value))).catch(reason => setError(reason.message))}
       openWorkout={setSelectedWorkout}
       profile={profile}
       profileMenuOpen={profileMenuOpen}
@@ -159,6 +180,7 @@ export const AppContainer = () => {
       theme={theme}
       workouts={workouts}
       workoutConfirmation={workoutConfirmation}
+      error={error}
       onDismissWorkoutConfirmation={() => setWorkoutConfirmation(null)}
       weightUnit={weightUnit}
     />

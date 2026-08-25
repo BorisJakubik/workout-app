@@ -97,21 +97,14 @@ const starterWorkouts = [
     ],
   },
 ]
-const read = key => {
-  try {
-    return JSON.parse(localStorage.getItem(key))
-  } catch {
-    return null
-  }
-}
-const initialState = read('fittrack-redux') || {
+const initialState = {
   language: 'sk',
   theme: 'dark',
   weightUnit: 'kg',
   profile: { name: 'Boris', surname: '', email: '', photo: '' },
   categories: defaultCategories,
   exercises: defaultExercises,
-  workouts: read('fittrack-workouts') || starterWorkouts,
+  workouts: [],
   activeWorkout: null,
 }
 
@@ -244,6 +237,7 @@ const fitnessSlice = createSlice({
     },
   },
 })
+export const fitnessReducer = fitnessSlice.reducer
 export const {
   setLanguage,
   setTheme,
@@ -263,33 +257,4 @@ export const {
   deleteWorkout,
   replaceData,
 } = fitnessSlice.actions
-export const store = configureStore({ reducer: { fitness: fitnessSlice.reducer } })
-
-let fileSyncEnabled = false
-let saveTimer
-
-store.subscribe(() => {
-  const data = store.getState().fitness
-  localStorage.setItem('fittrack-redux', JSON.stringify(data))
-  if (!fileSyncEnabled) return
-  clearTimeout(saveTimer)
-  saveTimer = setTimeout(() => {
-    fetch('/api/data', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    }).catch(error => console.error('JSON súbor sa nepodarilo uložiť:', error))
-  }, 400)
-})
-
-export const initializeData = async () => {
-  try {
-    const response = await fetch('/api/data')
-    if (!response.ok) throw new Error(`HTTP ${response.status}`)
-    store.dispatch(replaceData(await response.json()))
-  } catch (error) {
-    console.warn('Používam lokálne záložné dáta:', error)
-  } finally {
-    fileSyncEnabled = true
-  }
-}
+export const store = configureStore({ reducer: { fitness: fitnessReducer } })

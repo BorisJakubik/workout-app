@@ -1,75 +1,43 @@
 # FitTrack
 
-FitTrack is a mobile-first React application for logging strength workouts and tracking training and body-composition progress.
+React 18/Vite workout tracker with Redux UI state, Supabase PostgreSQL persistence and email/password authentication.
 
-## Features
-
-- Start workouts from built-in or custom training categories.
-- Create, rename, iconize, collapse, and delete workout categories.
-- Build a custom exercise library and organize exercises by category.
-- Log exercises with editable sets, repetitions, and weight, and remove individual sets when needed.
-- Reuse a previous workout by date or automatically begin with the latest workout from the selected category.
-- Record workout date, duration, body weight, body-fat percentage, rating, and notes.
-- Dictate workout notes using the browser's Speech Recognition API when supported.
-- Browse completed workouts in the history and monthly calendar views.
-- Open, edit, or delete previously completed workouts.
-- Review workout-duration charts, body-weight and body-fat trends, and progress for the powerlifting big three (squat, bench press, and deadlift).
-- Track the big-three total, heaviest sets, and personal records.
-- Switch between kilograms and pounds; stored values are converted automatically for display and editing.
-- Switch the interface between English and Slovak, including built-in workout and exercise names.
-- Choose a light or dark theme and manage profile details and a profile photo.
-- Use a responsive interface designed primarily for mobile devices.
-
-## Tech Stack
-
-- React 18
-- Redux Toolkit and React Redux
-- Vite
-- Lucide React
-- Node.js development server
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18 or newer
-- npm or pnpm
-
-### Installation
+## Local development
 
 ```bash
 npm install
+cp .env.example .env
+# fill in the two VITE_SUPABASE values
 npm run dev
 ```
 
-The application is available at [http://127.0.0.1:5173](http://127.0.0.1:5173).
+The app is at `http://127.0.0.1:5173`. The browser receives only the public Supabase URL and **anon key**. Never place a `service_role` key in frontend code or Vercel variables.
 
-To create a production build, run:
+## Supabase setup
+
+1. Create a [Supabase](https://supabase.com/dashboard) project and enable Email/password in Authentication.
+2. Run [`supabase/migrations/20260825_initial_schema.sql`](supabase/migrations/20260825_initial_schema.sql) in SQL Editor. It creates profiles, categories, exercises, workouts, workout exercises and sets, with RLS policies.
+3. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`, then restart the server.
+4. Register an account. If email confirmation is enabled, confirm the email before signing in.
+
+RLS means a signed-in user can access only their own profile, library and workout records. Ownership for sets and workout exercises is inherited from the parent workout.
+
+## JSON import
+
+`data/fitness-data.json` is now only a one-time backup source, never read by the app. After creating your account, run `IMPORT_EMAIL=... IMPORT_PASSWORD=... npm run import:json`. The importer signs in with the anon key and therefore remains constrained by the same RLS policies; it never needs a service-role key.
+
+## Scripts
 
 ```bash
+npm test
+npm run test:watch
+npm run test:coverage
+npm run lint
 npm run build
 ```
 
-To preview the production build locally, run:
+Tests cover reducer-level workout creation/finish, editing, deletion and the workout shape used during loading. Live Supabase responses, email confirmation and browser navigation are not yet covered.
 
-```bash
-npm run preview
-```
+## Vercel
 
-## Data Persistence
-
-Application state is managed with Redux Toolkit and cached in `localStorage`. During development, the custom Node.js server also loads data from `data/fitness-data.json` and writes state changes back to that file through the `/api/data` endpoint.
-
-The persisted data includes workouts, the exercise library, categories, language and unit preferences, theme, profile details, and an active workout.
-
-## Available Scripts
-
-- `npm run dev` starts the Vite development middleware and local data API.
-- `npm run build` creates a production build in `dist/`.
-- `npm run preview` previews the production build.
-- `npm run format` formats the project with Prettier.
-- `npm run format:check` checks formatting without changing files.
-
-## Browser Notes
-
-Voice dictation depends on the browser's implementation of the Speech Recognition API and requires microphone permission. The notes field remains available for regular text entry when speech recognition is unsupported.
+Import the repository, use `npm run build` and output directory `dist`, then add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as Vercel environment variables. Add the deployment URL in Supabase Authentication → URL Configuration → Redirect URLs.

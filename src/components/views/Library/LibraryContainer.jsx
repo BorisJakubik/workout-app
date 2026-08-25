@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addCategory, addLibraryExercise, removeCategory, removeLibraryExercise, renameCategory, updateCategoryIcon } from '../../../store'
 import { useTranslation } from '../../../i18n'
+import { createCategory, createExercise, deleteCategory, deleteExercise, updateCategory } from '../../../services/catalog'
 import { LibraryView } from './LibraryView'
 
 export const LibraryContainer = ({ categories, exercises }) => {
@@ -27,13 +28,15 @@ export const LibraryContainer = ({ categories, exercises }) => {
   const submitCategory = event => {
     event.preventDefault()
     if (!categoryName.trim()) return
-    dispatch(addCategory({ name: categoryName, icon: categoryIcon }))
+    const category = { id: crypto.randomUUID(), name: categoryName.trim(), icon: categoryIcon }
+    createCategory(category).then(() => dispatch(addCategory(category)))
     setCategoryName('')
   }
   const submitExercise = event => {
     event.preventDefault()
     if (!exerciseName.trim() || !categoryId) return
-    dispatch(addLibraryExercise({ name: exerciseName, categoryId }))
+    const exercise = { id: crypto.randomUUID(), name: exerciseName.trim(), categoryId }
+    createExercise(exercise).then(() => dispatch(addLibraryExercise(exercise)))
     setExerciseName('')
   }
   const beginRename = category => {
@@ -41,12 +44,12 @@ export const LibraryContainer = ({ categories, exercises }) => {
     setEditedName(category.name)
   }
   const saveRename = () => {
-    if (editedName.trim()) dispatch(renameCategory({ id: editingId, name: editedName }))
+    if (editedName.trim()) updateCategory({ id: editingId, name: editedName.trim(), icon: categories.find(item => item.id === editingId)?.icon || 'bench' }).then(() => dispatch(renameCategory({ id: editingId, name: editedName })))
     setEditingId(null)
   }
   const confirmDelete = () => {
-    if (deleteItem.type === 'category') dispatch(removeCategory(deleteItem.id))
-    else dispatch(removeLibraryExercise(deleteItem.id))
+    if (deleteItem.type === 'category') deleteCategory(deleteItem.id).then(() => dispatch(removeCategory(deleteItem.id)))
+    else deleteExercise(deleteItem.id).then(() => dispatch(removeLibraryExercise(deleteItem.id)))
     setDeleteItem(null)
   }
   const toggleCategory = id => setCollapsedCategories(current => ({ ...current, [id]: !current[id] }))
@@ -70,7 +73,7 @@ export const LibraryContainer = ({ categories, exercises }) => {
       onConfirmDelete={confirmDelete}
       onEditedNameChange={setEditedName}
       onExerciseNameChange={setExerciseName}
-      onIconChange={payload => dispatch(updateCategoryIcon(payload))}
+      onIconChange={payload => updateCategory({ ...categories.find(item => item.id === payload.id), icon: payload.icon }).then(() => dispatch(updateCategoryIcon(payload)))}
       onRemoveCategory={category => setDeleteItem({ id: category.id, name: category.name, type: 'category' })}
       onRemoveExercise={exercise => setDeleteItem({ id: exercise.id, name: exercise.name, type: 'exercise' })}
       onSaveRename={saveRename}

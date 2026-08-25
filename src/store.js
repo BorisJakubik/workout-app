@@ -98,7 +98,7 @@ const starterWorkouts = [
   },
 ]
 const initialState = {
-  language: 'sk',
+  language: 'en',
   theme: 'dark',
   weightUnit: 'kg',
   profile: { name: 'Boris', surname: '', email: '', photo: '' },

@@ -56,6 +56,17 @@ button {
   margin-bottom: 22px;
   border-radius: 7px;
 }
+.auth-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.auth-card-header .brand-mark {
+  margin-bottom: 22px;
+}
+.auth-language-toggle {
+  margin-left: 0;
+}
 .auth-card h1 {
   margin: 0;
   font: 800 42px/1 'Manrope', sans-serif;

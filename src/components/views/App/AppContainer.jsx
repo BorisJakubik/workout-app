@@ -133,10 +133,10 @@ export const AppContainer = () => {
   const deleteSelected = () => {
     removeWorkout(selectedWorkout.id).then(() => { dispatch(deleteWorkout(selectedWorkout.id)); setSelectedWorkout(null) }).catch(reason => setError(reason.message))
   }
-  const authenticate = async (method, credentials) => { setLoading(true); setError(''); const { data, error: authError } = await method(credentials); setLoading(false); if (authError) setError(authError.message); else if (!data.session && method === signUp) setError('Účet bol vytvorený. Skontrolujte e-mail a potom sa prihláste.') }
-  if (session === undefined) return <div className="app-state" role="status">Načítavam prihlásenie…</div>
-  if (!session) return <AuthView loading={loading} error={error} onLogin={credentials => authenticate(signIn, credentials)} onRegister={credentials => authenticate(signUp, credentials)} />
-  if (loading) return <div className="app-state" role="status">Načítavam tréningy…</div>
+  const authenticate = async (method, credentials) => { setLoading(true); setError(''); const { data, error: authError } = await method(credentials); setLoading(false); if (authError) setError(authError.message); else if (!data.session && method === signUp) setError(t('accountCreatedCheckEmail')) }
+  if (session === undefined) return <div className="app-state" role="status">{t('loadingSignIn')}</div>
+  if (!session) return <AuthView loading={loading} error={error} language={language} t={t} onLanguageChange={() => dispatch(setLanguage(language === 'sk' ? 'en' : 'sk'))} onLogin={credentials => authenticate(signIn, credentials)} onRegister={credentials => authenticate(signUp, credentials)} />
+  if (loading) return <div className="app-state" role="status">{t('loadingWorkouts')}</div>
   const previousWeight =
     selectedWorkout &&
     workouts

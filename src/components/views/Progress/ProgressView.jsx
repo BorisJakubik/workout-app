@@ -2,7 +2,17 @@ import React from 'react'
 import { Dumbbell, Trophy } from 'lucide-react'
 import { formatDate, weightFromKg } from '../../../utils'
 
-const LineProgressCard = ({ ariaLabel, emptyLabel, eyebrow, getValue, history, points, polyline, title, locale }) => (
+const labelStep = count => {
+  if (count > 12) return 3
+  if (count > 7) return 2
+  return 1
+}
+
+const LineProgressCard = ({ ariaLabel, emptyLabel, eyebrow, getValue, history, points, polyline, title, locale }) => {
+  const step = labelStep(history.length)
+  const isVisibleLabel = index => index === 0 || index === history.length - 1 || index % step === 0
+
+  return (
   <div className="weight-progress-card">
     <div className="section-heading">
       <div>
@@ -27,10 +37,12 @@ const LineProgressCard = ({ ariaLabel, emptyLabel, eyebrow, getValue, history, p
           ))}
         </div>
         <div className="weight-chart-labels" style={{ gridTemplateColumns: `repeat(${history.length}, minmax(0, 1fr))` }}>
-          {history.map(item => (
-            <div key={item.id}>
-              <strong>{getValue(item)}</strong>
-              <small>{formatDate(item.date, locale)}</small>
+          {history.map((item, index) => (
+            <div className={isVisibleLabel(index) ? '' : 'weight-chart-label-hidden'} key={item.id}>
+              {isVisibleLabel(index) && <>
+                <strong>{getValue(item)}</strong>
+                <small>{formatDate(item.date, locale)}</small>
+              </>}
             </div>
           ))}
         </div>
@@ -39,7 +51,8 @@ const LineProgressCard = ({ ariaLabel, emptyLabel, eyebrow, getValue, history, p
       <p className="weight-chart-empty">{emptyLabel}</p>
     )}
   </div>
-)
+  )
+}
 
 export const ProgressView = ({
   bigThreeProgress,

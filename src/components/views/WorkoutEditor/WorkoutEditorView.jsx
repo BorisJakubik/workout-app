@@ -1,5 +1,5 @@
 import React from 'react'
-import { Check, ChevronDown, Copy, Plus, Trash2, X } from 'lucide-react'
+import { Check, ChevronDown, Copy, Pause, Play, Plus, RotateCcw, Square, Trash2, X } from 'lucide-react'
 import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
 import { toDateInputValue, weightFromKg, weightToKg } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
@@ -9,9 +9,13 @@ export const WorkoutEditorView = ({
   addExercise,
   addSet,
   cancel,
+  cancelRestart,
   chosen,
   collapsedExercises,
+  confirmRestart,
   draft,
+  elapsedSeconds,
+  endTimer,
   exercises,
   finish,
   importDate,
@@ -19,18 +23,30 @@ export const WorkoutEditorView = ({
   importableWorkouts,
   isValid,
   locale,
+  pauseTimer,
+  requestRestart,
+  restartConfirmationOpen,
   removeSet,
   setChosen,
   setDraft,
   setImportDate,
   setWorkoutDetailsOpen,
+  startTimer,
   t,
   toggleExercise,
   updateSet,
   workoutToImport,
   workoutDetailsOpen,
+  workoutState,
   weightUnit,
 }) => {
+  const isInProgress = workoutState === 'in_progress'
+  const isPaused = workoutState === 'paused'
+  const isFinished = workoutState === 'finished'
+  const isTimerActive = isInProgress || isPaused
+  const formattedElapsedTime = new Date(elapsedSeconds * 1000).toISOString().slice(11, 19)
+  const stateTitle = isInProgress ? t('workoutInProgress') : isPaused ? t('workoutPaused') : isFinished ? t('workoutFinished') : t('workoutNotStarted')
+  const stateHint = isInProgress ? t('workoutTimerRunning') : isPaused ? t('workoutTimerPaused') : isFinished ? t('workoutTimerFinished') : t('workoutTimerNotStarted')
   return (
     <div className="app-shell editor">
       <header className="editor-header">
@@ -41,18 +57,45 @@ export const WorkoutEditorView = ({
           <p className="eyebrow">{t('activeWorkout')}</p>
           <input value={draft.name} onChange={event => setDraft({ ...draft, name: event.target.value })} aria-label={t('chooseWorkout')} />
         </div>
-        <button className="finish-top" onClick={finish} disabled={!isValid}>
+        <button className="finish-top" onClick={finish} disabled={!isValid || isTimerActive}>
           <Check size={18} /> {t('done')}
         </button>
       </header>
       <main>
         <div className="live-banner">
-          <span className="pulse" />
+          <span className={`pulse ${isInProgress ? '' : 'inactive'}`} />
           <div>
-            <strong>{t('workoutInProgress')}</strong>
-            <small>{t('savedToRedux')}</small>
+            <strong>{stateTitle}</strong>
+            <small>{stateHint}</small>
           </div>
-          <span className="timer">LIVE</span>
+          <span className="timer">{formattedElapsedTime}</span>
+          {isInProgress ? (
+            <div className="timer-actions">
+              <button className="timer-action" type="button" onClick={pauseTimer} aria-label={t('pauseWorkout')} title={t('pauseWorkout')}>
+                <Pause size={15} fill="currentColor" />
+              </button>
+              <button className="timer-action end" type="button" onClick={endTimer} aria-label={t('endWorkout')} title={t('endWorkout')}>
+                <Square size={15} fill="currentColor" />
+              </button>
+            </div>
+          ) : isPaused ? (
+            <div className="timer-actions">
+              <button className="timer-action" type="button" onClick={startTimer} aria-label={t('resumeWorkout')} title={t('resumeWorkout')}>
+                <Play size={15} fill="currentColor" />
+              </button>
+              <button className="timer-action end" type="button" onClick={endTimer} aria-label={t('endWorkout')} title={t('endWorkout')}>
+                <Square size={15} fill="currentColor" />
+              </button>
+            </div>
+          ) : !isFinished ? (
+            <button className="timer-action" type="button" onClick={startTimer} aria-label={t('startWorkout')} title={t('startWorkout')}>
+              <Play size={15} fill="currentColor" />
+            </button>
+          ) : (
+            <button className="timer-action" type="button" onClick={requestRestart} aria-label={t('restartWorkout')} title={t('restartWorkout')}>
+              <RotateCcw size={15} />
+            </button>
+          )}
         </div>
         <section className="workout-meta-card">
           <label>
@@ -73,6 +116,7 @@ export const WorkoutEditorView = ({
                 value={draft.duration ?? ''}
                 placeholder="60"
                 required
+                disabled={isTimerActive}
                 onChange={event => setDraft({ ...draft, duration: event.target.value === '' ? null : Number(event.target.value) })}
               />{' '}
               min
@@ -151,6 +195,35 @@ export const WorkoutEditorView = ({
                   t={t}
                 />
               </label>
+              <section className="workout-import">
+                <div className="workout-import-heading">
+                  <Copy size={18} />
+                  <span>
+                    <strong>{t('importWorkout')}</strong>
+                    <small>{t('importWorkoutHint')}</small>
+                  </span>
+                </div>
+                <div className="workout-import-controls">
+                  <input
+                    aria-label={t('importWorkoutDate')}
+                    className="date-input"
+                    type="date"
+                    max={importableWorkouts[0]?.date.slice(0, 10)}
+                    value={importDate}
+                    onChange={event => setImportDate(event.target.value)}
+                  />
+                  <button type="button" disabled={!workoutToImport} onClick={importWorkout}>
+                    <Copy size={17} /> {t('import')}
+                  </button>
+                </div>
+                {importDate && !workoutToImport && <small className="workout-import-status">{t('noWorkoutToImport')}</small>}
+                {!importDate && importableWorkouts.length === 0 && <small className="workout-import-status">{t('noPreviousWorkouts')}</small>}
+                {workoutToImport && (
+                  <small className="workout-import-status available">
+                    {t('workoutReadyToImport', { name: workoutToImport.name, count: workoutToImport.exercises.length })}
+                  </small>
+                )}
+              </section>
             </>
           )}
         </section>
@@ -218,45 +291,38 @@ export const WorkoutEditorView = ({
             )}
           </article>
         ))}
-        <section className="workout-import">
-          <div className="workout-import-heading">
-            <Copy size={18} />
-            <span>
-              <strong>{t('importWorkout')}</strong>
-              <small>{t('importWorkoutHint')}</small>
-            </span>
-          </div>
-          <div className="workout-import-controls">
-            <input
-              aria-label={t('importWorkoutDate')}
-              className="date-input"
-              type="date"
-              max={importableWorkouts[0]?.date.slice(0, 10)}
-              value={importDate}
-              onChange={event => setImportDate(event.target.value)}
-            />
-            <button type="button" disabled={!workoutToImport} onClick={importWorkout}>
-              <Copy size={17} /> {t('import')}
-            </button>
-          </div>
-          {importDate && !workoutToImport && <small className="workout-import-status">{t('noWorkoutToImport')}</small>}
-          {!importDate && importableWorkouts.length === 0 && <small className="workout-import-status">{t('noPreviousWorkouts')}</small>}
-          {workoutToImport && (
-            <small className="workout-import-status available">
-              {t('workoutReadyToImport', { name: workoutToImport.name, count: workoutToImport.exercises.length })}
-            </small>
-          )}
-        </section>
         <div className="exercise-picker">
           <ExerciseDropdown exercises={exercises} categoryId={draft.categoryId} value={chosen} onChange={setChosen} />
           <button onClick={addExercise}>
             <Plus /> {t('addExercise')}
           </button>
         </div>
-        <button className="finish-workout" onClick={finish} disabled={!isValid}>
+        <button className="finish-workout" onClick={finish} disabled={!isValid || isTimerActive}>
           <Check /> {t('finishWorkout')}
         </button>
       </main>
+      {restartConfirmationOpen && (
+        <div className="modal-backdrop" onMouseDown={event => event.target === event.currentTarget && cancelRestart()}>
+          <div className="delete-workout-modal" role="alertdialog" aria-modal="true" aria-labelledby="restart-workout-title" aria-describedby="restart-workout-description">
+            <div className="restart-workout-icon">
+              <RotateCcw size={22} />
+            </div>
+            <div>
+              <p className="eyebrow">{t('restartWorkout')}</p>
+              <h2 id="restart-workout-title">{t('restartWorkoutTitle')}</h2>
+              <p id="restart-workout-description">{t('restartWorkoutConfirm')}</p>
+            </div>
+            <div className="delete-workout-modal-actions">
+              <button className="modal-cancel" onClick={cancelRestart} autoFocus>
+                {t('cancel')}
+              </button>
+              <button className="modal-confirm" onClick={confirmRestart}>
+                <Play size={16} fill="currentColor" /> {t('restartWorkout')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

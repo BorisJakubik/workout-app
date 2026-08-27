@@ -182,7 +182,7 @@ export const AppContainer = () => {
       }}
       onDeleteWorkout={deleteSelected}
       onFinishWorkout={() => {
-        if (!isValidWorkout(activeWorkout)) return
+        if (!isValidWorkout(activeWorkout) || ['in_progress', 'paused'].includes(activeWorkout?.workoutState)) return
         const workoutName = activeWorkout?.name || t('workout')
         const draft = { ...activeWorkout, completed: true }
         createWorkout(draft).then(saved => { dispatch(updateActiveWorkout(saved)); dispatch(finishWorkout()); setScreen('home'); setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) }) }).catch(reason => setError(reason.message))

@@ -16,6 +16,21 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
   const [collapsedExercises, setCollapsedExercises] = useState(() => new Set())
   const [chosen, setChosen] = useState(categoryExercises[0]?.name || exercises[0]?.name || '')
   const [importDate, setImportDate] = useState('')
+  const [restartConfirmationOpen, setRestartConfirmationOpen] = useState(false)
+  const workoutState = draft.workoutState || 'not_started'
+  const legacyElapsedSeconds = draft.startedAt && draft.endedAt ? Math.max(0, Math.floor((draft.endedAt - draft.startedAt) / 1000)) : 0
+  const storedElapsedSeconds = Number(draft.timerElapsedSeconds ?? legacyElapsedSeconds)
+  const [elapsedSeconds, setElapsedSeconds] = useState(() => storedElapsedSeconds)
+  useEffect(() => {
+    if (workoutState !== 'in_progress' || !draft.startedAt) {
+      setElapsedSeconds(storedElapsedSeconds)
+      return undefined
+    }
+    const updateElapsedTime = () => setElapsedSeconds(storedElapsedSeconds + Math.max(0, Math.floor((Date.now() - draft.startedAt) / 1000)))
+    updateElapsedTime()
+    const interval = window.setInterval(updateElapsedTime, 1000)
+    return () => window.clearInterval(interval)
+  }, [draft.startedAt, storedElapsedSeconds, workoutState])
   useEffect(() => {
     if (!availableExercises.some(exercise => exercise.name === chosen)) {
       setChosen(availableExercises.find(exercise => exercise.categoryId === draft.categoryId)?.name || availableExercises[0]?.name || '')
@@ -83,6 +98,25 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       else next.add(exerciseId)
       return next
     })
+  const startTimer = () => {
+    const startedAt = Date.now()
+    const timerElapsedSeconds = workoutState === 'paused' ? storedElapsedSeconds : 0
+    setElapsedSeconds(timerElapsedSeconds)
+    setDraft({ ...draft, workoutState: 'in_progress', startedAt, endedAt: null, timerElapsedSeconds })
+  }
+  const pauseTimer = () => {
+    const timerElapsedSeconds = storedElapsedSeconds + Math.max(0, Math.floor((Date.now() - draft.startedAt) / 1000))
+    setElapsedSeconds(timerElapsedSeconds)
+    setDraft({ ...draft, workoutState: 'paused', startedAt: null, timerElapsedSeconds })
+  }
+  const endTimer = () => {
+    const endedAt = Date.now()
+    const timerElapsedSeconds = Number.isFinite(draft.startedAt)
+      ? storedElapsedSeconds + Math.max(0, Math.floor((endedAt - draft.startedAt) / 1000))
+      : storedElapsedSeconds
+    setElapsedSeconds(timerElapsedSeconds)
+    setDraft({ ...draft, workoutState: 'finished', startedAt: null, endedAt, timerElapsedSeconds, duration: Math.max(1, Math.ceil(timerElapsedSeconds / 60)) })
+  }
   return (
     <WorkoutEditorView
       addExercise={addExercise}
@@ -103,9 +137,21 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       setDraft={setDraft}
       setImportDate={setImportDate}
       setWorkoutDetailsOpen={setWorkoutDetailsOpen}
+      pauseTimer={pauseTimer}
+      restartConfirmationOpen={restartConfirmationOpen}
+      requestRestart={() => setRestartConfirmationOpen(true)}
+      cancelRestart={() => setRestartConfirmationOpen(false)}
+      confirmRestart={() => {
+        setRestartConfirmationOpen(false)
+        startTimer()
+      }}
+      startTimer={startTimer}
       t={t}
       toggleExercise={toggleExercise}
       updateSet={updateSet}
+      endTimer={endTimer}
+      elapsedSeconds={elapsedSeconds}
+      workoutState={workoutState}
       workoutToImport={workoutToImport}
       workoutDetailsOpen={workoutDetailsOpen}
       weightUnit={weightUnit}

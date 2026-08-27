@@ -2,6 +2,15 @@
 
 React 18/Vite workout tracker with Redux UI state, Supabase PostgreSQL persistence and email/password authentication.
 
+## Features
+
+- Create workouts with exercises, sets, reps, weights, notes and optional body metrics.
+- Track a workout with start, pause, resume and finish states. The measured time is automatically copied to **Workout time** when the workout timer ends.
+- Restart a finished workout timer after confirmation.
+- Use an adjustable rest timer between sets. It defaults to one minute and opens a dedicated countdown screen with a 60-dot progress ring; confirmation is required after the countdown ends.
+- Import exercises and sets from a previous workout in Additional details.
+- Switch between Slovak and English, and between light and dark themes.
+
 ## Local development
 
 ```bash

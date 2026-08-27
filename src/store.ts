@@ -1,0 +1,267 @@
+import { configureStore, createSlice } from '@reduxjs/toolkit'
+import { localizeExerciseNames, localizeWorkoutExerciseNames } from './exerciseTranslations'
+import { localizeWorkoutNames, translateWorkoutName } from './workoutTranslations'
+import type { FitnessState } from './types'
+
+const defaultCategories = [
+  { id: 'push', name: 'Push tréning', icon: 'bench' },
+  { id: 'pull', name: 'Pull tréning', icon: 'deadlift' },
+  { id: 'legs', name: 'Nohy', icon: 'squat' },
+  { id: 'full-body', name: 'Full body', icon: 'full-body' },
+]
+const defaultExercises = [
+  ['Bench press', 'push'],
+  ['Tlaky s jednoručkami', 'push'],
+  ['Tlaky nad hlavu', 'push'],
+  ['Upažovanie', 'push'],
+  ['Tricepsové sťahovanie', 'push'],
+  ['Mŕtvy ťah', 'pull'],
+  ['Zhyby', 'pull'],
+  ['Príťahy v predklone', 'pull'],
+  ['Sťahovanie kladky', 'pull'],
+  ['Bicepsový zdvih', 'pull'],
+  ['Drep', 'legs'],
+  ['Leg press', 'legs'],
+  ['Rumunský mŕtvy ťah', 'legs'],
+  ['Predkopávanie', 'legs'],
+  ['Výpony na lýtka', 'legs'],
+  ['Drep', 'full-body'],
+  ['Bench press', 'full-body'],
+  ['Príťahy v predklone', 'full-body'],
+  ['Tlaky nad hlavu', 'full-body'],
+  ['Plank', 'full-body'],
+].map(([name, categoryId], index) => ({ id: `exercise-${index}`, name, categoryId }))
+const starterWorkouts = [
+  {
+    id: 1,
+    categoryId: 'push',
+    name: 'Push tréning',
+    date: '2026-08-18T17:30:00',
+    duration: 58,
+    completed: true,
+    exercises: [
+      {
+        id: 11,
+        name: 'Bench press',
+        sets: [
+          { reps: 8, weight: 70 },
+          { reps: 8, weight: 70 },
+          { reps: 6, weight: 75 },
+        ],
+      },
+      {
+        id: 12,
+        name: 'Tlaky nad hlavu',
+        sets: [
+          { reps: 10, weight: 30 },
+          { reps: 9, weight: 30 },
+          { reps: 8, weight: 30 },
+        ],
+      },
+      {
+        id: 13,
+        name: 'Upažovanie',
+        sets: [
+          { reps: 12, weight: 10 },
+          { reps: 12, weight: 10 },
+          { reps: 11, weight: 10 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    categoryId: 'legs',
+    name: 'Nohy',
+    date: '2026-08-15T18:10:00',
+    duration: 64,
+    completed: true,
+    exercises: [
+      {
+        id: 21,
+        name: 'Drep',
+        sets: [
+          { reps: 8, weight: 80 },
+          { reps: 8, weight: 80 },
+          { reps: 6, weight: 85 },
+        ],
+      },
+      {
+        id: 22,
+        name: 'Leg press',
+        sets: [
+          { reps: 10, weight: 140 },
+          { reps: 10, weight: 140 },
+          { reps: 9, weight: 140 },
+        ],
+      },
+    ],
+  },
+]
+const initialState: FitnessState = {
+  language: 'en',
+  theme: 'dark',
+  weightUnit: 'kg',
+  profile: { name: 'Boris', surname: '', email: '', photo: '' },
+  categories: defaultCategories,
+  exercises: defaultExercises,
+  workouts: [],
+  activeWorkout: null,
+}
+
+const fitnessSlice = createSlice({
+  name: 'fitness',
+  initialState,
+  reducers: {
+    setLanguage(state, action) {
+      const language = action.payload === 'en' ? 'en' : 'sk'
+      state.language = language
+      state.categories = localizeWorkoutNames(state.categories, language)
+      state.exercises = localizeExerciseNames(state.exercises, language)
+      state.workouts = localizeWorkoutNames(localizeWorkoutExerciseNames(state.workouts, language), language)
+      if (state.activeWorkout) {
+        state.activeWorkout.name = translateWorkoutName(state.activeWorkout.name, language)
+        state.activeWorkout.exercises = localizeExerciseNames(state.activeWorkout.exercises, language)
+      }
+    },
+    setTheme(state, action) {
+      state.theme = action.payload === 'light' ? 'light' : 'dark'
+    },
+    setWeightUnit(state, action) {
+      state.weightUnit = action.payload === 'lbs' ? 'lbs' : 'kg'
+    },
+    updateProfile(state, action) {
+      state.profile = {
+        name: action.payload.name.trim(),
+        surname: action.payload.surname.trim(),
+        email: action.payload.email.trim(),
+        photo: action.payload.photo || '',
+      }
+    },
+    addCategory(state, action) {
+      const payload = typeof action.payload === 'string' ? { name: action.payload, icon: 'bench' } : action.payload
+      state.categories.push({ id: crypto.randomUUID(), name: payload.name.trim(), icon: payload.icon || 'bench' })
+    },
+    updateCategoryIcon(state, action) {
+      const category = state.categories.find(item => item.id === action.payload.id)
+      if (category) category.icon = action.payload.icon
+    },
+    renameCategory(state, action) {
+      const category = state.categories.find(c => c.id === action.payload.id)
+      if (category && action.payload.name.trim()) category.name = action.payload.name.trim()
+      if (state.activeWorkout?.categoryId === action.payload.id) state.activeWorkout.name = action.payload.name.trim()
+    },
+    removeCategory(state, action) {
+      state.categories = state.categories.filter(c => c.id !== action.payload)
+      state.exercises = state.exercises.filter(e => e.categoryId !== action.payload)
+    },
+    addLibraryExercise(state, action) {
+      state.exercises.push({ id: crypto.randomUUID(), ...action.payload, name: action.payload.name.trim() })
+    },
+    removeLibraryExercise(state, action) {
+      state.exercises = state.exercises.filter(e => e.id !== action.payload)
+    },
+    startWorkout(state, action) {
+      const category = state.categories.find(c => c.id === action.payload)
+      if (!category) return
+      const first = state.exercises.find(e => e.categoryId === action.payload)
+      const previousWorkout = state.workouts
+        .filter(workout => workout.completed && workout.categoryId === action.payload)
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0]
+      const workoutExercises = previousWorkout
+        ? previousWorkout.exercises.map(exercise => ({
+            ...exercise,
+            id: crypto.randomUUID(),
+            sets: exercise.sets.map(set => ({ ...set })),
+          }))
+        : first
+          ? [{ id: crypto.randomUUID(), name: first.name, sets: [{ reps: 10, weight: 0 }] }]
+          : []
+      state.activeWorkout = {
+        id: Date.now(),
+        categoryId: category.id,
+        name: category.name,
+        date: `${new Date(Date.now() - new Date().getTimezoneOffset() * 60_000).toISOString().slice(0, 10)}T12:00:00`,
+        duration: 60,
+        workoutState: 'not_started',
+        startedAt: null,
+        endedAt: null,
+        timerElapsedSeconds: 0,
+        notes: '',
+        rating: 0,
+        bodyWeight: null,
+        bodyFatPercentage: null,
+        completed: false,
+        exercises: workoutExercises,
+      }
+    },
+    updateActiveWorkout(state, action) {
+      state.activeWorkout = action.payload
+    },
+    cancelWorkout(state) {
+      state.activeWorkout = null
+    },
+    finishWorkout(state) {
+      if (!state.activeWorkout) return
+      state.workouts.unshift({
+        ...state.activeWorkout,
+        duration:
+          state.activeWorkout.duration > 0 ? state.activeWorkout.duration : Math.max(1, Math.round((Date.now() - Number(state.activeWorkout.id)) / 60000)),
+        completed: true,
+      })
+      state.activeWorkout = null
+    },
+    updateWorkout(state, action) {
+      const index = state.workouts.findIndex(workout => workout.id === action.payload.id)
+      if (index !== -1) state.workouts[index] = { ...action.payload, completed: true }
+    },
+    deleteWorkout(state, action) {
+      state.workouts = state.workouts.filter(workout => workout.id !== action.payload)
+    },
+    replaceData(state, action) {
+      const language = action.payload.language === 'en' ? 'en' : 'sk'
+      state.language = language
+      state.theme = action.payload.theme === 'light' ? 'light' : 'dark'
+      state.weightUnit = action.payload.weightUnit === 'lbs' ? 'lbs' : 'kg'
+      state.profile = {
+        name: action.payload.profile?.name || 'Boris',
+        surname: action.payload.profile?.surname || '',
+        email: action.payload.profile?.email || '',
+        photo: action.payload.profile?.photo || '',
+      }
+      state.categories = localizeWorkoutNames(action.payload.categories, language)
+      state.exercises = localizeExerciseNames(action.payload.exercises, language)
+      state.workouts = localizeWorkoutNames(localizeWorkoutExerciseNames(action.payload.workouts, language), language)
+      state.activeWorkout = action.payload.activeWorkout
+        ? {
+            ...action.payload.activeWorkout,
+            name: translateWorkoutName(action.payload.activeWorkout.name, language),
+            exercises: localizeExerciseNames(action.payload.activeWorkout.exercises, language),
+          }
+        : null
+    },
+  },
+})
+export const fitnessReducer = fitnessSlice.reducer
+export const {
+  setLanguage,
+  setTheme,
+  setWeightUnit,
+  updateProfile,
+  addCategory,
+  updateCategoryIcon,
+  renameCategory,
+  removeCategory,
+  addLibraryExercise,
+  removeLibraryExercise,
+  startWorkout,
+  updateActiveWorkout,
+  cancelWorkout,
+  finishWorkout,
+  updateWorkout,
+  deleteWorkout,
+  replaceData,
+} = fitnessSlice.actions
+export const store = configureStore({ reducer: { fitness: fitnessReducer } })
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

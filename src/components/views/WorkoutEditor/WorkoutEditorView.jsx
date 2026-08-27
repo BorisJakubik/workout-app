@@ -4,6 +4,7 @@ import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
 import { toDateInputValue, weightFromKg, weightToKg } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
 import { NotesDictation } from '../../molecules/NotesDictation/NotesDictation'
+import { RestTimer } from '../../atoms/RestTimer/RestTimerContainer'
 
 export const WorkoutEditorView = ({
   addExercise,
@@ -12,6 +13,7 @@ export const WorkoutEditorView = ({
   cancelRestart,
   chosen,
   collapsedExercises,
+  completeRestTimer,
   confirmRestart,
   draft,
   elapsedSeconds,
@@ -24,17 +26,24 @@ export const WorkoutEditorView = ({
   isValid,
   locale,
   pauseTimer,
+  pauseRestTimer,
   requestRestart,
+  resetRestTimer,
+  restDurationSeconds,
+  restRemainingSeconds,
+  restTimerState,
   restartConfirmationOpen,
   removeSet,
   setChosen,
   setDraft,
   setImportDate,
   setWorkoutDetailsOpen,
+  startRestTimer,
   startTimer,
   t,
   toggleExercise,
   updateSet,
+  updateRestDuration,
   workoutToImport,
   workoutDetailsOpen,
   workoutState,
@@ -47,6 +56,22 @@ export const WorkoutEditorView = ({
   const formattedElapsedTime = new Date(elapsedSeconds * 1000).toISOString().slice(11, 19)
   const stateTitle = isInProgress ? t('workoutInProgress') : isPaused ? t('workoutPaused') : isFinished ? t('workoutFinished') : t('workoutNotStarted')
   const stateHint = isInProgress ? t('workoutTimerRunning') : isPaused ? t('workoutTimerPaused') : isFinished ? t('workoutTimerFinished') : t('workoutTimerNotStarted')
+  const restTimerRunning = restTimerState === 'running'
+  const restTimerPaused = restTimerState === 'paused'
+  const restTimerFinished = restTimerState === 'finished'
+  const formattedRestTime = new Date(restRemainingSeconds * 1000).toISOString().slice(14, 19)
+  if (restTimerRunning || restTimerPaused || restTimerFinished)
+    return (
+      <RestTimer
+        onComplete={completeRestTimer}
+        onPause={pauseRestTimer}
+        onReset={resetRestTimer}
+        onResume={startRestTimer}
+        remainingSeconds={restRemainingSeconds}
+        restDurationSeconds={restDurationSeconds}
+        restTimerState={restTimerState}
+      />
+    )
   return (
     <div className="app-shell editor">
       <header className="editor-header">
@@ -97,6 +122,36 @@ export const WorkoutEditorView = ({
             </button>
           )}
         </div>
+        <section className="rest-timer-card" aria-label={t('restTimer')}>
+          <div>
+            <strong>{t('restTimer')}</strong>
+            <small>{t('restTimerHint')}</small>
+          </div>
+          <label>
+            <input
+              type="number"
+              min="0"
+              step="0.25"
+              value={restDurationSeconds ? restDurationSeconds / 60 : ''}
+              aria-label={t('restTimerLength')}
+              disabled={restTimerRunning}
+              onChange={event => updateRestDuration(event.target.value)}
+            />
+            {t('minutesShort')}
+          </label>
+          <span className="rest-timer-countdown">{formattedRestTime}</span>
+          <div className="timer-actions">
+            {restTimerRunning ? (
+              <button className="timer-action" type="button" onClick={pauseRestTimer} aria-label={t('pauseRestTimer')} title={t('pauseRestTimer')}>
+                <Pause size={15} fill="currentColor" />
+              </button>
+            ) : (
+              <button className="timer-action" type="button" onClick={startRestTimer} disabled={restDurationSeconds <= 0} aria-label={restTimerPaused ? t('resumeRestTimer') : t('startRestTimer')} title={restTimerPaused ? t('resumeRestTimer') : t('startRestTimer')}>
+                <Play size={15} fill="currentColor" />
+              </button>
+            )}
+          </div>
+        </section>
         <section className="workout-meta-card">
           <label>
             {t('workoutDate')}
@@ -267,10 +322,8 @@ export const WorkoutEditorView = ({
                     <span className="set-index">{index + 1}</span>
                     <input
                       type="number"
-                      min="0"
-                      step={weightFromKg(5, weightUnit)}
+                      step="any"
                       value={weightFromKg(set.weight, weightUnit) ?? ''}
-                      required
                       onChange={event => updateSet(exercise.id, index, 'weight', event.target.value)}
                     />
                     <input type="number" min="1" value={set.reps ?? ''} required onChange={event => updateSet(exercise.id, index, 'reps', event.target.value)} />

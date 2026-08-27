@@ -823,6 +823,160 @@ h2 {
   flex-wrap: nowrap;
   gap: 6px;
 }
+.rest-timer-card {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 14px;
+  margin-bottom: 18px;
+}
+.rest-timer-card > div:first-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+.rest-timer-card strong {
+  font-size: 13px;
+}
+.rest-timer-card small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.rest-timer-card label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.rest-timer-card input {
+  width: 52px;
+  border: 1px solid #303934;
+  background: #0c100e;
+  color: white;
+  padding: 7px;
+  text-align: center;
+}
+.rest-timer-countdown {
+  color: var(--lime);
+  font: 700 15px monospace;
+}
+.rest-timer-card .timer-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+.rest-timer-view {
+  width: min(100%, 720px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px 22px calc(28px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+.rest-timer-view header {
+  text-align: center;
+}
+.rest-timer-view header .eyebrow {
+  margin-bottom: 5px;
+}
+.rest-timer-view header strong {
+  font-size: 16px;
+}
+.rest-timer-view main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 44px;
+}
+.rest-timer-ring {
+  position: relative;
+  width: min(76vw, 330px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+.rest-timer-ring > strong {
+  color: var(--lime);
+  font: 800 clamp(45px, 13vw, 68px) monospace;
+  letter-spacing: -4px;
+}
+.rest-timer-dot {
+  position: absolute;
+  inset: 0;
+  transform: rotate(var(--angle));
+}
+.rest-timer-dot::after {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #303934;
+  content: '';
+  transform: translateX(-50%);
+}
+.rest-timer-dot.active::after {
+  background: var(--lime);
+  box-shadow: 0 0 8px #b8f13c88;
+}
+.rest-timer-view-actions {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+.rest-timer-primary {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--lime);
+  color: #0a1007;
+  cursor: pointer;
+}
+.rest-timer-complete {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--lime);
+  color: #0a1007;
+  padding: 0 22px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.rest-timer-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+  cursor: pointer;
+}
+@media (max-width: 520px) {
+  .rest-timer-card {
+    grid-template-columns: 1fr auto auto;
+  }
+  .rest-timer-card > div:first-child {
+    grid-column: 1 / -1;
+  }
+}
 .exercise-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -2241,6 +2395,7 @@ h2 {
   color: #52615a;
 }
 :root[data-theme='light'] .workout-meta-card input,
+:root[data-theme='light'] .rest-timer-card input,
 :root[data-theme='light'] .workout-import-controls input,
 :root[data-theme='light'] .notes-field textarea,
 :root[data-theme='light'] .detail-notes textarea,

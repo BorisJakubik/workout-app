@@ -25,7 +25,7 @@ export const weightFromKg = (value, unit = 'kg') => {
 
 export const weightToKg = (value, unit = 'kg') => {
   if (value == null || value === '') return value
-  const weight = Number(value)
+  const weight = Number(String(value).replace(',', '.'))
   return unit === 'lbs' ? Number((weight / POUNDS_PER_KILOGRAM).toFixed(8)) : weight
 }
 
@@ -41,6 +41,6 @@ export const isValidWorkout = workout =>
         exercise =>
           exercise.name?.trim() &&
           exercise.sets?.length &&
-          exercise.sets.every(set => isFilledNumber(set.weight) && Number(set.weight) >= 0 && isFilledNumber(set.reps) && Number(set.reps) > 0),
+          exercise.sets.every(set => isFilledNumber(set.reps) && Number(set.reps) > 0),
       ),
   )

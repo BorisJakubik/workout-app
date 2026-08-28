@@ -14,17 +14,17 @@ React 18/Vite workout tracker with React Router navigation, Redux UI state, Supa
 
 ## Routes
 
-| Route | View |
-| --- | --- |
-| `/` | Dashboard |
-| `/history` | Workout history |
-| `/progress` | Progress overview |
-| `/library` | Exercise library |
-| `/settings` | Settings |
-| `/workout` | Active workout |
-| `/workout/rest` | Rest timer |
-| `/workout/:workout_number` | Workout detail |
-| `/workout/:workout_number/edit` | Workout editor |
+| Route                           | View              |
+| ------------------------------- | ----------------- |
+| `/`                             | Dashboard         |
+| `/history`                      | Workout history   |
+| `/progress`                     | Progress overview |
+| `/library`                      | Exercise library  |
+| `/settings`                     | Settings          |
+| `/workout`                      | Active workout    |
+| `/workout/rest`                 | Rest timer        |
+| `/workout/:workout_number`      | Workout detail    |
+| `/workout/:workout_number/edit` | Workout editor    |
 
 ## Local development
 

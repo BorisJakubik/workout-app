@@ -14,44 +14,46 @@ const LineProgressCard = ({ ariaLabel, emptyLabel, eyebrow, getValue, history, p
   const isVisibleLabel = index => index === 0 || index === history.length - 1 || index % step === 0
 
   return (
-  <div className="weight-progress-card">
-    <div className="section-heading">
-      <div>
-        <p className="eyebrow">{eyebrow}</p>
-        <h2>{title}</h2>
+    <div className="weight-progress-card">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">{eyebrow}</p>
+          <h2>{title}</h2>
+        </div>
       </div>
+      {history.length ? (
+        <>
+          <div className="weight-chart">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label={ariaLabel}>
+              <line x1="6" y1="88" x2="94" y2="88" />
+              <polyline points={polyline} />
+            </svg>
+            {history.map((item, index) => (
+              <span
+                aria-hidden="true"
+                className="weight-chart-point"
+                key={item.id}
+                style={{ left: `${points[index].x}%`, top: `${points[index].y}%` }}
+              />
+            ))}
+          </div>
+          <div className="weight-chart-labels" style={{ gridTemplateColumns: `repeat(${history.length}, minmax(0, 1fr))` }}>
+            {history.map((item, index) => (
+              <div className={isVisibleLabel(index) ? '' : 'weight-chart-label-hidden'} key={item.id}>
+                {isVisibleLabel(index) && (
+                  <>
+                    <strong>{getValue(item)}</strong>
+                    <small>{formatDate(item.date, locale)}</small>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <p className="weight-chart-empty">{emptyLabel}</p>
+      )}
     </div>
-    {history.length ? (
-      <>
-        <div className="weight-chart">
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label={ariaLabel}>
-            <line x1="6" y1="88" x2="94" y2="88" />
-            <polyline points={polyline} />
-          </svg>
-          {history.map((item, index) => (
-            <span
-              aria-hidden="true"
-              className="weight-chart-point"
-              key={item.id}
-              style={{ left: `${points[index].x}%`, top: `${points[index].y}%` }}
-            />
-          ))}
-        </div>
-        <div className="weight-chart-labels" style={{ gridTemplateColumns: `repeat(${history.length}, minmax(0, 1fr))` }}>
-          {history.map((item, index) => (
-            <div className={isVisibleLabel(index) ? '' : 'weight-chart-label-hidden'} key={item.id}>
-              {isVisibleLabel(index) && <>
-                <strong>{getValue(item)}</strong>
-                <small>{formatDate(item.date, locale)}</small>
-              </>}
-            </div>
-          ))}
-        </div>
-      </>
-    ) : (
-      <p className="weight-chart-empty">{emptyLabel}</p>
-    )}
-  </div>
   )
 }
 

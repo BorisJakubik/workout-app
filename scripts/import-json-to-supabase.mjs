@@ -8,16 +8,49 @@ const { data: auth, error: loginError } = await db.auth.signInWithPassword({ ema
 if (loginError) throw loginError
 const source = JSON.parse(await readFile(new URL('../data/fitness-data.json', import.meta.url), 'utf8'))
 const userId = auth.user.id
-const ensure = async (table, rows) => { if (!rows.length) return; const { error } = await db.from(table).upsert(rows); if (error) throw error }
-await ensure('categories', source.categories.map(item => ({ ...item, user_id: userId })))
-await ensure('exercises', source.exercises.map(item => ({ id: item.id, name: item.name, category_id: item.categoryId, user_id: userId })))
+const ensure = async (table, rows) => {
+  if (!rows.length) return
+  const { error } = await db.from(table).upsert(rows)
+  if (error) throw error
+}
+await ensure(
+  'categories',
+  source.categories.map(item => ({ ...item, user_id: userId })),
+)
+await ensure(
+  'exercises',
+  source.exercises.map(item => ({ id: item.id, name: item.name, category_id: item.categoryId, user_id: userId })),
+)
 for (const workout of source.workouts || []) {
-  const { data: row, error } = await db.from('workouts').insert({ user_id: userId, category_id: workout.categoryId, name: workout.name, performed_at: workout.date, duration_minutes: workout.duration, completed: workout.completed, notes: workout.notes || '', rating: workout.rating || 0, body_weight: workout.bodyWeight, body_fat_percentage: workout.bodyFatPercentage }).select().single()
+  const { data: row, error } = await db
+    .from('workouts')
+    .insert({
+      user_id: userId,
+      category_id: workout.categoryId,
+      name: workout.name,
+      performed_at: workout.date,
+      duration_minutes: workout.duration,
+      completed: workout.completed,
+      notes: workout.notes || '',
+      rating: workout.rating || 0,
+      body_weight: workout.bodyWeight,
+      body_fat_percentage: workout.bodyFatPercentage,
+    })
+    .select()
+    .single()
   if (error) throw error
   for (const [position, exercise] of workout.exercises.entries()) {
-    const { data: exerciseRow, error: exerciseError } = await db.from('workout_exercises').insert({ workout_id: row.id, exercise_name: exercise.name, position }).select().single()
+    const { data: exerciseRow, error: exerciseError } = await db
+      .from('workout_exercises')
+      .insert({ workout_id: row.id, exercise_name: exercise.name, position })
+      .select()
+      .single()
     if (exerciseError) throw exerciseError
-    const { error: setsError } = await db.from('exercise_sets').insert(exercise.sets.map((set, setPosition) => ({ workout_exercise_id: exerciseRow.id, reps: set.reps, weight: set.weight, position: setPosition })))
+    const { error: setsError } = await db
+      .from('exercise_sets')
+      .insert(
+        exercise.sets.map((set, setPosition) => ({ workout_exercise_id: exerciseRow.id, reps: set.reps, weight: set.weight, position: setPosition })),
+      )
     if (setsError) throw setsError
   }
 }

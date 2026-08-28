@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { NotesDictationView } from './NotesDictationView'
 import type { NotesDictationContainerProps } from './NotesDictation.types'
 
-const getSpeechRecognition = () =>
-  typeof window === 'undefined' ? null : window.SpeechRecognition || window.webkitSpeechRecognition || null
+const getSpeechRecognition = () => (typeof window === 'undefined' ? null : window.SpeechRecognition || window.webkitSpeechRecognition || null)
 
 export const NotesDictationContainer = ({ locale, onChange, placeholder, t, value }: NotesDictationContainerProps) => {
   const recognitionRef = useRef<SpeechRecognition | null>(null)

@@ -2,7 +2,18 @@ import React from 'react'
 import { Camera, Check, Moon, Scale, Sun, Trash2 } from 'lucide-react'
 import type { SettingsViewProps } from './SettingsView.types'
 
-export const SettingsView = ({ draft, onFieldChange, onPhotoSelect, onSubmit, onThemeChange, onWeightUnitChange, saved, t, theme, weightUnit }: SettingsViewProps) => (
+export const SettingsView = ({
+  draft,
+  onFieldChange,
+  onPhotoSelect,
+  onSubmit,
+  onThemeChange,
+  onWeightUnitChange,
+  saved,
+  t,
+  theme,
+  weightUnit,
+}: SettingsViewProps) => (
   <section className="page settings-page">
     <p className="eyebrow">{t('preferences')}</p>
     <h1>{t('settings')}</h1>

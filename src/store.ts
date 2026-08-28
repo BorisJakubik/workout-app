@@ -206,7 +206,9 @@ const fitnessSlice = createSlice({
       state.workouts.unshift({
         ...state.activeWorkout,
         duration:
-          state.activeWorkout.duration > 0 ? state.activeWorkout.duration : Math.max(1, Math.round((Date.now() - Number(state.activeWorkout.id)) / 60000)),
+          state.activeWorkout.duration > 0
+            ? state.activeWorkout.duration
+            : Math.max(1, Math.round((Date.now() - Number(state.activeWorkout.id)) / 60000)),
         completed: true,
       })
       state.activeWorkout = null

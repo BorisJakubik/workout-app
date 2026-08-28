@@ -55,8 +55,7 @@ export const translateExerciseName = (name, language) => {
   return language === 'en' ? slovakToEnglish[name] || name : englishToSlovak[name] || name
 }
 
-export const localizeExerciseNames = (items = [], language) =>
-  items.map(item => ({ ...item, name: translateExerciseName(item.name, language) }))
+export const localizeExerciseNames = (items = [], language) => items.map(item => ({ ...item, name: translateExerciseName(item.name, language) }))
 
 export const localizeWorkoutExerciseNames = (workouts = [], language) =>
   workouts.map(workout => ({ ...workout, exercises: localizeExerciseNames(workout.exercises, language) }))

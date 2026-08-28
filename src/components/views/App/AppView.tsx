@@ -99,7 +99,9 @@ export const AppView = (props: AppViewProps) => {
               <button role="menuitem" onClick={() => props.onScreenChange('settings')}>
                 <Settings size={17} /> {t('settings')}
               </button>
-              <button role="menuitem" onClick={props.onLogout}>Odhlásiť sa</button>
+              <button role="menuitem" onClick={props.onLogout}>
+                Odhlásiť sa
+              </button>
             </div>
           )}
         </div>
@@ -142,7 +144,11 @@ export const AppView = (props: AppViewProps) => {
         <NavButton active={screen === 'library'} icon={Dumbbell} label={t('exercisesNav')} onClick={() => props.onScreenChange('library')} />
       </nav>
       <WorkoutConfirmation confirmation={props.workoutConfirmation} onDismiss={props.onDismissWorkoutConfirmation} closeLabel={t('dismiss')} />
-      {props.error && <div className="app-error" role="alert">{props.error}</div>}
+      {props.error && (
+        <div className="app-error" role="alert">
+          {props.error}
+        </div>
+      )}
     </div>
   )
 }

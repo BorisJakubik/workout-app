@@ -5,7 +5,18 @@ import { CategoryIcon } from '../../atoms/CategoryIcon/CategoryIconView'
 import { formatDuration, weightFromKg } from '../../../utils'
 import type { DashboardViewProps } from './DashboardView.types'
 
-export const DashboardView = ({ workouts, categories, exercises, stats, profileName, startWorkout, setScreen, openWorkout, t, weightUnit }: DashboardViewProps) => {
+export const DashboardView = ({
+  workouts,
+  categories,
+  exercises,
+  stats,
+  profileName,
+  startWorkout,
+  setScreen,
+  openWorkout,
+  t,
+  weightUnit,
+}: DashboardViewProps) => {
   return (
     <>
       <section className="hero">

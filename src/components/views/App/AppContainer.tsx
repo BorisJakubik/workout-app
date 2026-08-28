@@ -101,7 +101,8 @@ export const AppContainer = (_props: AppContainerProps) => {
   const screen = matchedScreen ?? 'home'
   const workoutRoute = location.pathname === '/workout/rest' ? null : location.pathname.match(/^\/workout\/([^/]+)(?:\/(edit))?$/)
   const workoutNumber = workoutRoute ? Number(workoutRoute[1]) : null
-  const selectedWorkout = Number.isSafeInteger(workoutNumber) && workoutNumber > 0 ? workouts.find(workout => workout.workoutNumber === workoutNumber) || null : null
+  const selectedWorkout =
+    Number.isSafeInteger(workoutNumber) && workoutNumber > 0 ? workouts.find(workout => workout.workoutNumber === workoutNumber) || null : null
   const editingWorkout = Boolean(workoutRoute?.[2])
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
   const [workoutConfirmation, setWorkoutConfirmation] = useState(null)
@@ -120,14 +121,19 @@ export const AppContainer = (_props: AppContainerProps) => {
   useEffect(() => {
     if (session === undefined) return
     try {
-      if (activeWorkout && session) window.localStorage.setItem(activeWorkoutStorageKey, JSON.stringify({ userId: session.user.id, workout: activeWorkout }))
+      if (activeWorkout && session)
+        window.localStorage.setItem(activeWorkoutStorageKey, JSON.stringify({ userId: session.user.id, workout: activeWorkout }))
       else window.localStorage.removeItem(activeWorkoutStorageKey)
     } catch {
       // The workout remains usable when browser storage is unavailable.
     }
   }, [activeWorkout, session])
   useEffect(() => {
-    if (!supabase) { setSession(null); setError('Supabase nie je nakonfigurovaný.'); return undefined }
+    if (!supabase) {
+      setSession(null)
+      setError('Supabase nie je nakonfigurovaný.')
+      return undefined
+    }
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
     const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession))
     return () => listener.subscription.unsubscribe()
@@ -145,7 +151,14 @@ export const AppContainer = (_props: AppContainerProps) => {
     Promise.all([getWorkouts(), getCatalog(), getProfile(userId)])
       .then(([remoteWorkouts, catalog, remoteProfile]) => {
         if (cancelled) return
-        dispatch(replaceData({ ...store.getState().fitness, ...catalog, workouts: remoteWorkouts, profile: { ...remoteProfile, email: session.user.email || '' } }))
+        dispatch(
+          replaceData({
+            ...store.getState().fitness,
+            ...catalog,
+            workouts: remoteWorkouts,
+            profile: { ...remoteProfile, email: session.user.email || '' },
+          }),
+        )
       })
       .catch(reason => {
         if (!cancelled) setError(reason.message || 'Dáta sa nepodarilo načítať.')
@@ -197,14 +210,48 @@ export const AppContainer = (_props: AppContainerProps) => {
     navigate(screenPaths.workout)
   }
   const saveSelected = updated => {
-    saveWorkout(updated).then(saved => { dispatch(updateWorkout(saved)); navigate(`/workout/${saved.workoutNumber}`, { replace: true }); setWorkoutConfirmation({ id: Date.now(), message: t('workoutSaved', { name: saved.name }) }) }).catch(reason => setError(reason.message))
+    saveWorkout(updated)
+      .then(saved => {
+        dispatch(updateWorkout(saved))
+        navigate(`/workout/${saved.workoutNumber}`, { replace: true })
+        setWorkoutConfirmation({ id: Date.now(), message: t('workoutSaved', { name: saved.name }) })
+      })
+      .catch(reason => setError(reason.message))
   }
   const deleteSelected = () => {
-    removeWorkout(selectedWorkout.id).then(() => { dispatch(deleteWorkout(selectedWorkout.id)); navigate(screenPaths.history, { replace: true }) }).catch(reason => setError(reason.message))
+    removeWorkout(selectedWorkout.id)
+      .then(() => {
+        dispatch(deleteWorkout(selectedWorkout.id))
+        navigate(screenPaths.history, { replace: true })
+      })
+      .catch(reason => setError(reason.message))
   }
-  const authenticate = async (method, credentials) => { setLoading(true); setError(''); const { data, error: authError } = await method(credentials); setLoading(false); if (authError) setError(authError.message); else if (!data.session && method === signUp) setError(t('accountCreatedCheckEmail')) }
-  if (session === undefined) return <div className="app-state" role="status">{t('loadingSignIn')}</div>
-  if (!session) return <AuthView loading={loading} error={error} language={language} t={t} onLanguageChange={() => dispatch(setLanguage(language === 'sk' ? 'en' : 'sk'))} onLogin={credentials => authenticate(signIn, credentials)} onRegister={credentials => authenticate(signUp, credentials)} />
+  const authenticate = async (method, credentials) => {
+    setLoading(true)
+    setError('')
+    const { data, error: authError } = await method(credentials)
+    setLoading(false)
+    if (authError) setError(authError.message)
+    else if (!data.session && method === signUp) setError(t('accountCreatedCheckEmail'))
+  }
+  if (session === undefined)
+    return (
+      <div className="app-state" role="status">
+        {t('loadingSignIn')}
+      </div>
+    )
+  if (!session)
+    return (
+      <AuthView
+        loading={loading}
+        error={error}
+        language={language}
+        t={t}
+        onLanguageChange={() => dispatch(setLanguage(language === 'sk' ? 'en' : 'sk'))}
+        onLogin={credentials => authenticate(signIn, credentials)}
+        onRegister={credentials => authenticate(signUp, credentials)}
+      />
+    )
   if (loading || dataLoadedForUserId !== session.user.id)
     return (
       <div className="app-state" role="status" aria-live="polite">
@@ -236,7 +283,14 @@ export const AppContainer = (_props: AppContainerProps) => {
         if (!isValidWorkout(activeWorkout) || ['in_progress', 'paused'].includes(activeWorkout?.workoutState)) return
         const workoutName = activeWorkout?.name || t('workout')
         const draft = { ...activeWorkout, completed: true }
-        createWorkout(draft).then(saved => { dispatch(updateActiveWorkout(saved)); dispatch(finishWorkout()); navigate(screenPaths.home); setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) }) }).catch(reason => setError(reason.message))
+        createWorkout(draft)
+          .then(saved => {
+            dispatch(updateActiveWorkout(saved))
+            dispatch(finishWorkout())
+            navigate(screenPaths.home)
+            setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) })
+          })
+          .catch(reason => setError(reason.message))
       }}
       onLanguageChange={() => dispatch(setLanguage(language === 'sk' ? 'en' : 'sk'))}
       onProfileMenuToggle={() => setProfileMenuOpen(open => !open)}
@@ -247,7 +301,11 @@ export const AppContainer = (_props: AppContainerProps) => {
       onThemeChange={value => dispatch(setTheme(value))}
       onWeightUnitChange={value => dispatch(setWeightUnit(value))}
       onUpdateActiveWorkout={draft => dispatch(updateActiveWorkout(draft))}
-      onUpdateProfile={value => saveProfile(session.user.id, value).then(() => dispatch(updateProfile(value))).catch(reason => setError(reason.message))}
+      onUpdateProfile={value =>
+        saveProfile(session.user.id, value)
+          .then(() => dispatch(updateProfile(value)))
+          .catch(reason => setError(reason.message))
+      }
       openWorkout={workout => navigate(workout?.workoutNumber ? `/workout/${workout.workoutNumber}` : screenPaths.history)}
       editingWorkout={editingWorkout}
       onEditingWorkoutChange={editing => navigate(`/workout/${selectedWorkout.workoutNumber}${editing ? '/edit' : ''}`)}

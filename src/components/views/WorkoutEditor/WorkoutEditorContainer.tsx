@@ -28,13 +28,14 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
   const [restRemainingSeconds, setRestRemainingSeconds] = useState(() =>
     savedRestTimer?.state === 'running' && savedRestTimer.endsAt
       ? Math.max(0, Math.ceil((savedRestTimer.endsAt - Date.now()) / 1000))
-      : savedRestTimer?.remainingSeconds ?? 60,
+      : (savedRestTimer?.remainingSeconds ?? 60),
   )
   const [restTimerState, setRestTimerState] = useState<RestTimerState>(() => savedRestTimer?.state ?? 'idle')
-  const [restTimerEndsAt, setRestTimerEndsAt] = useState<number | null>(() => savedRestTimer?.state === 'running' ? savedRestTimer.endsAt : null)
+  const [restTimerEndsAt, setRestTimerEndsAt] = useState<number | null>(() => (savedRestTimer?.state === 'running' ? savedRestTimer.endsAt : null))
   const restTimerOpen = location.pathname === '/workout/rest'
   const workoutState = draft.workoutState || 'not_started'
-  const legacyElapsedSeconds = draft.startedAt && draft.endedAt ? Math.max(0, Math.floor((new Date(draft.endedAt).getTime() - new Date(draft.startedAt).getTime()) / 1000)) : 0
+  const legacyElapsedSeconds =
+    draft.startedAt && draft.endedAt ? Math.max(0, Math.floor((new Date(draft.endedAt).getTime() - new Date(draft.startedAt).getTime()) / 1000)) : 0
   const storedElapsedSeconds = Number(draft.timerElapsedSeconds ?? legacyElapsedSeconds)
   const [elapsedSeconds, setElapsedSeconds] = useState(() => storedElapsedSeconds)
   useEffect(() => {
@@ -42,7 +43,8 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       setElapsedSeconds(storedElapsedSeconds)
       return undefined
     }
-    const updateElapsedTime = () => setElapsedSeconds(storedElapsedSeconds + Math.max(0, Math.floor((Date.now() - new Date(draft.startedAt).getTime()) / 1000)))
+    const updateElapsedTime = () =>
+      setElapsedSeconds(storedElapsedSeconds + Math.max(0, Math.floor((Date.now() - new Date(draft.startedAt).getTime()) / 1000)))
     updateElapsedTime()
     const interval = window.setInterval(updateElapsedTime, 1000)
     return () => window.clearInterval(interval)
@@ -87,8 +89,7 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
                 index === setIndex
                   ? {
                       ...set,
-                      [field]:
-                        value === '' ? null : field === 'weight' ? weightToKg(value, weightUnit) : Math.max(0, Number(value)),
+                      [field]: value === '' ? null : field === 'weight' ? weightToKg(value, weightUnit) : Math.max(0, Number(value)),
                     }
                   : set,
               ),
@@ -149,13 +150,21 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       ? storedElapsedSeconds + Math.max(0, Math.floor((endedAt - new Date(draft.startedAt).getTime()) / 1000))
       : storedElapsedSeconds
     setElapsedSeconds(timerElapsedSeconds)
-    setDraft({ ...draft, workoutState: 'finished', startedAt: null, endedAt, timerElapsedSeconds, duration: Math.max(1, Math.ceil(timerElapsedSeconds / 60)) })
+    setDraft({
+      ...draft,
+      workoutState: 'finished',
+      startedAt: null,
+      endedAt,
+      timerElapsedSeconds,
+      duration: Math.max(1, Math.ceil(timerElapsedSeconds / 60)),
+    })
   }
   const updateRestDuration = value => {
     const seconds = value === '' ? 0 : Math.max(0, Math.round(Number(value) * 60))
     setRestDurationSeconds(seconds)
     if (restTimerState !== 'running') setRestRemainingSeconds(seconds)
-    if (restTimerState !== 'running') setDraft({ ...draft, restTimer: { durationSeconds: seconds, remainingSeconds: seconds, state: restTimerState, endsAt: null } })
+    if (restTimerState !== 'running')
+      setDraft({ ...draft, restTimer: { durationSeconds: seconds, remainingSeconds: seconds, state: restTimerState, endsAt: null } })
   }
   const startRestTimer = () => {
     const seconds = restTimerState === 'paused' ? restRemainingSeconds : restDurationSeconds

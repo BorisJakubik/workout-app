@@ -7,7 +7,9 @@ import type { LibraryViewProps } from './LibraryView.types'
 
 export const LibraryView = (props: LibraryViewProps) => {
   const { categories, categoryIcon, categoryId, categoryName, editedName, editingId, exerciseName, exercises, t } = props
-  const exerciseOptions = [...new Set<string>((exercises as { name: string }[]).map(exercise => exercise.name.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b))
+  const exerciseOptions = [...new Set<string>((exercises as { name: string }[]).map(exercise => exercise.name.trim()).filter(Boolean))].sort((a, b) =>
+    a.localeCompare(b),
+  )
   return (
     <section className="page">
       <p className="eyebrow">{t('customPlan')}</p>

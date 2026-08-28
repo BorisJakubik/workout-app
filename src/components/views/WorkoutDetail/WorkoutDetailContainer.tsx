@@ -6,7 +6,17 @@ import type { WorkoutDetailContainerProps } from './WorkoutDetailContainer.types
 
 const STRENGTH_TRAINING_MET = 6
 
-export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, editing, onEditingChange, onBack, onSave, onDelete, weightUnit }: WorkoutDetailContainerProps) => {
+export const WorkoutDetailContainer = ({
+  workout,
+  exercises,
+  calorieWeight,
+  editing,
+  onEditingChange,
+  onBack,
+  onSave,
+  onDelete,
+  weightUnit,
+}: WorkoutDetailContainerProps) => {
   const { t, locale } = useTranslation()
   const [draft, setDraft] = useState(workout)
   const [menuOpen, setMenuOpen] = useState(false)

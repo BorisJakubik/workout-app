@@ -45,7 +45,10 @@ export const LibraryContainer = ({ categories, exercises }: LibraryContainerProp
     setEditedName(category.name)
   }
   const saveRename = () => {
-    if (editedName.trim()) updateCategory({ id: editingId, name: editedName.trim(), icon: categories.find(item => item.id === editingId)?.icon || 'bench' }).then(() => dispatch(renameCategory({ id: editingId, name: editedName })))
+    if (editedName.trim())
+      updateCategory({ id: editingId, name: editedName.trim(), icon: categories.find(item => item.id === editingId)?.icon || 'bench' }).then(() =>
+        dispatch(renameCategory({ id: editingId, name: editedName })),
+      )
     setEditingId(null)
   }
   const confirmDelete = () => {
@@ -74,7 +77,9 @@ export const LibraryContainer = ({ categories, exercises }: LibraryContainerProp
       onConfirmDelete={confirmDelete}
       onEditedNameChange={setEditedName}
       onExerciseNameChange={setExerciseName}
-      onIconChange={payload => updateCategory({ ...categories.find(item => item.id === payload.id), icon: payload.icon }).then(() => dispatch(updateCategoryIcon(payload)))}
+      onIconChange={payload =>
+        updateCategory({ ...categories.find(item => item.id === payload.id), icon: payload.icon }).then(() => dispatch(updateCategoryIcon(payload)))
+      }
       onRemoveCategory={category => setDeleteItem({ id: category.id, name: category.name, type: 'category' })}
       onRemoveExercise={exercise => setDeleteItem({ id: exercise.id, name: exercise.name, type: 'exercise' })}
       onSaveRename={saveRename}

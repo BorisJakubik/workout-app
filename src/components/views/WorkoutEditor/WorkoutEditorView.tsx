@@ -52,8 +52,20 @@ export const WorkoutEditorView = ({
   const isFinished = workoutState === 'finished'
   const isTimerActive = isInProgress || isPaused
   const formattedElapsedTime = new Date(elapsedSeconds * 1000).toISOString().slice(11, 19)
-  const stateTitle = isInProgress ? t('workoutInProgress') : isPaused ? t('workoutPaused') : isFinished ? t('workoutFinished') : t('workoutNotStarted')
-  const stateHint = isInProgress ? t('workoutTimerRunning') : isPaused ? t('workoutTimerPaused') : isFinished ? t('workoutTimerFinished') : t('workoutTimerNotStarted')
+  const stateTitle = isInProgress
+    ? t('workoutInProgress')
+    : isPaused
+      ? t('workoutPaused')
+      : isFinished
+        ? t('workoutFinished')
+        : t('workoutNotStarted')
+  const stateHint = isInProgress
+    ? t('workoutTimerRunning')
+    : isPaused
+      ? t('workoutTimerPaused')
+      : isFinished
+        ? t('workoutTimerFinished')
+        : t('workoutTimerNotStarted')
   const restTimerRunning = restTimerState === 'running'
   const restTimerPaused = restTimerState === 'paused'
   const formattedRestTime = new Date(restRemainingSeconds * 1000).toISOString().slice(14, 19)
@@ -131,7 +143,14 @@ export const WorkoutEditorView = ({
                 <Pause size={15} fill="currentColor" />
               </button>
             ) : (
-              <button className="timer-action" type="button" onClick={startRestTimer} disabled={restDurationSeconds <= 0} aria-label={restTimerPaused ? t('resumeRestTimer') : t('startRestTimer')} title={restTimerPaused ? t('resumeRestTimer') : t('startRestTimer')}>
+              <button
+                className="timer-action"
+                type="button"
+                onClick={startRestTimer}
+                disabled={restDurationSeconds <= 0}
+                aria-label={restTimerPaused ? t('resumeRestTimer') : t('startRestTimer')}
+                title={restTimerPaused ? t('resumeRestTimer') : t('startRestTimer')}
+              >
                 <Play size={15} fill="currentColor" />
               </button>
             )}
@@ -311,7 +330,13 @@ export const WorkoutEditorView = ({
                       value={weightFromKg(set.weight, weightUnit) ?? ''}
                       onChange={event => updateSet(exercise.id, index, 'weight', event.target.value)}
                     />
-                    <input type="number" min="1" value={set.reps ?? ''} required onChange={event => updateSet(exercise.id, index, 'reps', event.target.value)} />
+                    <input
+                      type="number"
+                      min="1"
+                      value={set.reps ?? ''}
+                      required
+                      onChange={event => updateSet(exercise.id, index, 'reps', event.target.value)}
+                    />
                     <button
                       className="set-delete"
                       type="button"
@@ -341,7 +366,13 @@ export const WorkoutEditorView = ({
       </main>
       {restartConfirmationOpen && (
         <div className="modal-backdrop" onMouseDown={event => event.target === event.currentTarget && cancelRestart()}>
-          <div className="delete-workout-modal" role="alertdialog" aria-modal="true" aria-labelledby="restart-workout-title" aria-describedby="restart-workout-description">
+          <div
+            className="delete-workout-modal"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="restart-workout-title"
+            aria-describedby="restart-workout-description"
+          >
             <div className="restart-workout-icon">
               <RotateCcw size={22} />
             </div>

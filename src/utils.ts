@@ -38,9 +38,6 @@ export const isValidWorkout = workout =>
       Number(workout.duration) > 0 &&
       workout.exercises?.length &&
       workout.exercises.every(
-        exercise =>
-          exercise.name?.trim() &&
-          exercise.sets?.length &&
-          exercise.sets.every(set => isFilledNumber(set.reps) && Number(set.reps) > 0),
+        exercise => exercise.name?.trim() && exercise.sets?.length && exercise.sets.every(set => isFilledNumber(set.reps) && Number(set.reps) > 0),
       ),
   )

@@ -4,7 +4,10 @@ import type { DashboardStats } from '../Dashboard/DashboardContainer.types'
 import type { Translate } from '../../molecules/NotesDictation/NotesDictation.types'
 
 export type Screen = 'home' | 'history' | 'progress' | 'library' | 'settings' | 'workout'
-export interface WorkoutConfirmation { id: number; message: string }
+export interface WorkoutConfirmation {
+  id: number
+  message: string
+}
 export interface AppViewProps {
   activeWorkout: Workout | null
   calorieWeight: number

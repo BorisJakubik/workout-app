@@ -2,7 +2,11 @@ import type { SubmitEvent } from 'react'
 import type { Category, Exercise } from '../../../types'
 import type { Translate } from '../../molecules/NotesDictation/NotesDictation.types'
 
-export interface LibraryDeleteItem { id: string; name: string; type: 'category' | 'exercise' }
+export interface LibraryDeleteItem {
+  id: string
+  name: string
+  type: 'category' | 'exercise'
+}
 export interface LibraryViewProps {
   categories: Category[]
   categoryIcon: string

@@ -2,7 +2,10 @@ import type { RefObject } from 'react'
 import type { Exercise, WeightUnit, Workout, WorkoutExercise } from '../../../types'
 import type { Translate } from '../../molecules/NotesDictation/NotesDictation.types'
 
-export interface EditableSet { reps: number | null; weight: number | null }
+export interface EditableSet {
+  reps: number | null
+  weight: number | null
+}
 export type EditableWorkoutExercise = Omit<WorkoutExercise, 'sets'> & { sets: EditableSet[] }
 export type EditableWorkout = Omit<Workout, 'bodyFatPercentage' | 'bodyWeight' | 'duration' | 'exercises'> & {
   bodyFatPercentage?: number | null

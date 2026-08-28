@@ -2,7 +2,17 @@ import React from 'react'
 import { Check, ChevronDown } from 'lucide-react'
 import type { ExerciseDropdownViewProps } from './ExerciseDropdownView.types'
 
-export const ExerciseDropdownView = ({ canShowAll, dropdownRef, onExpand, onSelect, onToggle, open, t, value, visibleExercises }: ExerciseDropdownViewProps) => (
+export const ExerciseDropdownView = ({
+  canShowAll,
+  dropdownRef,
+  onExpand,
+  onSelect,
+  onToggle,
+  open,
+  t,
+  value,
+  visibleExercises,
+}: ExerciseDropdownViewProps) => (
   <div className="exercise-dropdown" ref={dropdownRef}>
     <button
       className="exercise-dropdown-trigger"

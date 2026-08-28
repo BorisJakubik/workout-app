@@ -4,7 +4,6 @@ import { RatingStars } from '../../atoms/RatingStars/RatingStarsContainer'
 import { toDateInputValue, weightFromKg, weightToKg } from '../../../utils'
 import { ExerciseDropdown } from '../../molecules/ExerciseDropdown/ExerciseDropdownContainer'
 import { NotesDictation } from '../../molecules/NotesDictation/NotesDictationContainer'
-import { RestTimer } from '../../atoms/RestTimer/RestTimerContainer'
 import type { WorkoutEditorViewProps } from './WorkoutEditorView.types'
 
 export const WorkoutEditorView = ({
@@ -14,7 +13,6 @@ export const WorkoutEditorView = ({
   cancelRestart,
   chosen,
   collapsedExercises,
-  completeRestTimer,
   confirmRestart,
   draft,
   elapsedSeconds,
@@ -29,7 +27,6 @@ export const WorkoutEditorView = ({
   pauseTimer,
   pauseRestTimer,
   requestRestart,
-  resetRestTimer,
   restDurationSeconds,
   restRemainingSeconds,
   restTimerState,
@@ -59,20 +56,7 @@ export const WorkoutEditorView = ({
   const stateHint = isInProgress ? t('workoutTimerRunning') : isPaused ? t('workoutTimerPaused') : isFinished ? t('workoutTimerFinished') : t('workoutTimerNotStarted')
   const restTimerRunning = restTimerState === 'running'
   const restTimerPaused = restTimerState === 'paused'
-  const restTimerFinished = restTimerState === 'finished'
   const formattedRestTime = new Date(restRemainingSeconds * 1000).toISOString().slice(14, 19)
-  if (restTimerRunning || restTimerPaused || restTimerFinished)
-    return (
-      <RestTimer
-        onComplete={completeRestTimer}
-        onPause={pauseRestTimer}
-        onReset={resetRestTimer}
-        onResume={startRestTimer}
-        remainingSeconds={restRemainingSeconds}
-        restDurationSeconds={restDurationSeconds}
-        restTimerState={restTimerState}
-      />
-    )
   return (
     <div className="app-shell editor">
       <header className="editor-header">

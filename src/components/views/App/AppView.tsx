@@ -59,6 +59,8 @@ export const AppView = (props: AppViewProps) => {
           exercises={exercises}
           calorieWeight={calorieWeight}
           onBack={() => props.openWorkout(null)}
+          editing={props.editingWorkout}
+          onEditingChange={props.onEditingWorkoutChange}
           onSave={props.onSaveWorkout}
           onDelete={props.onDeleteWorkout}
           weightUnit={weightUnit}

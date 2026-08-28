@@ -38,4 +38,6 @@ export interface AppViewProps {
   openWorkout: (workout: Workout | null) => void
   workoutConfirmation: WorkoutConfirmation | null
   error: string
+  editingWorkout: boolean
+  onEditingWorkoutChange: (editing: boolean) => void
 }

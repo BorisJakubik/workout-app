@@ -8,7 +8,7 @@ export type Workout = {
 }
 
 const mapWorkout = (row: any): Workout => ({
-  id: row.id, categoryId: row.category_id, name: row.name, date: row.performed_at, duration: row.duration_minutes,
+  id: row.id, workoutNumber: Number(row.workout_number), categoryId: row.category_id, name: row.name, date: row.performed_at, duration: row.duration_minutes,
   completed: row.completed, notes: row.notes || '', rating: row.rating || 0, bodyWeight: row.body_weight,
   bodyFatPercentage: row.body_fat_percentage,
   exercises: (row.workout_exercises || []).sort((a: any, b: any) => a.position - b.position).map((exercise: any) => ({

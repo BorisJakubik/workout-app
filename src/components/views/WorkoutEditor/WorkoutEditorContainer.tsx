@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from '../../../i18n'
+import { RestTimer } from '../../atoms/RestTimer/RestTimerContainer'
 import { WorkoutEditorView } from './WorkoutEditorView'
 import { isValidWorkout, weightToKg } from '../../../utils'
 import type { WorkoutEditorContainerProps } from './WorkoutEditorContainer.types'
@@ -7,6 +9,8 @@ import type { RestTimerState } from './WorkoutEditorView.types'
 
 export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDraft, finish, cancel, weightUnit }: WorkoutEditorContainerProps) => {
   const { t, locale } = useTranslation()
+  const location = useLocation()
+  const navigate = useNavigate()
   const categoryExercises = exercises.filter(exercise => exercise.categoryId === draft.categoryId)
   const selectedExerciseNames = new Set(draft.exercises.map(exercise => exercise.name.trim().toLocaleLowerCase()))
   const availableExercises = exercises.filter(
@@ -19,10 +23,16 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
   const [chosen, setChosen] = useState(categoryExercises[0]?.name || exercises[0]?.name || '')
   const [importDate, setImportDate] = useState('')
   const [restartConfirmationOpen, setRestartConfirmationOpen] = useState(false)
-  const [restDurationSeconds, setRestDurationSeconds] = useState(60)
-  const [restRemainingSeconds, setRestRemainingSeconds] = useState(60)
-  const [restTimerState, setRestTimerState] = useState<RestTimerState>('idle')
-  const [restTimerEndsAt, setRestTimerEndsAt] = useState(null)
+  const savedRestTimer = draft.restTimer
+  const [restDurationSeconds, setRestDurationSeconds] = useState(() => savedRestTimer?.durationSeconds ?? 60)
+  const [restRemainingSeconds, setRestRemainingSeconds] = useState(() =>
+    savedRestTimer?.state === 'running' && savedRestTimer.endsAt
+      ? Math.max(0, Math.ceil((savedRestTimer.endsAt - Date.now()) / 1000))
+      : savedRestTimer?.remainingSeconds ?? 60,
+  )
+  const [restTimerState, setRestTimerState] = useState<RestTimerState>(() => savedRestTimer?.state ?? 'idle')
+  const [restTimerEndsAt, setRestTimerEndsAt] = useState<number | null>(() => savedRestTimer?.state === 'running' ? savedRestTimer.endsAt : null)
+  const restTimerOpen = location.pathname === '/workout/rest'
   const workoutState = draft.workoutState || 'not_started'
   const legacyElapsedSeconds = draft.startedAt && draft.endedAt ? Math.max(0, Math.floor((new Date(draft.endedAt).getTime() - new Date(draft.startedAt).getTime()) / 1000)) : 0
   const storedElapsedSeconds = Number(draft.timerElapsedSeconds ?? legacyElapsedSeconds)
@@ -45,12 +55,16 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
       if (remaining === 0) {
         setRestTimerState('finished')
         setRestTimerEndsAt(null)
+        setDraft({ ...draft, restTimer: { durationSeconds: restDurationSeconds, remainingSeconds: 0, state: 'finished', endsAt: null } })
       }
     }
     updateRestTimer()
     const interval = window.setInterval(updateRestTimer, 250)
     return () => window.clearInterval(interval)
-  }, [restTimerEndsAt, restTimerState])
+  }, [draft, restDurationSeconds, restTimerEndsAt, restTimerState, setDraft])
+  useEffect(() => {
+    if (restTimerOpen && restTimerState === 'idle') navigate('/workout', { replace: true })
+  }, [navigate, restTimerOpen, restTimerState])
   useEffect(() => {
     if (!availableExercises.some(exercise => exercise.name === chosen)) {
       setChosen(availableExercises.find(exercise => exercise.categoryId === draft.categoryId)?.name || availableExercises[0]?.name || '')
@@ -141,28 +155,50 @@ export const WorkoutEditorContainer = ({ draft, exercises, workouts = [], setDra
     const seconds = value === '' ? 0 : Math.max(0, Math.round(Number(value) * 60))
     setRestDurationSeconds(seconds)
     if (restTimerState !== 'running') setRestRemainingSeconds(seconds)
+    if (restTimerState !== 'running') setDraft({ ...draft, restTimer: { durationSeconds: seconds, remainingSeconds: seconds, state: restTimerState, endsAt: null } })
   }
   const startRestTimer = () => {
     const seconds = restTimerState === 'paused' ? restRemainingSeconds : restDurationSeconds
     if (seconds <= 0) return
     setRestRemainingSeconds(seconds)
-    setRestTimerEndsAt(Date.now() + seconds * 1000)
+    const endsAt = Date.now() + seconds * 1000
+    setRestTimerEndsAt(endsAt)
     setRestTimerState('running')
+    setDraft({ ...draft, restTimer: { durationSeconds: restDurationSeconds, remainingSeconds: seconds, state: 'running', endsAt } })
+    navigate('/workout/rest')
   }
   const pauseRestTimer = () => {
-    if (restTimerEndsAt) setRestRemainingSeconds(Math.max(0, Math.ceil((restTimerEndsAt - Date.now()) / 1000)))
+    const remainingSeconds = restTimerEndsAt ? Math.max(0, Math.ceil((restTimerEndsAt - Date.now()) / 1000)) : restRemainingSeconds
+    setRestRemainingSeconds(remainingSeconds)
     setRestTimerEndsAt(null)
     setRestTimerState('paused')
+    setDraft({ ...draft, restTimer: { durationSeconds: restDurationSeconds, remainingSeconds, state: 'paused', endsAt: null } })
   }
   const resetRestTimer = () => {
     setRestTimerEndsAt(null)
     setRestRemainingSeconds(restDurationSeconds)
     setRestTimerState('idle')
+    setDraft({ ...draft, restTimer: { durationSeconds: restDurationSeconds, remainingSeconds: restDurationSeconds, state: 'idle', endsAt: null } })
+    navigate('/workout')
   }
   const completeRestTimer = () => {
     setRestRemainingSeconds(restDurationSeconds)
     setRestTimerState('idle')
+    setDraft({ ...draft, restTimer: { durationSeconds: restDurationSeconds, remainingSeconds: restDurationSeconds, state: 'idle', endsAt: null } })
+    navigate('/workout')
   }
+  if (restTimerOpen && restTimerState !== 'idle')
+    return (
+      <RestTimer
+        onComplete={completeRestTimer}
+        onPause={pauseRestTimer}
+        onReset={resetRestTimer}
+        onResume={startRestTimer}
+        remainingSeconds={restRemainingSeconds}
+        restDurationSeconds={restDurationSeconds}
+        restTimerState={restTimerState}
+      />
+    )
   return (
     <WorkoutEditorView
       addExercise={addExercise}

@@ -1,15 +1,30 @@
 # FitTrack
 
-React 18/Vite workout tracker with Redux UI state, Supabase PostgreSQL persistence and email/password authentication.
+React 18/Vite workout tracker with React Router navigation, Redux UI state, Supabase PostgreSQL persistence and email/password authentication.
 
 ## Features
 
 - Create workouts with exercises, sets, reps, weights, notes and optional body metrics.
 - Track a workout with start, pause, resume and finish states. The measured time is automatically copied to **Workout time** when the workout timer ends.
 - Restart a finished workout timer after confirmation.
-- Use an adjustable rest timer between sets. It defaults to one minute and opens a dedicated countdown screen with a 60-dot progress ring; confirmation is required after the countdown ends.
+- Use an adjustable rest timer between sets. It defaults to one minute and opens at `/workout/rest` with a 60-dot progress ring; confirmation is required after the countdown ends.
+- Preserve an active workout and rest timer across an iPhone/browser reload. The active draft is restored from browser storage for the signed-in user and a running timer is recalculated from its end time.
 - Import exercises and sets from a previous workout in Additional details.
 - Switch between Slovak and English, and between light and dark themes.
+
+## Routes
+
+| Route | View |
+| --- | --- |
+| `/` | Dashboard |
+| `/history` | Workout history |
+| `/progress` | Progress overview |
+| `/library` | Exercise library |
+| `/settings` | Settings |
+| `/workout` | Active workout |
+| `/workout/rest` | Rest timer |
+| `/workout/:workout_number` | Workout detail |
+| `/workout/:workout_number/edit` | Workout editor |
 
 ## Local development
 
@@ -25,7 +40,9 @@ The app is at `http://127.0.0.1:5173`. The browser receives only the public Supa
 ## Supabase setup
 
 1. Create a [Supabase](https://supabase.com/dashboard) project and enable Email/password in Authentication.
-2. Run [`supabase/migrations/20260825_initial_schema.sql`](supabase/migrations/20260825_initial_schema.sql) in SQL Editor. It creates profiles, categories, exercises, workouts, workout exercises and sets, with RLS policies.
+2. Run the SQL migrations in chronological order in Supabase SQL Editor:
+   - [`supabase/migrations/20260825_initial_schema.sql`](supabase/migrations/20260825_initial_schema.sql) creates profiles, categories, exercises, workouts, workout exercises and sets, with RLS policies.
+   - [`supabase/migrations/20260828_add_workout_number.sql`](supabase/migrations/20260828_add_workout_number.sql) adds a sequential `workout_number` to existing and new workouts. This number is used in workout URLs; UUID stays as the internal relational key.
 3. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`, then restart the server.
 4. Register an account. If email confirmation is enabled, confirm the email before signing in.
 

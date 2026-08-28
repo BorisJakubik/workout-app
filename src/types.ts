@@ -2,6 +2,14 @@ export type Language = 'sk' | 'en'
 export type Theme = 'dark' | 'light'
 export type WeightUnit = 'kg' | 'lbs'
 export type WorkoutState = 'not_started' | 'in_progress' | 'paused' | 'finished'
+export type RestTimerState = 'idle' | 'running' | 'paused' | 'finished'
+
+export interface RestTimerSnapshot {
+  durationSeconds: number
+  remainingSeconds: number
+  state: RestTimerState
+  endsAt: number | null
+}
 
 export interface Category {
   id: string
@@ -28,6 +36,7 @@ export interface WorkoutExercise extends Exercise {
 
 export interface Workout {
   id: string | number
+  workoutNumber?: number
   categoryId?: string | null
   name: string
   date: string
@@ -38,6 +47,7 @@ export interface Workout {
   startedAt?: string | number | null
   endedAt?: string | number | null
   timerElapsedSeconds?: number
+  restTimer?: RestTimerSnapshot
   notes?: string
   rating?: number
   bodyWeight?: number | null

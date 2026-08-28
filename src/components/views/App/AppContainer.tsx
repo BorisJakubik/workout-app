@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import {
   cancelWorkout,
   deleteWorkout,
@@ -26,6 +27,33 @@ import { AppView } from './AppView'
 import { isValidWorkout } from '../../../utils'
 import type { AppContainerProps } from './AppContainer.types'
 import type { Screen } from './AppView.types'
+
+const activeWorkoutStorageKey = 'fittrack.active-workout'
+const screenPaths: Record<Screen, string> = {
+  home: '/',
+  history: '/history',
+  progress: '/progress',
+  library: '/library',
+  settings: '/settings',
+  workout: '/workout',
+}
+
+const getScreenFromPathname = (pathname: string): Screen | null => {
+  if (pathname === '/') return 'home'
+  if (pathname === '/workout/rest') return 'workout'
+  if (/^\/workout\/[^/]+(?:\/edit)?$/.test(pathname)) return 'history'
+  return (Object.entries(screenPaths).find(([, path]) => path === pathname)?.[0] as Screen | undefined) ?? null
+}
+
+const readStoredActiveWorkout = userId => {
+  try {
+    const stored = window.localStorage.getItem(activeWorkoutStorageKey)
+    const snapshot = stored ? JSON.parse(stored) : null
+    return snapshot?.userId === userId ? snapshot.workout : null
+  } catch {
+    return null
+  }
+}
 
 const bigThreeLifts = [
   { key: 'benchPress', aliases: ['bench press', 'benchpress'] },
@@ -56,6 +84,8 @@ const getBestBigThreeLift = workouts =>
 
 export const AppContainer = (_props: AppContainerProps) => {
   const dispatch = useDispatch()
+  const location = useLocation()
+  const navigate = useNavigate()
   const { language, t } = useTranslation()
   const { workouts, categories, exercises, activeWorkout } = useSelector((state: RootState) => state.fitness)
   const theme = useSelector((state: RootState) => state.fitness.theme || 'dark')
@@ -67,8 +97,12 @@ export const AppContainer = (_props: AppContainerProps) => {
     email: storedProfile?.email || '',
     photo: storedProfile?.photo || '',
   }
-  const [screen, setScreen] = useState<Screen>(activeWorkout ? 'workout' : 'home')
-  const [selectedWorkout, setSelectedWorkout] = useState(null)
+  const matchedScreen = getScreenFromPathname(location.pathname)
+  const screen = matchedScreen ?? 'home'
+  const workoutRoute = location.pathname === '/workout/rest' ? null : location.pathname.match(/^\/workout\/([^/]+)(?:\/(edit))?$/)
+  const workoutNumber = workoutRoute ? Number(workoutRoute[1]) : null
+  const selectedWorkout = Number.isSafeInteger(workoutNumber) && workoutNumber > 0 ? workouts.find(workout => workout.workoutNumber === workoutNumber) || null : null
+  const editingWorkout = Boolean(workoutRoute?.[2])
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
   const [workoutConfirmation, setWorkoutConfirmation] = useState(null)
   const [session, setSession] = useState(undefined)
@@ -76,6 +110,22 @@ export const AppContainer = (_props: AppContainerProps) => {
   const [dataLoadedForUserId, setDataLoadedForUserId] = useState(null)
   const [error, setError] = useState('')
   const profileMenuRef = useRef(null)
+  useEffect(() => {
+    if (!session) return
+    const storedActiveWorkout = readStoredActiveWorkout(session.user.id)
+    if (storedActiveWorkout) {
+      dispatch(updateActiveWorkout(storedActiveWorkout))
+    }
+  }, [dispatch, session])
+  useEffect(() => {
+    if (session === undefined) return
+    try {
+      if (activeWorkout && session) window.localStorage.setItem(activeWorkoutStorageKey, JSON.stringify({ userId: session.user.id, workout: activeWorkout }))
+      else window.localStorage.removeItem(activeWorkoutStorageKey)
+    } catch {
+      // The workout remains usable when browser storage is unavailable.
+    }
+  }, [activeWorkout, session])
   useEffect(() => {
     if (!supabase) { setSession(null); setError('Supabase nie je nakonfigurovaný.'); return undefined }
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
@@ -112,11 +162,6 @@ export const AppContainer = (_props: AppContainerProps) => {
     document.documentElement.lang = language
   }, [language])
   useEffect(() => {
-    if (!selectedWorkout) return
-    const localizedWorkout = workouts.find(workout => workout.id === selectedWorkout.id)
-    if (localizedWorkout && localizedWorkout !== selectedWorkout) setSelectedWorkout(localizedWorkout)
-  }, [workouts, selectedWorkout])
-  useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
   useEffect(() => {
@@ -149,13 +194,13 @@ export const AppContainer = (_props: AppContainerProps) => {
   }, [workouts])
   const start = categoryId => {
     dispatch(startWorkout(categoryId))
-    setScreen('workout')
+    navigate(screenPaths.workout)
   }
   const saveSelected = updated => {
-    saveWorkout(updated).then(saved => { dispatch(updateWorkout(saved)); setSelectedWorkout(saved); setWorkoutConfirmation({ id: Date.now(), message: t('workoutSaved', { name: saved.name }) }) }).catch(reason => setError(reason.message))
+    saveWorkout(updated).then(saved => { dispatch(updateWorkout(saved)); navigate(`/workout/${saved.workoutNumber}`, { replace: true }); setWorkoutConfirmation({ id: Date.now(), message: t('workoutSaved', { name: saved.name }) }) }).catch(reason => setError(reason.message))
   }
   const deleteSelected = () => {
-    removeWorkout(selectedWorkout.id).then(() => { dispatch(deleteWorkout(selectedWorkout.id)); setSelectedWorkout(null) }).catch(reason => setError(reason.message))
+    removeWorkout(selectedWorkout.id).then(() => { dispatch(deleteWorkout(selectedWorkout.id)); navigate(screenPaths.history, { replace: true }) }).catch(reason => setError(reason.message))
   }
   const authenticate = async (method, credentials) => { setLoading(true); setError(''); const { data, error: authError } = await method(credentials); setLoading(false); if (authError) setError(authError.message); else if (!data.session && method === signUp) setError(t('accountCreatedCheckEmail')) }
   if (session === undefined) return <div className="app-state" role="status">{t('loadingSignIn')}</div>
@@ -167,6 +212,9 @@ export const AppContainer = (_props: AppContainerProps) => {
         {t('loadingWorkouts')}
       </div>
     )
+  if (workoutRoute && !selectedWorkout) return <Navigate to={screenPaths.history} replace />
+  if (!matchedScreen && !workoutRoute) return <Navigate to={screenPaths.home} replace />
+  if (screen === 'workout' && !activeWorkout) return <Navigate to={screenPaths.home} replace />
   const previousWeight =
     selectedWorkout &&
     workouts
@@ -181,26 +229,28 @@ export const AppContainer = (_props: AppContainerProps) => {
       language={language}
       onCancelWorkout={() => {
         dispatch(cancelWorkout())
-        setScreen('home')
+        navigate(screenPaths.home)
       }}
       onDeleteWorkout={deleteSelected}
       onFinishWorkout={() => {
         if (!isValidWorkout(activeWorkout) || ['in_progress', 'paused'].includes(activeWorkout?.workoutState)) return
         const workoutName = activeWorkout?.name || t('workout')
         const draft = { ...activeWorkout, completed: true }
-        createWorkout(draft).then(saved => { dispatch(updateActiveWorkout(saved)); dispatch(finishWorkout()); setScreen('home'); setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) }) }).catch(reason => setError(reason.message))
+        createWorkout(draft).then(saved => { dispatch(updateActiveWorkout(saved)); dispatch(finishWorkout()); navigate(screenPaths.home); setWorkoutConfirmation({ id: Date.now(), message: t('workoutCreated', { name: workoutName }) }) }).catch(reason => setError(reason.message))
       }}
       onLanguageChange={() => dispatch(setLanguage(language === 'sk' ? 'en' : 'sk'))}
       onProfileMenuToggle={() => setProfileMenuOpen(open => !open)}
       onLogout={() => signOut()}
       onSaveWorkout={saveSelected}
-      onScreenChange={setScreen}
+      onScreenChange={nextScreen => navigate(screenPaths[nextScreen])}
       onStartWorkout={start}
       onThemeChange={value => dispatch(setTheme(value))}
       onWeightUnitChange={value => dispatch(setWeightUnit(value))}
       onUpdateActiveWorkout={draft => dispatch(updateActiveWorkout(draft))}
       onUpdateProfile={value => saveProfile(session.user.id, value).then(() => dispatch(updateProfile(value))).catch(reason => setError(reason.message))}
-      openWorkout={setSelectedWorkout}
+      openWorkout={workout => navigate(workout?.workoutNumber ? `/workout/${workout.workoutNumber}` : screenPaths.history)}
+      editingWorkout={editingWorkout}
+      onEditingWorkoutChange={editing => navigate(`/workout/${selectedWorkout.workoutNumber}${editing ? '/edit' : ''}`)}
       profile={profile}
       profileMenuOpen={profileMenuOpen}
       profileMenuRef={profileMenuRef}

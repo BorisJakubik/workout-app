@@ -6,9 +6,8 @@ import type { WorkoutDetailContainerProps } from './WorkoutDetailContainer.types
 
 const STRENGTH_TRAINING_MET = 6
 
-export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBack, onSave, onDelete, weightUnit }: WorkoutDetailContainerProps) => {
+export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, editing, onEditingChange, onBack, onSave, onDelete, weightUnit }: WorkoutDetailContainerProps) => {
   const { t, locale } = useTranslation()
-  const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(workout)
   const [menuOpen, setMenuOpen] = useState(false)
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
@@ -57,7 +56,7 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
   const save = () => {
     if (!isValidWorkout(draft)) return
     onSave({ ...draft, name: draft.name.trim() })
-    setEditing(false)
+    onEditingChange(false)
   }
   useEffect(() => {
     if (!menuOpen) return undefined
@@ -101,7 +100,7 @@ export const WorkoutDetailContainer = ({ workout, exercises, calorieWeight, onBa
       setChosenExercise={setChosenExercise}
       setDeleteModalOpen={setDeleteModalOpen}
       setDraft={setDraft}
-      setEditing={setEditing}
+      setEditing={onEditingChange}
       setMenuOpen={setMenuOpen}
       t={t}
       toggleExercise={toggleExercise}

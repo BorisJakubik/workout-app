@@ -16,7 +16,7 @@ import {
   replaceData,
 } from '../../../store'
 import type { RootState } from '../../../store'
-import { supabase } from '../../../lib/supabase'
+import { supabase, supabaseConfigurationError } from '../../../lib/supabase'
 import { signIn, signOut, signUp } from '../../../services/auth'
 import { getWorkouts, createWorkout, updateWorkout as saveWorkout, deleteWorkout as removeWorkout } from '../../../services/workouts'
 import { getCatalog } from '../../../services/catalog'
@@ -29,6 +29,7 @@ import type { AppContainerProps } from './AppContainer.types'
 import type { Screen } from './AppView.types'
 
 const activeWorkoutStorageKey = 'fittrack.active-workout'
+const isSupabaseTimeout = reason => reason?.message?.includes('SUPABASE_REQUEST_TIMEOUT')
 const screenPaths: Record<Screen, string> = {
   home: '/',
   history: '/history',
@@ -131,10 +132,19 @@ export const AppContainer = (_props: AppContainerProps) => {
   useEffect(() => {
     if (!supabase) {
       setSession(null)
-      setError('Supabase nie je nakonfigurovaný.')
+      setError(supabaseConfigurationError || 'Supabase nie je nakonfigurovaný.')
       return undefined
     }
-    supabase.auth.getSession().then(({ data }) => setSession(data.session))
+    supabase.auth
+      .getSession()
+      .then(({ data, error: sessionError }) => {
+        if (sessionError) setError(isSupabaseTimeout(sessionError) ? t('requestTimeout') : sessionError.message)
+        setSession(data.session)
+      })
+      .catch(reason => {
+        setError(isSupabaseTimeout(reason) ? t('requestTimeout') : reason.message || t('requestFailed'))
+        setSession(null)
+      })
     const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => setSession(nextSession))
     return () => listener.subscription.unsubscribe()
   }, [])
@@ -229,10 +239,15 @@ export const AppContainer = (_props: AppContainerProps) => {
   const authenticate = async (method, credentials) => {
     setLoading(true)
     setError('')
-    const { data, error: authError } = await method(credentials)
-    setLoading(false)
-    if (authError) setError(authError.message)
-    else if (!data.session && method === signUp) setError(t('accountCreatedCheckEmail'))
+    try {
+      const { data, error: authError } = await method(credentials)
+      if (authError) setError(isSupabaseTimeout(authError) ? t('requestTimeout') : authError.message)
+      else if (!data.session && method === signUp) setError(t('accountCreatedCheckEmail'))
+    } catch (reason) {
+      setError(isSupabaseTimeout(reason) ? t('requestTimeout') : reason.message || t('requestFailed'))
+    } finally {
+      setLoading(false)
+    }
   }
   if (session === undefined)
     return (

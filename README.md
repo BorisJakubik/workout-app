@@ -44,7 +44,8 @@ The app is at `http://127.0.0.1:5173`. The browser receives only the public Supa
    - [`supabase/migrations/20260825_initial_schema.sql`](supabase/migrations/20260825_initial_schema.sql) creates profiles, categories, exercises, workouts, workout exercises and sets, with RLS policies.
    - [`supabase/migrations/20260828_add_workout_number.sql`](supabase/migrations/20260828_add_workout_number.sql) adds a sequential `workout_number` to existing and new workouts. This number is used in workout URLs; UUID stays as the internal relational key.
 3. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`, then restart the server.
-4. Register an account. If email confirmation is enabled, confirm the email before signing in.
+
+If every device reports `JWT issued at future`, the deployed `VITE_SUPABASE_ANON_KEY` itself has a future `iat` claim. In Supabase Dashboard, open **Settings → API Keys**, create a new **publishable** key (or rotate/copy the current anon key), replace `VITE_SUPABASE_ANON_KEY` locally and in the hosting provider's environment variables, then rebuild and redeploy. This is a server-side configuration problem; changing a device clock will not resolve it. 4. Register an account. If email confirmation is enabled, confirm the email before signing in.
 
 RLS means a signed-in user can access only their own profile, library and workout records. Ownership for sets and workout exercises is inherited from the parent workout.
 

@@ -1135,6 +1135,22 @@ h2 {
 .history-list {
   margin-top: 38px;
 }
+.history-show-more {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--lime);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.history-show-more:hover,
+.history-show-more:focus-visible {
+  border-color: var(--lime);
+}
 .history-calendar-heading {
   margin-top: 34px;
 }

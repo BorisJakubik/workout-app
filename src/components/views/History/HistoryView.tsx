@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { WorkoutRow } from '../../molecules/WorkoutRow/WorkoutRowContainer'
 import { CalendarView } from '../../molecules/Calendar/CalendarContainer'
 import type { HistoryViewProps } from './HistoryView.types'
 
 export const HistoryView = ({ workouts, openWorkout, t }: HistoryViewProps) => {
+  const [visibleWorkoutsCount, setVisibleWorkoutsCount] = useState(5)
+  const visibleWorkouts = workouts.slice(0, visibleWorkoutsCount)
+  const hasMoreWorkouts = visibleWorkoutsCount < workouts.length
+
   return (
     <section className="page">
       <p className="eyebrow">{t('workoutJourney')}</p>
@@ -17,9 +21,14 @@ export const HistoryView = ({ workouts, openWorkout, t }: HistoryViewProps) => {
       </div>
       <CalendarView workouts={workouts} openWorkout={openWorkout} embedded />
       <div className="history-list">
-        {workouts.map(workout => (
+        {visibleWorkouts.map(workout => (
           <WorkoutRow key={workout.id} workout={workout} onClick={() => openWorkout(workout)} />
         ))}
+        {hasMoreWorkouts && (
+          <button className="history-show-more" onClick={() => setVisibleWorkoutsCount(count => count + 5)}>
+            {t('showMore')}
+          </button>
+        )}
       </div>
     </section>
   )
